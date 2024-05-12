@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import localFont from "next/font/local";
+
+const poseyFont = localFont({
+  src: "../../../public/fonts/posey-textured.ttf",
+});
 
 const NavBar = () => {
   return (
@@ -8,7 +13,11 @@ const NavBar = () => {
       {/* border-2 dark:border-gray-600/40 */}
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost lg:hidden px-0 pr-3 sm:px-4 "
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -30,7 +39,7 @@ const NavBar = () => {
           >
             <li>
               <Link className="dark:focus:text-white" href="/login">
-                Hmm
+                LoginTest
               </Link>
             </li>
             <li>
@@ -60,15 +69,18 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost text-xl">
-          MAC Reality Quest
+        <Link
+          href="/"
+          className="btn btn-ghost text-lg sm:text-3xl px-0 sm:px-4 font-normal"
+        >
+          <div className={poseyFont.className}>MAC Reality Quest</div>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link className="dark:focus:text-white" href="/login">
-              Hmm
+              LoginTest
             </Link>
           </li>
           <li>
@@ -101,7 +113,7 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end flex flex-row space-x-4 items-center">
+        <div className="dropdown dropdown-end flex flex-row space-x-2 sm:space-x-4 items-center">
           <ThemeToggle />
           <div
             tabIndex={0}
