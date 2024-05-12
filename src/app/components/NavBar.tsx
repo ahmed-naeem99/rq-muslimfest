@@ -60,7 +60,7 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <Link href="/login" className="btn btn-ghost text-xl">
+        <Link href="/" className="btn btn-ghost text-xl">
           MAC Reality Quest
         </Link>
       </div>

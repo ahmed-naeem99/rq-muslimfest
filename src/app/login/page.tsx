@@ -132,7 +132,7 @@ const LoginPage = () => {
           </div>
 
           <p className="mt-10 text-center text-sm text-gray-400">
-            Haven't made a team account?{" "}
+            Haven&apos;t made a team account?{" "}
             <button
               onClick={() => router.push("signup")}
               className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"
