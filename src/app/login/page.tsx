@@ -25,13 +25,13 @@ const LoginPage = () => {
             width="90"
             height="90"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               stroke="#CCCCCC"
-              stroke-width="0.664882"
+              strokeWidth="0.664882"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
@@ -63,7 +63,7 @@ const LoginPage = () => {
               </g>{" "}
             </g>
           </svg>
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-dark dark:text-white">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-indigo-950 dark:text-white">
             Sign in to your Team Account
           </h2>
         </div>
@@ -85,7 +85,7 @@ const LoginPage = () => {
                   autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  className="block w-full px-3 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -115,7 +115,7 @@ const LoginPage = () => {
                   autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -134,7 +134,7 @@ const LoginPage = () => {
           <p className="mt-10 text-center text-sm text-gray-400">
             Haven&apos;t made a team account?{" "}
             <button
-              onClick={() => router.push("signup")}
+              onClick={() => router.push("register")}
               className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"
             >
               Sign Up

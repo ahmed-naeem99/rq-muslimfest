@@ -30,7 +30,7 @@ const ThemeToggle = () => {
       <div
         className="absolute bg-white w-6 h-6 rounded-full shadow-md transform duration-1000"
         style={{
-          left: darkMode ? "2px" : "38px",
+          left: darkMode ? "2px" : "39px",
           transition: "left 0.3s cubic-bezier(0, 0, 0.05, 0.99) 0s",
         }}
       ></div>
