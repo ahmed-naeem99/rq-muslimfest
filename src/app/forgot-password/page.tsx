@@ -11,7 +11,7 @@ const ForgotPassPage = () => {
   const router = useRouter();
 
   return (
-    <div className="grid place-items-center h-full">
+    <div className="grid place-items-center">
       <div className="flex flex-1 flex-col justify-center pb-32 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <Image priority src={realityQuestLogo} alt="Logo" width={300} />

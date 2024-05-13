@@ -16,14 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className="h-screen">
+    <html lang="en" data-theme="light" className="h-full">
       <body
         className={
           "${inter.className} dark:bg-dark h-full flex flex-col transition-colors"
         }
       >
         <NavBar />
-        <div className="flex-1"> {children} </div>
+        <div className="flex-1 overflow-auto"> {children} </div>
       </body>
     </html>
   );
