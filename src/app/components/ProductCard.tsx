@@ -1,5 +1,5 @@
 import React from "react";
-import AddToCart from "./AddToCart";
+import AddToCart from "./LoginButton";
 // import styles from "./css/ProductCard.module.css";
 
 const ProductCard = () => {
