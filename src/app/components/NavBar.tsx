@@ -38,7 +38,7 @@ const NavBar = async () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52  dark:bg-medium text-dark dark:text-white"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52   bg-sky-800 text-white"
           >
             {/* <li>
               <Link className="dark:focus:text-white" href="/login">
@@ -49,7 +49,10 @@ const NavBar = async () => {
               <a>Missions</a>
               <ul className="p-2">
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission1">
+                  <Link
+                    className="dark:focus:text-white dark:text-white"
+                    href="/mission1"
+                  >
                     M1
                   </Link>
                 </li>
@@ -89,19 +92,28 @@ const NavBar = async () => {
           <li>
             <details>
               <summary>Missions</summary>
-              <ul className="p-2  dark:bg-medium">
+              <ul className="p-2  bg-sky-800">
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission1">
+                  <Link
+                    className="dark:focus:text-white text-white"
+                    href="/mission1"
+                  >
                     M1
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission2">
+                  <Link
+                    className="dark:focus:text-white text-white"
+                    href="/mission2"
+                  >
                     M2
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission3">
+                  <Link
+                    className="dark:focus:text-white text-white"
+                    href="/mission3"
+                  >
                     M3
                   </Link>
                 </li>
@@ -109,7 +121,10 @@ const NavBar = async () => {
             </details>
           </li>
           <li>
-            <Link className="dark:focus:text-white" href="/leaderboard">
+            <Link
+              className="dark:focus:text-white dark:text-white"
+              href="/leaderboard"
+            >
               Leaderboard
             </Link>
           </li>
@@ -132,14 +147,11 @@ const NavBar = async () => {
           </div>
           <ul
             tabIndex={0}
-            className=" mt-24 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 dark:bg-medium"
+            className=" mt-24 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52  bg-sky-800"
           >
             {!session && (
               <li>
-                <Link
-                  className="dark:focus:text-white justify-between"
-                  href="/login"
-                >
+                <Link className="text-white  justify-between" href="/login">
                   Login
                   {/* <span className="badge">New</span> */}
                 </Link>
@@ -147,10 +159,7 @@ const NavBar = async () => {
             )}
             {!!session && (
               <li>
-                <Link
-                  className="dark:focus:text-white justify-between"
-                  href="/profile"
-                >
+                <Link className="text-white  justify-between" href="/profile">
                   Profile
                   {/* <span className="badge">New</span> */}
                 </Link>
