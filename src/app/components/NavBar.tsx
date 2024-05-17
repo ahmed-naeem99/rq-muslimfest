@@ -2,12 +2,15 @@ import React from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import localFont from "next/font/local";
+import { getServerSession } from "next-auth";
+import Logout from "./logout";
 
 const poseyFont = localFont({
   src: "../../../public/fonts/posey-textured.ttf",
 });
 
-const NavBar = () => {
+const NavBar = async () => {
+  const session = await getServerSession();
   return (
     <div className="navbar dark:text-white dark:focus:text-white transition-colors  rounded-3xl">
       {/* border-2 dark:border-gray-600/40 */}
@@ -131,15 +134,33 @@ const NavBar = () => {
             tabIndex={0}
             className=" mt-24 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 dark:bg-medium"
           >
-            <li>
-              <Link
-                className="dark:focus:text-white justify-between"
-                href="/login"
-              >
-                Profile
-                {/* <span className="badge">New</span> */}
-              </Link>
-            </li>
+            {!session && (
+              <li>
+                <Link
+                  className="dark:focus:text-white justify-between"
+                  href="/login"
+                >
+                  Login
+                  {/* <span className="badge">New</span> */}
+                </Link>
+              </li>
+            )}
+            {!!session && (
+              <li>
+                <Link
+                  className="dark:focus:text-white justify-between"
+                  href="/profile"
+                >
+                  Profile
+                  {/* <span className="badge">New</span> */}
+                </Link>
+              </li>
+            )}
+            {!!session && (
+              <li>
+                <Logout />
+              </li>
+            )}
           </ul>
         </div>
       </div>
