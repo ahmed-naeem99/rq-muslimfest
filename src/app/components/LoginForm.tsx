@@ -46,7 +46,7 @@ export default function LoginForm() {
           password: "",
           general: "",
         });
-        router.push("/profile");
+        router.push("/");
         router.refresh();
       } else {
         switch (response.error) {

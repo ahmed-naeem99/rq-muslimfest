@@ -158,14 +158,6 @@ const NavBar = async () => {
               </li>
             )}
             {!!session && (
-              <li>
-                <Link className="text-white  justify-between" href="/profile">
-                  Profile
-                  {/* <span className="badge">New</span> */}
-                </Link>
-              </li>
-            )}
-            {!!session && (
               <li className="text-white">
                 <Logout />
               </li>
