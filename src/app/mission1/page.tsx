@@ -139,7 +139,12 @@ const Mission1Page = () => {
           >
             Use Hint 1 (Time Penalty)
           </button>
-          {showHint1 && <p className="text-white w-full">HINT 1</p>}
+          {showHint1 && (
+            <p className="text-white w-full">
+              Did you find the link hidden in the video? Those numbers in the
+              end are hexadecimal; they can be converted...
+            </p>
+          )}
           <button
             onClick={handleM1Hint2}
             disabled={!canUseHint2}
@@ -147,7 +152,11 @@ const Mission1Page = () => {
           >
             Use Hint 2 (Time Penalty)
           </button>
-          {showHint2 && <p className="text-white w-full">HINT 2</p>}
+          {showHint2 && (
+            <p className="text-white w-full">
+              The posters symbolize events from the Seerah; put them in order.
+            </p>
+          )}
         </div>
       </div>
     </div>
