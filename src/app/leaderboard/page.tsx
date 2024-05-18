@@ -1,7 +1,11 @@
 import React from "react";
 
 const LeaderBoardPage = () => {
-  return <div className="dark:text-white">LeaderBoardPage</div>;
+  return (
+    <div className="flex flex-col text-center mt-11 dark:text-white">
+      Coming Soon!
+    </div>
+  );
 };
 
 export default LeaderBoardPage;

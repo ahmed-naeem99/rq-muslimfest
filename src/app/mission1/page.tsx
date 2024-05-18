@@ -97,52 +97,58 @@ const Mission1Page = () => {
   };
 
   return (
-    <div className="h-full justify-center pb-16 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center ">
-      <div
-        className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
-      >
-        Mission 1 Submission
-      </div>
-      <input
-        id="missionAnswer"
-        name="missionAnswer"
-        type="text"
-        autoComplete="Enter Answer"
-        onChange={(e) => setSubmission(e.target.value)}
-        required
-        className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-      />
-      {submitMessage && isGreen && (
-        <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-      )}
-      {submitMessage && !isGreen && (
-        <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-      )}
-      <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
-        <button
-          onClick={handleM1Submit}
-          disabled={!submission}
-          className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+    <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center ">
+      <video className="w-full" controls>
+        <source src="/videos/Mission1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="flex flex-col items-center text-center sm:w-3/4 w-full">
+        <div
+          className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
         >
-          Submit
-        </button>
+          Mission 1 Submission
+        </div>
+        <input
+          id="missionAnswer"
+          name="missionAnswer"
+          type="text"
+          autoComplete="Enter Answer"
+          onChange={(e) => setSubmission(e.target.value)}
+          required
+          className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+        />
+        {submitMessage && isGreen && (
+          <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+        )}
+        {submitMessage && !isGreen && (
+          <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+        )}
+        <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
+          <button
+            onClick={handleM1Submit}
+            disabled={!submission}
+            className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Submit
+          </button>
 
-        <button
-          onClick={handleM1Hint1}
-          disabled={!canUseHint1}
-          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Use Hint 1 (Time Penalty)
-        </button>
-        {showHint1 && <p className="text-white w-full">HINT 1</p>}
-        <button
-          onClick={handleM1Hint2}
-          disabled={!canUseHint2}
-          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Use Hint 2 (Time Penalty)
-        </button>
-        {showHint2 && <p className="text-white w-full">HINT 2</p>}
+          <button
+            onClick={handleM1Hint1}
+            disabled={!canUseHint1}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 1 (Time Penalty)
+          </button>
+          {showHint1 && <p className="text-white w-full">HINT 1</p>}
+          <button
+            onClick={handleM1Hint2}
+            disabled={!canUseHint2}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 2 (Time Penalty)
+          </button>
+          {showHint2 && <p className="text-white w-full">HINT 2</p>}
+        </div>
       </div>
     </div>
   );
