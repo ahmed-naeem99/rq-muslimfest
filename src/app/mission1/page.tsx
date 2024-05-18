@@ -14,12 +14,18 @@ const Mission1Page = () => {
   const [submission, setSubmission] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
   const [isGreen, setIsGreen] = useState(true);
+
   const [canUseHint1, setCanUseHint1] = useState(false);
   const [canUseHint2, setCanUseHint2] = useState(false);
+  const [canUseHint3, setCanUseHint3] = useState(false);
+
   const [usedHint1, setUsedHint1] = useState(false);
   const [usedHint2, setUsedHint2] = useState(false);
+  const [usedHint3, setUsedHint3] = useState(false);
+
   const [showHint1, setShowHint1] = useState(false);
   const [showHint2, setShowHint2] = useState(false);
+  const [showHint3, setShowHint3] = useState(false);
 
   const handleM1Hint1 = async () => {
     if (session.user.hints1used == 0) {
@@ -59,6 +65,25 @@ const Mission1Page = () => {
     }
   };
 
+  const handleM1Hint3 = async () => {
+    if (session.user.hints1used == 2) {
+      const response = await fetch("/api/auth/updateHints", {
+        method: "POST",
+        body: JSON.stringify({
+          username: session.user.username,
+          currMiss: 1,
+        }),
+      });
+      if (response.status === 200) {
+        console.log("success");
+        setShowHint3(true);
+        setUsedHint3(true);
+        setCanUseHint3(false);
+        update({ hints1used: 3 });
+      }
+    }
+  };
+
   const handleM1Submit = async () => {
     if (
       (submission === "Talha ibn Ubayd Allah" ||
@@ -78,6 +103,7 @@ const Mission1Page = () => {
         setSubmitMessage("Correct! Well done, proceed to mission 2.");
         setCanUseHint1(false);
         setCanUseHint2(false);
+        setCanUseHint3(false);
         update({ mission: 2 });
         console.log(session);
       } else {
@@ -88,6 +114,8 @@ const Mission1Page = () => {
       setIsGreen(false);
       setCanUseHint1(false);
       setCanUseHint2(false);
+      setCanUseHint3(false);
+
       setSubmitMessage("You have already completed this mission.");
     } else {
       setIsGreen(false);
@@ -96,16 +124,27 @@ const Mission1Page = () => {
         setCanUseHint1(true);
       } else if (session.user.hints1used == 1) {
         setCanUseHint2(true);
+      } else if (session.user.hints1used == 2) {
+        setCanUseHint3(true);
       }
     }
   };
 
   return (
     <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center ">
-      <video className="w-full" controls>
+      <div className="w-full aspect-w-16 aspect-h-9">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/vvEvBzUisXs"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Mission Video"
+        ></iframe>
+      </div>
+      {/* <video className="w-full" controls>
         <source src="/videos/Mission1.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full">
         <div
           className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
@@ -160,6 +199,20 @@ const Mission1Page = () => {
             <p className="text-white w-full">
               {" "}
               The posters symbolize events from the Seerah; put them in order.
+            </p>
+          )}
+          <button
+            onClick={handleM1Hint3}
+            disabled={!canUseHint3}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 3 (Time Penalty)
+          </button>
+          {showHint3 && (
+            <p className="text-white w-full">
+              {" "}
+              Black screen? Or is it? Play around with the brightness and
+              contrast.
             </p>
           )}
         </div>
