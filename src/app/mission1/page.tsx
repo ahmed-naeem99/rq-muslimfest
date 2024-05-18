@@ -60,7 +60,11 @@ const Mission1Page = () => {
   };
 
   const handleM1Submit = async () => {
-    if (submission === "Test" && session.user.mission === 1) {
+    if (
+      (submission === "Talha ibn Ubayd Allah" ||
+        submission === "Talha ibn 'Ubayd Allah") &&
+      session.user.mission === 1
+    ) {
       const response = await fetch("/api/auth/updateMission", {
         method: "POST",
         body: JSON.stringify({
@@ -129,7 +133,7 @@ const Mission1Page = () => {
             disabled={!submission}
             className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
-            Submit
+            Submit (Use Wikipedia Spelling)
           </button>
 
           <button
