@@ -132,15 +132,14 @@ const Mission1Page = () => {
 
   return (
     <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center ">
-      <div className="w-full aspect-w-16 aspect-h-9">
-        <iframe
-          className="w-full h-full"
-          src="https://www.youtube.com/embed/vvEvBzUisXs"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title="Mission Video"
-        ></iframe>
-      </div>
+      <iframe
+        className="w-full h-full"
+        src="https://www.youtube.com/embed/vvEvBzUisXs"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="Mission 1 Video"
+      ></iframe>
+
       {/* <video className="w-full" controls>
         <source src="/videos/Mission1.mp4" type="video/mp4" />
         Your browser does not support the video tag.

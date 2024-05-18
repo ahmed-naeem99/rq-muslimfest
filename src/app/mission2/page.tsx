@@ -130,6 +130,14 @@ const Mission2Page = () => {
 
   return (
     <div className="h-full justify-center pb-16 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center ">
+      <iframe
+        className="w-full h-full"
+        src="https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="Mission 2 Video"
+      ></iframe>
+
       <div
         className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
       >
