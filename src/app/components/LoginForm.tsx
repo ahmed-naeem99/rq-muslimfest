@@ -11,10 +11,20 @@ export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isValid, setIsUserValid] = useState(true);
-  const [doesExist, setDoesExist] = useState(true);
+  const [errorMessages, setErrorMessages] = useState({
+    username: "",
+    password: "",
+    general: "",
+  });
+
   const router = useRouter();
 
   const handleLogin = async () => {
+    setErrorMessages({
+      username: "",
+      password: "",
+      general: "",
+    });
     const isUsernameValid = validateUsername(username);
 
     setIsUserValid(isUsernameValid);
@@ -31,12 +41,48 @@ export default function LoginForm() {
       console.log({ response });
 
       if (!response?.error) {
-        setDoesExist(true);
+        setErrorMessages({
+          username: "",
+          password: "",
+          general: "",
+        });
         router.push("/profile");
         router.refresh();
       } else {
-        setDoesExist(false);
+        switch (response.error) {
+          case "InvalidUsername":
+            setErrorMessages((prev) => ({
+              ...prev,
+              username:
+                "Invalid username format. Username must be 3-36 characters long and contain only letters, numbers, and underscores.",
+            }));
+            break;
+          case "IncorrectPassword":
+            setErrorMessages((prev) => ({
+              ...prev,
+              password: "Incorrect password. Please try again.",
+            }));
+            break;
+          case "UserNotFound":
+            setErrorMessages((prev) => ({
+              ...prev,
+              username: "Username not found.",
+            }));
+            break;
+          default:
+            setErrorMessages((prev) => ({
+              ...prev,
+              general: "An unknown error occurred.",
+            }));
+            break;
+        }
       }
+    } else {
+      setErrorMessages((prev) => ({
+        ...prev,
+        username:
+          "Invalid username format. Username must be 3-36 characters long and contain only letters, numbers, and underscores.",
+      }));
     }
   };
 
@@ -73,20 +119,11 @@ export default function LoginForm() {
                   autoComplete="username"
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 ${
-                    !isValid && "border-red-500"
-                  } ${!doesExist && "border-red-500"} `}
+                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
-                {!isValid && (
+                {errorMessages.username && (
                   <p className="text-red-500 pt-3 w-full max-w-xs">
-                    Invalid username format. Username must be 3-36 characters
-                    long and contain only letters, numbers, and underscores.
-                  </p>
-                )}
-                {!doesExist && (
-                  <p className="text-red-500 pt-3 w-full max-w-xs">
-                    Username does not exist/encountered an error. Please enter a
-                    valid username.
+                    {errorMessages.username}
                   </p>
                 )}
               </div>
@@ -119,6 +156,11 @@ export default function LoginForm() {
                   required
                   className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
+                {errorMessages.password && (
+                  <p className="text-red-500 pt-3 w-full max-w-xs">
+                    {errorMessages.password}
+                  </p>
+                )}
               </div>
             </div>
 

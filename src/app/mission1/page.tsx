@@ -1,56 +1,60 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const Mission1Page = () => {
-  const session = useSession() as any;
+  const { data: session, update } = useSession() as any;
 
-  const router = useRouter();
   const [submission, setSubmission] = useState("");
-  const [isCorrect, setIsCorrect] = useState(true);
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [isGreen, setIsGreen] = useState(true);
 
   const handleM1Submit = async () => {
-    if (submission === "Test") {
-      console.log("Correct!, performing actions...");
-      console.log(session);
-      const response = await fetch("/api/auth/updateMission1", {
+    if (submission === "Test" && session.user.mission === 1) {
+      const response = await fetch("/api/auth/updateMission", {
         method: "POST",
         body: JSON.stringify({
-          username: session.data.user.username,
+          username: session.user.username,
           setMission: 2,
         }),
       });
 
-      console.log(response);
-
       if (response.status === 200) {
-        router.push("/mission2");
-        router.refresh();
+        setIsGreen(true);
+        setSubmitMessage("Correct! Well done, proceed to mission 2.");
+        update({ mission: 2 });
+        console.log(session);
       } else {
-        console.log("Failed to update mission.");
+        setIsGreen(false);
+        setSubmitMessage("An error has occurred. Please try again.");
       }
+    } else if (!(session.user.mission === 1)) {
+      setIsGreen(false);
+      setSubmitMessage("You have already completed this mission.");
     } else {
-      console.log("Invalid input. Please enter the correct word.");
-      setIsCorrect(false);
+      setIsGreen(false);
+      setSubmitMessage("Incorrect.");
     }
   };
 
   return (
     <div className="h-full justify-center pb-16 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center ">
       <input
-        id="mission1answer"
-        name="mission1answer"
-        type="text" // Changed to text type for username input
+        id="missionAnswer"
+        name="missionAnswer"
+        type="text"
         autoComplete="Enter Answer"
         onChange={(e) => setSubmission(e.target.value)}
         required
-        className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 ${
-          !isCorrect && "border-red-500"
-        } `}
+        className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
       />
-      {!isCorrect && <p className="text-red-500 pt-3 w-full">Incorrect.</p>}
+      {submitMessage && isGreen && (
+        <p className="text-green-500 pt-3 w-full">{submitMessage}</p>
+      )}
+      {submitMessage && !isGreen && (
+        <p className="text-red-500 pt-3 w-full">{submitMessage}</p>
+      )}
 
       <div className=" w-full py-4">
         <button

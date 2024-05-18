@@ -18,6 +18,7 @@ export default function LoginForm() {
     email: "",
     username: "",
     password: "",
+    general: "",
   });
 
   const router = useRouter();
@@ -104,6 +105,7 @@ export default function LoginForm() {
         email: "",
         username: "",
         password: "",
+        general: "",
       });
       // Proceed with sign-up logic
       console.log("Signing up...");
@@ -157,9 +159,7 @@ export default function LoginForm() {
                     setEmail(e.target.value);
                   }}
                   required
-                  className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 ${
-                    !isEmailValid && "border-red-500"
-                  }`}
+                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
                 {errorMessages.email && (
                   <p className="text-red-500 pt-3 w-full max-w-xs">
@@ -186,9 +186,7 @@ export default function LoginForm() {
                     setUsername(e.target.value);
                   }}
                   required
-                  className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 ${
-                    !isUserValid && "border-red-500"
-                  }`}
+                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
                 {errorMessages.username && (
                   <p className="text-red-500 pt-3 w-full max-w-xs">
@@ -215,9 +213,7 @@ export default function LoginForm() {
                   autoComplete="password"
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 ${
-                    !isUserValid && "border-red-500"
-                  }`}
+                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
                 {errorMessages.password && (
                   <p className="text-red-500 pt-3 w-full max-w-xs">

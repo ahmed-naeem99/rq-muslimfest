@@ -2,7 +2,6 @@ import NextAuth, { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { sql } from "@vercel/postgres";
-import { JWT } from "next-auth/jwt";
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,36}$/;
 
@@ -18,17 +17,12 @@ const handler = NextAuth({
       },
       async authorize(credentials, req) {
         if (!usernameRegex.test(credentials?.username || "")) {
-          return null; // Return null if the username format is invalid
+          throw new Error("InvalidUsername");
         }
 
         const response = await sql`
         SELECT * FROM users WHERE username=${credentials?.username}`;
         const user = response.rows[0];
-
-        const passwordCorrect = await compare(
-          credentials?.password || "",
-          user.password
-        );
 
         if (user) {
           const passwordCorrect = await compare(
@@ -40,11 +34,14 @@ const handler = NextAuth({
             return {
               id: user.id,
               username: user.username,
+              mission: user.currentmission,
             };
+          } else {
+            throw new Error("IncorrectPassword");
           }
         }
 
-        return null;
+        throw new Error("UserNotFound");
       },
     }),
   ],
@@ -53,9 +50,12 @@ const handler = NextAuth({
       session.user = token.user as any;
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.user = user;
+      }
+      if (trigger === "update" && session?.mission) {
+        (token.user as any).mission = session.mission;
       }
       return token;
     },

@@ -166,7 +166,7 @@ const NavBar = async () => {
               </li>
             )}
             {!!session && (
-              <li>
+              <li className="text-white">
                 <Logout />
               </li>
             )}
