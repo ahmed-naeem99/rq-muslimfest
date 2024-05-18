@@ -158,6 +158,7 @@ const Mission1Page = () => {
           </button>
           {showHint2 && (
             <p className="text-white w-full">
+              {" "}
               The posters symbolize events from the Seerah; put them in order.
             </p>
           )}
