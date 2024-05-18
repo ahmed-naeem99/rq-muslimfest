@@ -138,11 +138,8 @@ export default function LoginForm() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <div
-                    onClick={() => router.push("/forgot-password")}
-                    className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500"
-                  >
-                    Forgot password?
+                  <div className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500">
+                    Forgot password? Make New Acount.
                   </div>
                 </div>
               </div>

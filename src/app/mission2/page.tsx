@@ -14,12 +14,18 @@ const Mission2Page = () => {
   const [submission, setSubmission] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
   const [isGreen, setIsGreen] = useState(true);
+
   const [canUseHint1, setCanUseHint1] = useState(false);
   const [canUseHint2, setCanUseHint2] = useState(false);
+  const [canUseHint3, setCanUseHint3] = useState(false);
+
   const [usedHint1, setUsedHint1] = useState(false);
   const [usedHint2, setUsedHint2] = useState(false);
+  const [usedHint3, setUsedHint3] = useState(false);
+
   const [showHint1, setShowHint1] = useState(false);
   const [showHint2, setShowHint2] = useState(false);
+  const [showHint3, setShowHint3] = useState(false);
 
   const handleM2Hint1 = async () => {
     if (session.user.hints2used == 0) {
@@ -59,8 +65,27 @@ const Mission2Page = () => {
     }
   };
 
+  const handleM2Hint3 = async () => {
+    if (session.user.hints2used == 2) {
+      const response = await fetch("/api/auth/updateHints", {
+        method: "POST",
+        body: JSON.stringify({
+          username: session.user.username,
+          currMiss: 2,
+        }),
+      });
+      if (response.status === 200) {
+        console.log("success");
+        setShowHint3(true);
+        setUsedHint3(true);
+        setCanUseHint3(false);
+        update({ hints2used: 3 });
+      }
+    }
+  };
+
   const handleM2Submit = async () => {
-    if (submission === "Test" && session.user.mission === 2) {
+    if (submission === "Ahmad ibn Hanbal" && session.user.mission === 2) {
       const response = await fetch("/api/auth/updateMission", {
         method: "POST",
         body: JSON.stringify({
@@ -74,6 +99,7 @@ const Mission2Page = () => {
         setSubmitMessage("Correct! Well done, proceed to mission 3.");
         setCanUseHint1(false);
         setCanUseHint2(false);
+        setCanUseHint3(false);
         update({ mission: 3 });
       } else {
         setIsGreen(false);
@@ -83,6 +109,7 @@ const Mission2Page = () => {
       setIsGreen(false);
       setCanUseHint1(false);
       setCanUseHint2(false);
+      setCanUseHint3(false);
       if (session.user.mission === 1) {
         setSubmitMessage("You have not yet reached this mission.");
       } else {
@@ -95,6 +122,8 @@ const Mission2Page = () => {
         setCanUseHint1(true);
       } else if (session.user.hints2used == 1) {
         setCanUseHint2(true);
+      } else if (session.user.hints2used == 2) {
+        setCanUseHint3(true);
       }
     }
   };
@@ -137,7 +166,13 @@ const Mission2Page = () => {
         >
           Use Hint 1 (Time Penalty)
         </button>
-        {showHint1 && <p className="text-white w-full">HINT 1</p>}
+        {showHint1 && (
+          <p className="text-white w-full">
+            Riddle me this Riddle me that! What it&apos;s saying is that you
+            need to find the place in the convention that people stand in lines.
+            Here&apos;s the hint: the big magical stairs.
+          </p>
+        )}
 
         <button
           onClick={handleM2Hint2}
@@ -146,7 +181,24 @@ const Mission2Page = () => {
         >
           Use Hint 2 (Time Penalty)
         </button>
-        {showHint2 && <p className="text-white w-full">HINT 2</p>}
+        {showHint2 && (
+          <p className="text-white w-full">
+            The video had two pauses; which letters were replaced?
+          </p>
+        )}
+
+        <button
+          onClick={handleM2Hint3}
+          disabled={!canUseHint3}
+          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        >
+          Use Hint 3 (Time Penalty)
+        </button>
+        {showHint3 && (
+          <p className="text-white w-full">
+            What happens if you overlay the two maps. Also horse code
+          </p>
+        )}
       </div>
     </div>
   );
