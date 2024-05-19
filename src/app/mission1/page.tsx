@@ -131,20 +131,19 @@ const Mission1Page = () => {
   };
 
   return (
-    <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center ">
-      <iframe
-        className="w-full h-full"
-        src="https://www.youtube.com/embed/vvEvBzUisXs"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        title="Mission 1 Video"
-      ></iframe>
-
+    <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center overflow-auto ">
       {/* <video className="w-full" controls>
         <source src="/videos/Mission1.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video> */}
-      <div className="flex flex-col items-center text-center sm:w-3/4 w-full">
+      <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
+        <iframe
+          className="w-full h-full "
+          src="https://www.youtube.com/embed/vvEvBzUisXs"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Mission 1 Video"
+        ></iframe>
         <div
           className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
         >

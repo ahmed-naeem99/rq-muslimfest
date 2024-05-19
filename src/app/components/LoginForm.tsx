@@ -138,7 +138,7 @@ export default function LoginForm() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <div className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500">
+                  <div className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500 px-2">
                     Forgot password? Make New Acount.
                   </div>
                 </div>

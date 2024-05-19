@@ -130,83 +130,85 @@ const Mission2Page = () => {
 
   return (
     <div className="h-full justify-center pb-16 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center ">
-      <iframe
-        className="w-full h-full"
-        src="https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        title="Mission 2 Video"
-      ></iframe>
+      <div className="flex flex-col items-center text-center w-full overflow-auto ">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Mission 2 Video"
+        ></iframe>
 
-      <div
-        className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
-      >
-        Mission 2 Submission
-      </div>
-      <input
-        id="missionAnswer"
-        name="missionAnswer"
-        type="text" // Changed to text type for username input
-        autoComplete="Enter Answer"
-        onChange={(e) => setSubmission(e.target.value)}
-        required
-        className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-      />
-      {submitMessage && isGreen && (
-        <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-      )}
-      {submitMessage && !isGreen && (
-        <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-      )}
-
-      <div className=" flex flex-col items-center text-center gap-y-5 sm:w-full w-3/4 py-4">
-        <button
-          onClick={handleM2Submit}
-          disabled={!submission}
-          className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        <div
+          className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
         >
-          Submit
-        </button>
-        <button
-          onClick={handleM2Hint1}
-          disabled={!canUseHint1}
-          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Use Hint 1 (Time Penalty)
-        </button>
-        {showHint1 && (
-          <p className="text-white w-full">
-            Riddle me this Riddle me that! What it&apos;s saying is that you
-            need to find the place in the convention that people stand in lines.
-            Here&apos;s the hint: the big magical stairs.
-          </p>
+          Mission 2 Submission
+        </div>
+        <input
+          id="missionAnswer"
+          name="missionAnswer"
+          type="text" // Changed to text type for username input
+          autoComplete="Enter Answer"
+          onChange={(e) => setSubmission(e.target.value)}
+          required
+          className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+        />
+        {submitMessage && isGreen && (
+          <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+        )}
+        {submitMessage && !isGreen && (
+          <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
         )}
 
-        <button
-          onClick={handleM2Hint2}
-          disabled={!canUseHint2}
-          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Use Hint 2 (Time Penalty)
-        </button>
-        {showHint2 && (
-          <p className="text-white w-full">
-            The video had two pauses; which letters were replaced?
-          </p>
-        )}
+        <div className=" flex flex-col items-center text-center gap-y-5 sm:w-full w-3/4 py-4">
+          <button
+            onClick={handleM2Submit}
+            disabled={!submission}
+            className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Submit (Use Wikipedia Spelling)
+          </button>
+          <button
+            onClick={handleM2Hint1}
+            disabled={!canUseHint1}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 1 (Time Penalty)
+          </button>
+          {showHint1 && (
+            <p className="text-white w-full">
+              Riddle me this Riddle me that! What it&apos;s saying is that you
+              need to find the place in the convention that people stand in
+              lines. Here&apos;s the hint: the big magical stairs.
+            </p>
+          )}
 
-        <button
-          onClick={handleM2Hint3}
-          disabled={!canUseHint3}
-          className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Use Hint 3 (Time Penalty)
-        </button>
-        {showHint3 && (
-          <p className="text-white w-full">
-            What happens if you overlay the two maps. Also horse code
-          </p>
-        )}
+          <button
+            onClick={handleM2Hint2}
+            disabled={!canUseHint2}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 2 (Time Penalty)
+          </button>
+          {showHint2 && (
+            <p className="text-white w-full">
+              The video had two pauses; which letters were replaced?
+            </p>
+          )}
+
+          <button
+            onClick={handleM2Hint3}
+            disabled={!canUseHint3}
+            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Use Hint 3 (Time Penalty)
+          </button>
+          {showHint3 && (
+            <p className="text-white w-full">
+              What happens if you overlay the two maps. Also horse code
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
