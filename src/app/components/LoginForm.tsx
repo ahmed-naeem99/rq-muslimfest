@@ -139,7 +139,7 @@ export default function LoginForm() {
                 </label>
                 <div className="text-sm">
                   <div className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500 px-2">
-                    Forgot password? Make New Acount.
+                    Forgot password? Make a New Account.
                   </div>
                 </div>
               </div>
