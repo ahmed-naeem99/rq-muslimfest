@@ -3,6 +3,7 @@
 import React, { use, useState } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
+import { useRouter } from "next/navigation";
 
 const poseyFont = localFont({
   src: "../../../public/fonts/posey-textured.ttf",
@@ -23,6 +24,8 @@ const Mission3Page = () => {
 
   const [showHint1, setShowHint1] = useState(false);
   const [showHint2, setShowHint2] = useState(false);
+
+  const router = useRouter();
 
   const handleM3Hint1 = async () => {
     if (session.user.hints3used == 0) {
@@ -83,6 +86,7 @@ const Mission3Page = () => {
         setCanUseHint2(false);
         update({ mission: -1 });
         console.log(session);
+        router.push("https://forms.gle/fjzgkRbbANDw4yaz5");
       } else {
         setIsGreen(false);
         setSubmitMessage("An error has occurred. Please try again.");
@@ -95,6 +99,7 @@ const Mission3Page = () => {
         setSubmitMessage("You have not yet reached this mission.");
       } else {
         setSubmitMessage("You have already completed this mission.");
+        router.push("https://forms.gle/fjzgkRbbANDw4yaz5");
       }
     } else {
       setIsGreen(false);
