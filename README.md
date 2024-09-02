@@ -1,4 +1,4 @@
-## What is MAC Reality Quest?
+## What is MAC Reality Quest? 🌠
 
 Reality Quest is the Muslim Association of Canada (MAC)'s annual alternate reality game (ARG), showcased at the MAC Convention in Toronto, Canada. In other words, it is a convnetion-wide puzzle game and scavenger hunt with a particular focus on Islamic education.
 
