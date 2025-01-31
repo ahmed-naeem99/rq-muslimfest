@@ -5,8 +5,6 @@ export async function POST(request: Request) {
   try {
     const req = await request.json();
 
-    console.log(req);
-
     const columnName = `hints${req.currMiss}used`;
 
     if (columnName === "hints1used") {
@@ -52,7 +50,6 @@ export async function POST(request: Request) {
       );
     }
   } catch (e: any) {
-    console.log(e);
     return NextResponse.json(
       { message: "An error occurred", code: "UNKNOWN_ERROR" },
       { status: 500 }
