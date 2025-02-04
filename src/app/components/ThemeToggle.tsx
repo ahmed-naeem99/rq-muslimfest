@@ -34,7 +34,7 @@ const ThemeToggle = () => {
           transition: "left 0.3s cubic-bezier(0, 0, 0.05, 0.99) 0s",
         }}
       ></div>
-      <BsSunFill className="ml-auto text-yellow-400" size={18} />
+      <BsSunFill className="ml-auto text-sky-600" size={18} />
     </div>
   );
 };
