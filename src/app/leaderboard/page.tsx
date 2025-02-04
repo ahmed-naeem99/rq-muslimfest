@@ -7,10 +7,13 @@ interface User {
   username: string;
   timecompleted: string | null;
   hintsused: number;
+  role: string;
+  finaltime: string | null;
 }
 
 const LeaderBoardPage = () => {
   const [leaderboard, setLeaderboard] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -18,25 +21,25 @@ const LeaderBoardPage = () => {
         const response = await fetch("/api/leaderboard");
         const data = await response.json();
         console.log(data);
-        const penalizedData = data.map((user: User) => ({
-          ...user,
-          timecompleted: adjustCompletionTime(
-            user.timecompleted,
-            user.hintsused
-          ),
-        }));
-        console.log(penalizedData);
+
+        const penalizedData = data
+          .filter((user: User) => user.role === "player")
+          .map((user: User) => ({
+            ...user,
+            finaltime: adjustCompletionTime(user.timecompleted, user.hintsused),
+          }));
         const sortedData = penalizedData.sort((a: User, b: User) => {
-          if (!a.timecompleted) return 1;
-          if (!b.timecompleted) return -1;
+          if (!a.finaltime) return 1;
+          if (!b.finaltime) return -1;
           return (
-            new Date(a.timecompleted).getTime() -
-            new Date(b.timecompleted).getTime()
+            new Date(a.finaltime).getTime() - new Date(b.finaltime).getTime()
           );
         });
         setLeaderboard(sortedData);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching leaderboard data:", error);
+        setLoading(false);
       }
     };
 
@@ -74,29 +77,52 @@ const LeaderBoardPage = () => {
     return date.toLocaleDateString("en-US", options);
   };
 
+  if (loading) {
+    return (
+      <div className="flex flex-col text-center mt-11 dark:text-white items-center">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col text-center mt-11 dark:text-white items-center">
-      <h1 className="text-2xl mb-4">Leaderboard</h1>
-      <table className="w-[60%] bg-white dark:bg-red-400 transition-all">
-        <thead>
-          <tr>
-            <th className="py-2">Position</th>
-            <th className="py-2">User</th>
-            <th className="py-2">Completion Time</th>
-            <th className="py-2">Hints Used</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaderboard.map((user: User, index: number) => (
-            <tr key={user.id} className="border-t">
-              <td className="py-2">{index + 1}</td>
-              <td className="py-2">{user.username}</td>
-              <td className="py-2">{formatDate(user.timecompleted)}</td>
-              <td className="py-2">{user.hintsused}</td>
+    <div className="flex flex-col text-center mt-11 dark:text-white items-center py-12 min-w-fit overflow-auto">
+      <h1 className="text-3xl mb-6 font-bold">Standings</h1>
+      <div className="flex flex-col items-center min-w-fit sm:w-[90%] md:w-[80%] xl:w-[60%] text-sm lg:text-[16px] dark:bg-gray-300 bg-neutral-400 p-2 rounded-xl">
+        <table className="w-full text-gray-800 dark:text-gray-200 bg-white dark:bg-neutral-700  transition-all rounded-lg overflow-x-auto whitespace-nowrap ">
+          <thead>
+            <tr>
+              <th className="py-2 px-3">#</th>
+              <th className="py-2 px-3">Team</th>
+              <th className="py-2 px-3">Completion</th>
+              <th className="py-2 px-3">Hints Used</th>
+              <th className="py-2 px-10">Final Time</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {leaderboard.map((user: User, index: number) => (
+              <tr
+                key={user.id}
+                className={`border-t ${
+                  index === 0
+                    ? "bg-[#e6daa1] dark:bg-[#a89d72] font-bold"
+                    : index === 1
+                    ? "bg-stone-400/70 font-bold"
+                    : index === 2
+                    ? "bg-amber-900/30 font-bold"
+                    : ""
+                }`}
+              >
+                <td className="py-2">{index + 1}</td>
+                <td className="py-2">{user.username}</td>
+                <td className="py-2">{formatDate(user.timecompleted)}</td>
+                <td className="py-2">{user.hintsused}</td>
+                <td className="py-2">{formatDate(user.finaltime)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

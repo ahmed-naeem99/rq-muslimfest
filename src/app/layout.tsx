@@ -21,7 +21,7 @@ export default async function RootLayout({
       <html lang="en" className="h-full dark">
         <body
           className={
-            "${inter.className} dark:bg-dark h-full flex flex-col transition-colors"
+            "${inter.className} dark:bg-dark h-full w-full flex flex-col transition-colors"
           }
         >
           <NavBar />
