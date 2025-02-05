@@ -22,7 +22,7 @@ const LeaderBoardPage = () => {
         const data = await response.json();
         console.log(data);
 
-        const penalizedData = data
+        const penalizedData = data.result
           .filter((user: User) => user.role === "player")
           .map((user: User) => ({
             ...user,
