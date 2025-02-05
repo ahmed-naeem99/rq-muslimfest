@@ -31,14 +31,11 @@ export default function LoginForm() {
 
     if (isUsernameValid) {
       // Proceed with sign-in logic
-      console.log("Signing in...");
       const response = await signIn("credentials", {
         username: username,
         password: password,
         redirect: false,
       });
-
-      console.log({ response });
 
       if (!response?.error) {
         setErrorMessages({
@@ -138,9 +135,12 @@ export default function LoginForm() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <div className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500 px-2">
-                    Forgot password? Make a New Account.
-                  </div>
+                  <button
+                    className="cursor-pointer font-semibold text-sky-600 hover:text-sky-500 px-2"
+                    onClick={() => router.push("forgot-password")}
+                  >
+                    Forgot password?
+                  </button>
                 </div>
               </div>
               <div className="mt-2">
