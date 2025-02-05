@@ -87,7 +87,7 @@ const LeaderBoardPage = () => {
 
   return (
     <div className="flex flex-col text-center mt-11 dark:text-white items-center py-12 min-w-fit overflow-auto">
-      <h1 className="text-3xl mb-6 font-bold">Standings</h1>
+      <h1 className="text-3xl mb-6 font-bold">Leaderboard</h1>
       <div className="flex flex-col items-center min-w-fit sm:w-[90%] md:w-[80%] xl:w-[60%] text-sm lg:text-[16px] dark:bg-gray-300 bg-neutral-400 p-2 rounded-xl">
         <table className="w-full text-gray-800 dark:text-gray-200 bg-white dark:bg-neutral-700  transition-all rounded-lg overflow-x-auto whitespace-nowrap ">
           <thead>
