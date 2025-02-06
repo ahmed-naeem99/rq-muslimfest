@@ -8,6 +8,7 @@ import realityQuestLogo from "../../../public/rqlogo.svg";
 export default function ForgotPassForm() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [resetSent, setResetSent] = useState(false);
 
   const validateEmail = (email: string) => {
     // Regular expression for username validation
@@ -16,19 +17,26 @@ export default function ForgotPassForm() {
   };
 
   const handleSubmit = async () => {
+    const button = document.querySelector("button");
+    button?.setAttribute("disabled", "true");
     if (!validateEmail(email)) {
       setEmailError("Invalid email format.");
+      button?.removeAttribute("disabled");
     } else {
       setEmailError("");
-      //api call to send reset link
-      const response = await fetch("/api/forgot-password", {
+
+      const response = await fetch("/api/forgotPassword", {
         method: "POST",
         body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
-      console.log(data);
+      if (response.status === 200) {
+        // Disable forgot password button from being clicked multiple times
+        setResetSent(true);
+      } else {
+        setEmailError("An error has occurred. Please try again.");
+        button?.removeAttribute("disabled");
+      }
     }
   };
 
@@ -38,7 +46,7 @@ export default function ForgotPassForm() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <Image priority src={realityQuestLogo} alt="Logo" width={300} />
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
-            Reset Password
+            Forgot Password
           </h2>
         </div>
 
@@ -61,9 +69,14 @@ export default function ForgotPassForm() {
                   required
                   className="block w-full px-3 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                 />
-                {emailError && (
+                {emailError && !resetSent && (
                   <p className="text-red-500 pt-3 w-full max-w-xs">
                     {emailError}
+                  </p>
+                )}
+                {!emailError && resetSent && (
+                  <p className="text-green-500 pt-3 w-full max-w-xs">
+                    A reset password link has been sent to your email.
                   </p>
                 )}
               </div>
