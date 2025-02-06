@@ -22,7 +22,7 @@ export default function ResetPassForm(data: any) {
     } else {
       const response = await fetch("/api/resetPassword", {
         method: "POST",
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: password, user: userData }),
       });
 
       if (response.status === 200) {
@@ -38,18 +38,18 @@ export default function ResetPassForm(data: any) {
       <div className="flex flex-1 flex-col justify-center pb-32 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <Image priority src={realityQuestLogo} alt="Logo" width={300} />
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
+          <h2 className="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white pb-4">
             Reset Password
           </h2>
         </div>
 
-        <div>
+        <div className="pb-6">
           <div className="flex items-center justify-between">
             <label
               htmlFor="password"
               className="block text-sm font-medium leading-6  text-dark dark:text-white"
             >
-              Password
+              New Password
             </label>
           </div>
           <div className="mt-2">
@@ -62,9 +62,6 @@ export default function ResetPassForm(data: any) {
               required
               className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
             />
-            {error && (
-              <p className="text-red-500 pt-3 w-full max-w-xs">{error}</p>
-            )}
           </div>
         </div>
 
@@ -87,9 +84,12 @@ export default function ResetPassForm(data: any) {
               required
               className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
             />
+            {error && (
+              <p className="text-red-500 py-4 w-full max-w-xs">{error}</p>
+            )}
           </div>
         </div>
-        <div>
+        <div className="">
           <button
             onClick={handleReset}
             disabled={!password || !rePassword}
