@@ -11,7 +11,7 @@ export async function POST(request: Request) {
           SELECT email, passwordresettoken, passwordresetexpiry FROM users WHERE passwordresettoken=${hashedToken}`;
 
     const user = response.rows[0];
-    if (!user || user.passwordresetexpiry < Date.now()) {
+    if (!user) {
       return NextResponse.json(
         {
           message: "Invalid token",
@@ -22,6 +22,14 @@ export async function POST(request: Request) {
         }
       );
     }
+
+    if (user.passwordresetexpiry < Date.now()) {
+      await sql`
+            UPDATE users SET passwordresettoken=${null}, passwordresetexpiry=${null} WHERE email=${
+        user.email
+      }`;
+    }
+
     return NextResponse.json(
       {
         message: "Success",
