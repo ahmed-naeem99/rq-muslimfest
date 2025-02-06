@@ -83,16 +83,11 @@ const NavBar = async () => {
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {/* <li>
-            <Link className="dark:focus:text-white" href="/login">
-              LoginTest
-            </Link>
-          </li> */}
+        <ul className="menu menu-horizontal px-1 items-center justify-center">
           <li>
             <details>
               <summary>Missions</summary>
-              <ul className="p-2  bg-sky-800">
+              <ul className="p-2  bg-sky-800 ">
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"

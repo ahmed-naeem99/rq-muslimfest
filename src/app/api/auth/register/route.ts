@@ -9,8 +9,6 @@ export async function POST(request: Request) {
   try {
     const { email, username, password } = await request.json();
 
-    console.log({ email, username, password });
-
     if (
       (!username || !usernameRegex.test(username)) &&
       (!email || !emailRegex.test(email))

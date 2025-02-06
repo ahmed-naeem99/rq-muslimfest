@@ -117,7 +117,6 @@ export default function LoginForm() {
           password: password,
         }),
       });
-      console.log({ response });
       const result = await response.json();
       if (response.status === 200) {
         router.push("/login");
