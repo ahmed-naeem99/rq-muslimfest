@@ -6,7 +6,10 @@ export async function GET() {
     const response = await sql`
           SELECT username, hintsused, timecompleted, role FROM users
         `;
-    return NextResponse.json(response.rows);
+    return NextResponse.json(
+      { message: "Success", result: response.rows },
+      { status: 200 }
+    );
   } catch (e: any) {
     return NextResponse.json(
       { message: "An error occurred", code: "UNKNOWN_ERROR" },
