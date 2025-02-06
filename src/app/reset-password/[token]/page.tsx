@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import ResetPassForm from "../../components/ResetPassForm";
-import dotenv from "dotenv";
+import { loadEnvConfig } from "@next/env";
 
-dotenv.config({ path: ".env.development.local" });
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 const ResetPassPage = async ({ params }: any) => {
   const session = await getServerSession();

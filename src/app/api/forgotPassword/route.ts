@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { sql } from "@vercel/postgres";
-import dotenv from "dotenv";
+import { loadEnvConfig } from "@next/env";
 
-dotenv.config({ path: ".env.development.local" });
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const nodemailer = require("nodemailer");
