@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import ResetPassForm from "../../components/ResetPassForm";
+import ResetPassForm from "../../components/auth_forms/ResetPassForm";
 import { loadEnvConfig } from "@next/env";
 
 const projectDir = process.cwd();
