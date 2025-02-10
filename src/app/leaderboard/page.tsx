@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 
 interface User {
-  id: string;
   username: string;
   timecompleted: string | null;
   hintsused: number;
@@ -20,7 +19,6 @@ const LeaderBoardPage = () => {
       try {
         const response = await fetch("/api/leaderboard");
         const data = await response.json();
-        console.log(data);
 
         const penalizedData = data.result
           .filter((user: User) => user.role === "player")
@@ -102,7 +100,7 @@ const LeaderBoardPage = () => {
           <tbody>
             {leaderboard.map((user: User, index: number) => (
               <tr
-                key={user.id}
+                key={user.username}
                 className={`border-t ${
                   index === 0
                     ? "bg-[#e6daa1] dark:bg-[#a89d72] font-bold"
