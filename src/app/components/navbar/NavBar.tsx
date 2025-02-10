@@ -51,18 +51,18 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white dark:text-white"
-                    href="/mission1"
+                    href="/mission/1"
                   >
                     M1
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission2">
+                  <Link className="dark:focus:text-white" href="/mission/2">
                     M2
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission3">
+                  <Link className="dark:focus:text-white" href="/mission/3">
                     M3
                   </Link>
                 </li>
@@ -91,7 +91,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission1"
+                    href="/mission/1"
                   >
                     M1
                   </Link>
@@ -99,7 +99,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission2"
+                    href="/mission/2"
                   >
                     M2
                   </Link>
@@ -107,7 +107,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission3"
+                    href="/mission/3"
                   >
                     M3
                   </Link>
