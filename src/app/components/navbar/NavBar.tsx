@@ -3,10 +3,10 @@ import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import localFont from "next/font/local";
 import { getServerSession } from "next-auth";
-import Logout from "./logout";
+import Logout from "./Logout";
 
 const poseyFont = localFont({
-  src: "../../../public/fonts/posey-textured.ttf",
+  src: "../../../../public/fonts/posey-textured.ttf",
 });
 
 const NavBar = async () => {

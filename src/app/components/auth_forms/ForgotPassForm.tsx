@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import Image from "next/image";
-import realityQuestLogo from "../../../public/rqlogo.svg";
+import realityQuestLogo from "../../../../public/rqlogo.svg";
 
 export default function ForgotPassForm() {
   const [email, setEmail] = useState("");

@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Image from "next/image";
-import realityQuestLogo from "../../../public/rqlogo.svg";
+import realityQuestLogo from "../../../../public/rqlogo.svg";
 import { useRouter } from "next/navigation";
 
 export default function ResetPassForm(data: any) {
