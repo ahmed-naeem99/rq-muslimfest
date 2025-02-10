@@ -6,12 +6,15 @@ import MissionForm from "@/app/components/missions/MissionForm";
 
 const MissionPage = () => {
   const { data: session, status } = useSession();
-
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="grid place-items-center h-full dark:text-white text-dark">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
-  if (!session) {
+  if (!session?.user) {
     return <div>Please log in to access this page.</div>;
   }
 
