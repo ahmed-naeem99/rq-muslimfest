@@ -13,7 +13,7 @@ const MissionForm = (mission: any) => {
 
   const [submission, setSubmission] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
-  const [isGreen, setIsGreen] = useState(true);
+  const [isCorrect, setIsCorrect] = useState(true);
 
   const [showHintCounter, setShowHintCounter] = useState(0);
 
@@ -43,8 +43,9 @@ const MissionForm = (mission: any) => {
   };
 
   const handleM1Submit = async () => {
+    setIsCorrect(false);
+
     if (!(session.user.mission === 1)) {
-      setIsGreen(false);
       setSubmitMessage("You have already completed this mission.");
       return;
     }
@@ -53,7 +54,6 @@ const MissionForm = (mission: any) => {
       submission != "Talha ibn Ubayd Allah" &&
       submission != "Talha ibn 'Ubayd Allah"
     ) {
-      setIsGreen(false);
       setSubmitMessage("Incorrect.");
       return;
     }
@@ -67,13 +67,12 @@ const MissionForm = (mission: any) => {
     });
 
     if (response.status === 200) {
-      setIsGreen(true);
+      setIsCorrect(true);
       setSubmitMessage("Correct! Well done, proceed to mission 2.");
       update({ mission: 2 });
       return;
     }
 
-    setIsGreen(false);
     setSubmitMessage("An error has occurred. Please try again.");
   };
 
@@ -101,10 +100,10 @@ const MissionForm = (mission: any) => {
           required
           className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
         />
-        {submitMessage && isGreen && (
+        {submitMessage && isCorrect && (
           <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
         )}
-        {submitMessage && !isGreen && (
+        {submitMessage && !isCorrect && (
           <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
         )}
         <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
