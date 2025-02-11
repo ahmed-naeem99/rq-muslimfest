@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
+import { HintProvider } from "@/app/context/HintContext";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -108,69 +109,67 @@ const MissionForm = ({ mission }: { mission: number }) => {
   };
 
   return (
-    <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center overflow-auto ">
-      <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
-        <iframe
-          className="w-full h-full "
-          src={missionData[mission].video}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title={`Mission ${mission} Video`}
-        ></iframe>
-        <div
-          className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
-        >
-          Mission {mission} Submission
-        </div>
-        <input
-          id="missionAnswer"
-          name="missionAnswer"
-          type="text"
-          autoComplete="Enter Answer"
-          onChange={(e) => setSubmission(e.target.value)}
-          required
-          className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-        />
-        {submitMessage && isCorrect && (
-          <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-        )}
-        {submitMessage && !isCorrect && (
-          <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-        )}
-        <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
-          <button
-            onClick={handleSubmit}
-            disabled={!submission}
-            className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+    <HintProvider>
+      <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center overflow-auto ">
+        <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
+          <iframe
+            className="w-full h-full "
+            src={missionData[mission].video}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={`Mission ${mission} Video`}
+          ></iframe>
+          <div
+            className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
           >
-            Submit (Use Wikipedia Spelling)
-          </button>
-          <HintButton
-            hintNum={1}
-            hintMessage={missionData[mission].hint1}
-            mission={mission}
-            showHintCounter={showHintCounter}
-            setShowHintCounter={setShowHintCounter}
+            Mission {mission} Submission
+          </div>
+          <input
+            id="missionAnswer"
+            name="missionAnswer"
+            type="text"
+            autoComplete="Enter Answer"
+            onChange={(e) => setSubmission(e.target.value)}
+            required
+            className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
+          {submitMessage && isCorrect && (
+            <p className="text-green-500 pt-3 sm:w-full w-3/4">
+              {submitMessage}
+            </p>
+          )}
+          {submitMessage && !isCorrect && (
+            <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+          )}
+          <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
+            <button
+              onClick={handleSubmit}
+              disabled={!submission}
+              className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Submit (Use Wikipedia Spelling)
+            </button>
+            <HintButton
+              hintNum={1}
+              hintMessage={missionData[mission].hint1}
+              mission={mission}
+            />
 
-          <HintButton
-            hintNum={2}
-            hintMessage={missionData[mission].hint2}
-            mission={mission}
-            showHintCounter={showHintCounter}
-            setShowHintCounter={setShowHintCounter}
-          />
+            <HintButton
+              hintNum={2}
+              hintMessage={missionData[mission].hint2}
+              mission={mission}
+            />
 
-          <HintButton
-            hintNum={3}
-            hintMessage={missionData[mission].hint3}
-            mission={mission}
-            showHintCounter={showHintCounter}
-            setShowHintCounter={setShowHintCounter}
-          />
+            <HintButton
+              hintNum={3}
+              hintMessage={missionData[mission].hint3}
+              mission={mission}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </HintProvider>
   );
 };
 

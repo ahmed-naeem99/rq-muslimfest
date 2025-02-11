@@ -1,23 +1,21 @@
 "use client";
 import React from "react";
 import { useSession } from "next-auth/react";
+import { useHint } from "@/app/context/HintContext";
 
 interface HintButtonProps {
   hintNum: number;
   hintMessage: string;
   mission: number;
-  showHintCounter: number;
-  setShowHintCounter: (value: number) => void;
 }
 
 const HintButton: React.FC<HintButtonProps> = ({
   hintNum,
   hintMessage,
   mission,
-  showHintCounter,
-  setShowHintCounter,
 }) => {
   const { data: session, update } = useSession() as any;
+  const { showHintCounter, setShowHintCounter } = useHint();
 
   const handleHint = async (hintNum: number) => {
     if (session.user[`hints${mission}used`] <= hintNum - 1) {
@@ -39,8 +37,6 @@ const HintButton: React.FC<HintButtonProps> = ({
       }
     }
   };
-
-  console.log(session.user);
 
   return (
     <div className="w-full flex flex-col items-center gap-3">
