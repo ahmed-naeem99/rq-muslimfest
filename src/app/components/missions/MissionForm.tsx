@@ -110,10 +110,10 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
   return (
     <HintProvider>
-      <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center overflow-auto ">
-        <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
+      <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center">
+        <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg">
           <iframe
-            className="w-full h-full "
+            className="w-full h-72 rounded-lg shadow-lg"
             src={missionData[mission].video}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
