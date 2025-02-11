@@ -22,9 +22,7 @@ const MissionPage = () => {
     );
   }
 
-  return (
-    <MissionForm curr_mission={session.user.mission} user_data={session.user} />
-  );
+  return <MissionForm mission={session.user.mission} />;
 };
 
 export default MissionPage;

@@ -8,7 +8,7 @@ const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
 });
 
-const MissionForm = (curr_mission: any, user_data: any) => {
+const MissionForm = (mission: any) => {
   const { data: session, update } = useSession() as any;
 
   const [submission, setSubmission] = useState("");
@@ -17,89 +17,27 @@ const MissionForm = (curr_mission: any, user_data: any) => {
 
   const [showHintCounter, setShowHintCounter] = useState(0);
 
-  const [canUseHint1, setCanUseHint1] = useState(false);
-  const [canUseHint2, setCanUseHint2] = useState(false);
-  const [canUseHint3, setCanUseHint3] = useState(false);
-
-  const [usedHint1, setUsedHint1] = useState(false);
-  const [usedHint2, setUsedHint2] = useState(false);
-  const [usedHint3, setUsedHint3] = useState(false);
-
-  const [showHint1, setShowHint1] = useState(false);
-  const [showHint2, setShowHint2] = useState(false);
-  const [showHint3, setShowHint3] = useState(false);
-
   useEffect(() => {
-    setShowHintCounter(session.user[`hints${curr_mission}used`]);
+    setShowHintCounter(session.user[`hints${mission}used`]);
   }, []);
 
   const handleHint = async (hintNum: number) => {
-    if (session.user[`hints${curr_mission}used`] == hintNum - 1) {
+    if (session.user[`hints${mission}used`] <= hintNum - 1) {
       const response = await fetch("/api/auth/updateHints", {
         method: "POST",
         body: JSON.stringify({
           username: session.user.username,
-          currMiss: curr_mission,
+          currMiss: mission,
         }),
       });
       if (response.status === 200) {
-        setShowHintCounter(showHintCounter + 1);
-        setCanUseHint1(false);
         update({ hints1used: hintNum });
       }
-    }
-  };
-
-  const handleM1Hint1 = async () => {
-    if (session.user.hints1used == 0) {
-      const response = await fetch("/api/auth/updateHints", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          currMiss: 1,
-        }),
-      });
-      if (response.status === 200) {
-        setShowHint1(true);
-        setUsedHint1(true);
-        setCanUseHint1(false);
-        update({ hints1used: 1 });
-      }
-    }
-  };
-
-  const handleM1Hint2 = async () => {
-    if (session.user.hints1used == 1) {
-      const response = await fetch("/api/auth/updateHints", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          currMiss: 1,
-        }),
-      });
-      if (response.status === 200) {
-        setShowHint2(true);
-        setUsedHint2(true);
-        setCanUseHint2(false);
-        update({ hints1used: 2 });
-      }
-    }
-  };
-
-  const handleM1Hint3 = async () => {
-    if (session.user.hints1used == 2) {
-      const response = await fetch("/api/auth/updateHints", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          currMiss: 1,
-        }),
-      });
-      if (response.status === 200) {
-        setShowHint3(true);
-        setUsedHint3(true);
-        setCanUseHint3(false);
-        update({ hints1used: 3 });
+    } else {
+      if (hintNum == showHintCounter) {
+        setShowHintCounter(0);
+      } else {
+        setShowHintCounter(hintNum);
       }
     }
   };
@@ -121,9 +59,6 @@ const MissionForm = (curr_mission: any, user_data: any) => {
       if (response.status === 200) {
         setIsGreen(true);
         setSubmitMessage("Correct! Well done, proceed to mission 2.");
-        setCanUseHint1(false);
-        setCanUseHint2(false);
-        setCanUseHint3(false);
         update({ mission: 2 });
       } else {
         setIsGreen(false);
@@ -131,30 +66,16 @@ const MissionForm = (curr_mission: any, user_data: any) => {
       }
     } else if (!(session.user.mission === 1)) {
       setIsGreen(false);
-      setCanUseHint1(false);
-      setCanUseHint2(false);
-      setCanUseHint3(false);
 
       setSubmitMessage("You have already completed this mission.");
     } else {
       setIsGreen(false);
       setSubmitMessage("Incorrect.");
-      if (session.user.hints1used == 0) {
-        setCanUseHint1(true);
-      } else if (session.user.hints1used == 1) {
-        setCanUseHint2(true);
-      } else if (session.user.hints1used == 2) {
-        setCanUseHint3(true);
-      }
     }
   };
 
   return (
     <div className="h-full justify-center text-center pb-16 sm:mx-auto sm:w-full sm:max-w-lg flex flex-col items-center overflow-auto ">
-      {/* <video className="w-full" controls>
-        <source src="/videos/Mission1.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video> */}
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
         <iframe
           className="w-full h-full "
@@ -193,39 +114,50 @@ const MissionForm = (curr_mission: any, user_data: any) => {
           </button>
 
           <button
-            onClick={handleM1Hint1}
-            disabled={!canUseHint1}
+            onClick={() => handleHint(1)}
+            disabled={
+              session.user[`hints${mission}used`] == 0 &&
+              session.user.mission != mission
+            }
             className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Use Hint 1 (Time Penalty)
           </button>
-          {showHint1 && (
+          {showHintCounter == 1 && (
             <p className="text-white w-full">
               Did you find the link hidden in the video? Those numbers in the
               end are hexadecimal; they can be converted...
             </p>
           )}
           <button
-            onClick={handleM1Hint2}
-            disabled={!canUseHint2}
+            onClick={() => handleHint(2)}
+            disabled={
+              session.user[`hints${mission}used`] < 1 ||
+              (session.user[`hints${mission}used`] < 1 &&
+                session.user.mission != mission)
+            }
             className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Use Hint 2 (Time Penalty)
           </button>
-          {showHint2 && (
+          {showHintCounter == 2 && (
             <p className="text-white w-full">
               {" "}
               The posters symbolize events from the Seerah; put them in order.
             </p>
           )}
           <button
-            onClick={handleM1Hint3}
-            disabled={!canUseHint3}
+            onClick={() => handleHint(3)}
+            disabled={
+              session.user[`hints${mission}used`] < 2 ||
+              (session.user[`hints${mission}used`] < 2 &&
+                session.user.mission != mission)
+            }
             className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Use Hint 3 (Time Penalty)
           </button>
-          {showHint3 && (
+          {showHintCounter == 3 && (
             <p className="text-white w-full">
               {" "}
               Black screen? Or is it? Play around with the brightness and
