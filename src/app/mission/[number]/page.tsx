@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import MissionForm from "@/app/components/missions/MissionForm";
 
 const MissionPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as any;
   if (status === "loading") {
     return (
       <div className="grid place-items-center h-full dark:text-white text-dark">
@@ -14,8 +14,12 @@ const MissionPage = () => {
     );
   }
 
-  if (!session?.user) {
-    return <div>Please log in to access this page.</div>;
+  if (!session) {
+    return (
+      <div className="grid place-items-center h-full dark:text-white text-dark">
+        Please log in to access this page.
+      </div>
+    );
   }
 
   return (
