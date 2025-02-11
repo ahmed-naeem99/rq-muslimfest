@@ -4,7 +4,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import MissionForm from "@/app/components/missions/MissionForm";
 
-const MissionPage = () => {
+const MissionPage = ({ params: { number } }: any) => {
   const { data: session, status } = useSession() as any;
   if (status === "loading") {
     return (
@@ -22,7 +22,7 @@ const MissionPage = () => {
     );
   }
 
-  return <MissionForm mission={session.user.mission} />;
+  return <MissionForm mission={number} />;
 };
 
 export default MissionPage;

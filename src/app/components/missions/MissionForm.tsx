@@ -8,18 +8,51 @@ const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
 });
 
-const MissionForm = (mission: any) => {
+interface MissionData {
+  video: string;
+  answer: string[];
+  hint1: string;
+  hint2: string;
+  hint3: string;
+}
+
+const missionData: { [key: number]: MissionData } = {
+  1: {
+    video: "https://www.youtube.com/embed/vvEvBzUisXs",
+    answer: ["Talha ibn Ubayd Allah", "Talha ibn 'Ubayd Allah"],
+    hint1:
+      "Did you find the link hidden in the video? Those numbers in the end are hexadecimal; they can be converted...",
+    hint2: "The posters symbolize events from the Seerah; put them in order.",
+    hint3:
+      "Black screen? Or is it? Play around with the brightness and contrast.",
+  },
+  2: {
+    video: "https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn",
+    answer: ["Ahmad ibn Hanbal"],
+    hint1:
+      "Riddle me this Riddle me that! What it's saying is that you need to find the place in the convention that people stand in lines. Here's the hint: the big magical stairs.",
+    hint2: "The video had two pauses; which letters were replaced?",
+    hint3: "What happens if you overlay the two maps? Also horse code",
+  },
+  3: {
+    video: "https://www.youtube.com/embed/Z43NS_BL0eE?si=1V0LdR3175AEbhha",
+    answer: ["Mark Sykes"],
+    hint1:
+      "Since this is the last mission don't expect the hints to be too helpful. There are 2 different audio tricks done on the video: Re- and...",
+    hint2:
+      "Retrace your steps means go back to where you went before in the convention center. Look in places you didn't look in before.",
+    hint3: "",
+  },
+};
+
+const MissionForm = ({ mission }: { mission: number }) => {
   const { data: session, update } = useSession() as any;
 
   const [submission, setSubmission] = useState("");
+
   const [submitMessage, setSubmitMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(true);
-
   const [showHintCounter, setShowHintCounter] = useState(0);
-
-  useEffect(() => {
-    setShowHintCounter(session.user[`hints${mission}used`]);
-  }, []);
 
   const handleHint = async (hintNum: number) => {
     if (session.user[`hints${mission}used`] <= hintNum - 1) {
@@ -42,18 +75,15 @@ const MissionForm = (mission: any) => {
     }
   };
 
-  const handleM1Submit = async () => {
+  const handleSubmit = async () => {
     setIsCorrect(false);
 
-    if (!(session.user.mission === 1)) {
+    if (!(session.user.mission === mission)) {
       setSubmitMessage("You have already completed this mission.");
       return;
     }
 
-    if (
-      submission != "Talha ibn Ubayd Allah" &&
-      submission != "Talha ibn 'Ubayd Allah"
-    ) {
+    if (!missionData[mission].answer.includes(submission)) {
       setSubmitMessage("Incorrect.");
       return;
     }
@@ -62,14 +92,14 @@ const MissionForm = (mission: any) => {
       method: "POST",
       body: JSON.stringify({
         username: session.user.username,
-        setMission: 2,
+        setMission: mission === 3 ? -1 : mission + 1,
       }),
     });
 
     if (response.status === 200) {
       setIsCorrect(true);
       setSubmitMessage("Correct! Well done, proceed to mission 2.");
-      update({ mission: 2 });
+      update({ mission: mission === 3 ? -1 : mission + 1 });
       return;
     }
 
@@ -81,15 +111,15 @@ const MissionForm = (mission: any) => {
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full overflow-auto ">
         <iframe
           className="w-full h-full "
-          src="https://www.youtube.com/embed/vvEvBzUisXs"
+          src={missionData[mission].video}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          title="Mission 1 Video"
+          title={`Mission ${mission} Video`}
         ></iframe>
         <div
           className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
         >
-          Mission 1 Submission
+          Mission {mission} Submission
         </div>
         <input
           id="missionAnswer"
@@ -108,7 +138,7 @@ const MissionForm = (mission: any) => {
         )}
         <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
           <button
-            onClick={handleM1Submit}
+            onClick={handleSubmit}
             disabled={!submission}
             className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
@@ -126,16 +156,13 @@ const MissionForm = (mission: any) => {
             Use Hint 1 (Time Penalty)
           </button>
           {showHintCounter == 1 && (
-            <p className="text-white w-full">
-              Did you find the link hidden in the video? Those numbers in the
-              end are hexadecimal; they can be converted...
-            </p>
+            <p className="text-white w-full">{missionData[mission].hint1}</p>
           )}
           <button
             onClick={() => handleHint(2)}
             disabled={
               session.user[`hints${mission}used`] < 1 ||
-              (session.user[`hints${mission}used`] < 1 &&
+              (session.user[`hints${mission}used`] == 1 &&
                 session.user.mission != mission)
             }
             className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
@@ -143,28 +170,23 @@ const MissionForm = (mission: any) => {
             Use Hint 2 (Time Penalty)
           </button>
           {showHintCounter == 2 && (
-            <p className="text-white w-full">
-              {" "}
-              The posters symbolize events from the Seerah; put them in order.
-            </p>
+            <p className="text-white w-full"> {missionData[mission].hint2}</p>
           )}
-          <button
-            onClick={() => handleHint(3)}
-            disabled={
-              session.user[`hints${mission}used`] < 2 ||
-              (session.user[`hints${mission}used`] < 2 &&
-                session.user.mission != mission)
-            }
-            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          >
-            Use Hint 3 (Time Penalty)
-          </button>
+          {mission != 3 && (
+            <button
+              onClick={() => handleHint(3)}
+              disabled={
+                session.user[`hints${mission}used`] < 2 ||
+                (session.user[`hints${mission}used`] == 2 &&
+                  session.user.mission != mission)
+              }
+              className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Use Hint 3 (Time Penalty)
+            </button>
+          )}
           {showHintCounter == 3 && (
-            <p className="text-white w-full">
-              {" "}
-              Black screen? Or is it? Play around with the brightness and
-              contrast.
-            </p>
+            <p className="text-white w-full">{missionData[mission].hint3}</p>
           )}
         </div>
       </div>
