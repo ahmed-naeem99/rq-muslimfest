@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 
@@ -15,6 +15,8 @@ const MissionForm = (curr_mission: any, user_data: any) => {
   const [submitMessage, setSubmitMessage] = useState("");
   const [isGreen, setIsGreen] = useState(true);
 
+  const [showHintCounter, setShowHintCounter] = useState(0);
+
   const [canUseHint1, setCanUseHint1] = useState(false);
   const [canUseHint2, setCanUseHint2] = useState(false);
   const [canUseHint3, setCanUseHint3] = useState(false);
@@ -26,6 +28,27 @@ const MissionForm = (curr_mission: any, user_data: any) => {
   const [showHint1, setShowHint1] = useState(false);
   const [showHint2, setShowHint2] = useState(false);
   const [showHint3, setShowHint3] = useState(false);
+
+  useEffect(() => {
+    setShowHintCounter(session.user[`hints${curr_mission}used`]);
+  }, []);
+
+  const handleHint = async (hintNum: number) => {
+    if (session.user[`hints${curr_mission}used`] == hintNum - 1) {
+      const response = await fetch("/api/auth/updateHints", {
+        method: "POST",
+        body: JSON.stringify({
+          username: session.user.username,
+          currMiss: curr_mission,
+        }),
+      });
+      if (response.status === 200) {
+        setShowHintCounter(showHintCounter + 1);
+        setCanUseHint1(false);
+        update({ hints1used: hintNum });
+      }
+    }
+  };
 
   const handleM1Hint1 = async () => {
     if (session.user.hints1used == 0) {
