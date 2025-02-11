@@ -43,35 +43,38 @@ const MissionForm = (mission: any) => {
   };
 
   const handleM1Submit = async () => {
-    if (
-      (submission === "Talha ibn Ubayd Allah" ||
-        submission === "Talha ibn 'Ubayd Allah") &&
-      session.user.mission === 1
-    ) {
-      const response = await fetch("/api/auth/updateMission", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          setMission: 2,
-        }),
-      });
-
-      if (response.status === 200) {
-        setIsGreen(true);
-        setSubmitMessage("Correct! Well done, proceed to mission 2.");
-        update({ mission: 2 });
-      } else {
-        setIsGreen(false);
-        setSubmitMessage("An error has occurred. Please try again.");
-      }
-    } else if (!(session.user.mission === 1)) {
+    if (!(session.user.mission === 1)) {
       setIsGreen(false);
-
       setSubmitMessage("You have already completed this mission.");
-    } else {
+      return;
+    }
+
+    if (
+      submission != "Talha ibn Ubayd Allah" &&
+      submission != "Talha ibn 'Ubayd Allah"
+    ) {
       setIsGreen(false);
       setSubmitMessage("Incorrect.");
+      return;
     }
+
+    const response = await fetch("/api/auth/updateMission", {
+      method: "POST",
+      body: JSON.stringify({
+        username: session.user.username,
+        setMission: 2,
+      }),
+    });
+
+    if (response.status === 200) {
+      setIsGreen(true);
+      setSubmitMessage("Correct! Well done, proceed to mission 2.");
+      update({ mission: 2 });
+      return;
+    }
+
+    setIsGreen(false);
+    setSubmitMessage("An error has occurred. Please try again.");
   };
 
   return (
