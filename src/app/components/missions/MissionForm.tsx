@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
+import HintButton from "./HintButton";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -144,50 +145,29 @@ const MissionForm = ({ mission }: { mission: number }) => {
           >
             Submit (Use Wikipedia Spelling)
           </button>
+          <HintButton
+            hintNum={1}
+            hintMessage={missionData[mission].hint1}
+            mission={mission}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
+          />
 
-          <button
-            onClick={() => handleHint(1)}
-            disabled={
-              session.user[`hints${mission}used`] == 0 &&
-              session.user.mission != mission
-            }
-            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          >
-            Use Hint 1 (Time Penalty)
-          </button>
-          {showHintCounter == 1 && (
-            <p className="text-white w-full">{missionData[mission].hint1}</p>
-          )}
-          <button
-            onClick={() => handleHint(2)}
-            disabled={
-              session.user[`hints${mission}used`] < 1 ||
-              (session.user[`hints${mission}used`] == 1 &&
-                session.user.mission != mission)
-            }
-            className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          >
-            Use Hint 2 (Time Penalty)
-          </button>
-          {showHintCounter == 2 && (
-            <p className="text-white w-full"> {missionData[mission].hint2}</p>
-          )}
-          {mission != 3 && (
-            <button
-              onClick={() => handleHint(3)}
-              disabled={
-                session.user[`hints${mission}used`] < 2 ||
-                (session.user[`hints${mission}used`] == 2 &&
-                  session.user.mission != mission)
-              }
-              className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Use Hint 3 (Time Penalty)
-            </button>
-          )}
-          {showHintCounter == 3 && (
-            <p className="text-white w-full">{missionData[mission].hint3}</p>
-          )}
+          <HintButton
+            hintNum={2}
+            hintMessage={missionData[mission].hint2}
+            mission={mission}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
+          />
+
+          <HintButton
+            hintNum={3}
+            hintMessage={missionData[mission].hint3}
+            mission={mission}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
+          />
         </div>
       </div>
     </div>
