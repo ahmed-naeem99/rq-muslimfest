@@ -18,6 +18,7 @@ const LeaderBoardPage = () => {
     const fetchLeaderboard = async () => {
       try {
         const response = await fetch("/api/leaderboard");
+        console.log(response);
         const data = await response.json();
 
         const penalizedData = data.result.map((user: User) => ({
