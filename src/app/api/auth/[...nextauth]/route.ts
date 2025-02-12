@@ -57,17 +57,19 @@ const handler = NextAuth({
       if (user) {
         token.user = user;
       }
-      if (trigger === "update" && session?.mission) {
-        (token.user as any).mission = session.mission;
-      }
-      if (trigger === "update" && session?.hints1used) {
-        (token.user as any).hints1used = session.hints1used;
-      }
-      if (trigger === "update" && session?.hints2used) {
-        (token.user as any).hints2used = session.hints2used;
-      }
-      if (trigger === "update" && session?.hints3used) {
-        (token.user as any).hints3used = session.hints3used;
+      if (trigger === "update") {
+        if (session?.mission) {
+          (token.user as any).mission = session.mission;
+        }
+        if (session?.hints1used) {
+          (token.user as any).hints1used = session.hints1used;
+        }
+        if (session?.hints2used) {
+          (token.user as any).hints2used = session.hints2used;
+        }
+        if (session?.hints3used) {
+          (token.user as any).hints3used = session.hints3used;
+        }
       }
       return token;
     },
