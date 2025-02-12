@@ -18,23 +18,25 @@ const HintButton: React.FC<HintButtonProps> = ({
   const { showHintCounter, setShowHintCounter } = useHint();
 
   const handleHint = async (hintNum: number) => {
-    if (session.user[`hints${mission}used`] <= hintNum - 1) {
-      const response = await fetch("/api/auth/updateHints", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          currMiss: mission,
-        }),
-      });
-      if (response.status === 200) {
-        update({ [`hints${mission}used`]: hintNum });
-      }
-    } else {
+    if (session.user[`hints${mission}used`] > hintNum - 1) {
       if (hintNum === showHintCounter) {
         setShowHintCounter(0);
       } else {
         setShowHintCounter(hintNum);
       }
+      return;
+    }
+
+    const response = await fetch("/api/auth/updateHints", {
+      method: "POST",
+      body: JSON.stringify({
+        username: session.user.username,
+        currMiss: mission,
+      }),
+    });
+    if (response.status === 200) {
+      update({ [`hints${mission}used`]: hintNum });
+      setShowHintCounter(hintNum);
     }
   };
 
