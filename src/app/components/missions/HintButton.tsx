@@ -56,7 +56,7 @@ const HintButton: React.FC<HintButtonProps> = ({
           : `Use Hint ${hintNum} (Time Penalty)`}
       </button>
       {showHintCounter == hintNum && (
-        <p className="text-white dark:text-dark w-full">{hintMessage}</p>
+        <p className="dark:text-white text-dark w-full">{hintMessage}</p>
       )}
     </div>
   );
