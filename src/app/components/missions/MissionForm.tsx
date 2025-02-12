@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
 import { HintProvider } from "@/app/context/HintContext";
+import VideoFrame from "./MissionVideo";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -54,33 +55,11 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
   const [submitMessage, setSubmitMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(true);
-  const [showHintCounter, setShowHintCounter] = useState(0);
-
-  const handleHint = async (hintNum: number) => {
-    if (session.user[`hints${mission}used`] <= hintNum - 1) {
-      const response = await fetch("/api/auth/updateHints", {
-        method: "POST",
-        body: JSON.stringify({
-          username: session.user.username,
-          currMiss: mission,
-        }),
-      });
-      if (response.status === 200) {
-        update({ hints1used: hintNum });
-      }
-    } else {
-      if (hintNum == showHintCounter) {
-        setShowHintCounter(0);
-      } else {
-        setShowHintCounter(hintNum);
-      }
-    }
-  };
 
   const handleSubmit = async () => {
     setIsCorrect(false);
 
-    if (!(session.user.mission === mission)) {
+    if (session.user.mission != mission) {
       setSubmitMessage("You have already completed this mission.");
       return;
     }
@@ -100,7 +79,14 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
     if (response.status === 200) {
       setIsCorrect(true);
-      setSubmitMessage("Correct! Well done, proceed to mission 2.");
+      if (mission === 3) {
+        setSubmitMessage(
+          "Congratulations! You have completed all the missions."
+        );
+        return;
+      } else {
+        setSubmitMessage("Correct! Well done, proceed to mission 2.");
+      }
       update({ mission: mission === 3 ? -1 : mission + 1 });
       return;
     }
@@ -112,25 +98,17 @@ const MissionForm = ({ mission }: { mission: number }) => {
     <HintProvider>
       <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center">
         <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg">
-          <iframe
-            className="w-full h-72 rounded-lg shadow-lg"
-            src={missionData[mission].video}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={`Mission ${mission} Video`}
-          ></iframe>
+          <VideoFrame
+            videoLink={missionData[mission].video}
+            mission={mission}
+          />
           <div
             className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
           >
             Mission {mission} Submission
           </div>
           <input
-            id="missionAnswer"
-            name="missionAnswer"
-            type="text"
-            autoComplete="Enter Answer"
             onChange={(e) => setSubmission(e.target.value)}
-            required
             className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
           {submitMessage && isCorrect && (
