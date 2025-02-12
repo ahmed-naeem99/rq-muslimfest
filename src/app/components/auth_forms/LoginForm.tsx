@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import realityQuestLogo from "../../../public/rqlogo.svg";
+import realityQuestLogo from "../../../../public/rqlogo.svg";
 import { signIn } from "next-auth/react";
 
 export default function LoginForm() {

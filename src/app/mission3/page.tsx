@@ -37,10 +37,7 @@ const Mission3Page = () => {
         }),
       });
 
-      console.log(response);
-
       if (response.status === 200) {
-        console.log("success");
         setShowHint1(true);
         setUsedHint1(true);
         setCanUseHint1(false);
@@ -58,7 +55,6 @@ const Mission3Page = () => {
         }),
       });
       if (response.status === 200) {
-        console.log("success");
         setShowHint2(true);
         setUsedHint2(true);
         setCanUseHint2(false);
@@ -85,7 +81,6 @@ const Mission3Page = () => {
         setCanUseHint1(false);
         setCanUseHint2(false);
         update({ mission: -1 });
-        console.log(session);
         router.push("https://forms.gle/fjzgkRbbANDw4yaz5");
       } else {
         setIsGreen(false);

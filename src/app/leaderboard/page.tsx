@@ -20,15 +20,11 @@ const LeaderBoardPage = () => {
         const response = await fetch("/api/leaderboard");
         console.log(response);
         const data = await response.json();
-        console.log(data);
-        if (response.status !== 200) throw new Error(data.message);
 
-        const penalizedData = data.result
-          .filter((user: User) => user.role === "player")
-          .map((user: User) => ({
-            ...user,
-            finaltime: adjustCompletionTime(user.timecompleted, user.hintsused),
-          }));
+        const penalizedData = data.result.map((user: User) => ({
+          ...user,
+          finaltime: adjustCompletionTime(user.timecompleted, user.hintsused),
+        }));
         const sortedData = penalizedData.sort((a: User, b: User) => {
           if (!a.finaltime) return 1;
           if (!b.finaltime) return -1;

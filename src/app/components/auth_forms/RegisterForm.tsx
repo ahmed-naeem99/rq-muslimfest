@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent } from "react";
 import Image from "next/image";
-import realityQuestLogo from "../../../public/rqlogo.svg";
+import realityQuestLogo from "../../../../public/rqlogo.svg";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -107,8 +107,7 @@ export default function LoginForm() {
         password: "",
         general: "",
       });
-      // Proceed with sign-up logic
-      console.log("Signing up...");
+
       const response = await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({

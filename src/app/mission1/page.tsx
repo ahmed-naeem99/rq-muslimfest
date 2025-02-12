@@ -37,7 +37,6 @@ const Mission1Page = () => {
         }),
       });
       if (response.status === 200) {
-        console.log("success");
         setShowHint1(true);
         setUsedHint1(true);
         setCanUseHint1(false);
@@ -56,7 +55,6 @@ const Mission1Page = () => {
         }),
       });
       if (response.status === 200) {
-        console.log("success");
         setShowHint2(true);
         setUsedHint2(true);
         setCanUseHint2(false);
@@ -75,7 +73,6 @@ const Mission1Page = () => {
         }),
       });
       if (response.status === 200) {
-        console.log("success");
         setShowHint3(true);
         setUsedHint3(true);
         setCanUseHint3(false);
@@ -105,7 +102,6 @@ const Mission1Page = () => {
         setCanUseHint2(false);
         setCanUseHint3(false);
         update({ mission: 2 });
-        console.log(session);
       } else {
         setIsGreen(false);
         setSubmitMessage("An error has occurred. Please try again.");

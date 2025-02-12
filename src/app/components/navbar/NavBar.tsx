@@ -3,10 +3,10 @@ import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import localFont from "next/font/local";
 import { getServerSession } from "next-auth";
-import Logout from "./logout";
+import Logout from "./Logout";
 
 const poseyFont = localFont({
-  src: "../../../public/fonts/posey-textured.ttf",
+  src: "../../../../public/fonts/posey-textured.ttf",
 });
 
 const NavBar = async () => {
@@ -51,18 +51,18 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white dark:text-white"
-                    href="/mission1"
+                    href="/mission/1"
                   >
                     M1
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission2">
+                  <Link className="dark:focus:text-white" href="/mission/2">
                     M2
                   </Link>
                 </li>
                 <li>
-                  <Link className="dark:focus:text-white" href="/mission3">
+                  <Link className="dark:focus:text-white" href="/mission/3">
                     M3
                   </Link>
                 </li>
@@ -91,7 +91,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission1"
+                    href="/mission/1"
                   >
                     M1
                   </Link>
@@ -99,7 +99,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission2"
+                    href="/mission/2"
                   >
                     M2
                   </Link>
@@ -107,7 +107,7 @@ const NavBar = async () => {
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
-                    href="/mission3"
+                    href="/mission/3"
                   >
                     M3
                   </Link>

@@ -1,4 +1,4 @@
-"use client"; //client component so it can listen for browser events
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
 import localFont from "next/font/local";
@@ -10,17 +10,18 @@ const poseyFont = localFont({
 
 const HomeButton = () => {
   const router = useRouter();
-  const session = useSession() as any;
+  const { data: session, status } = useSession() as any;
 
   const handleNavigation = () => {
-    if (session.status === "authenticated") {
-      if (!(session.data.user.mission === -1)) {
-        router.push("/mission" + session.data.user.mission);
-      } else {
-        router.push("/leaderboard");
-      }
-    } else {
+    if (status != "authenticated") {
       router.push("/login");
+      return;
+    }
+
+    if (session.user.mission != -1) {
+      router.push("/mission/" + session.user.mission);
+    } else {
+      router.push("/leaderboard");
     }
   };
 
