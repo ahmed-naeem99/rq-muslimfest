@@ -51,7 +51,9 @@ const HintButton: React.FC<HintButtonProps> = ({
         }
         className="disabled:opacity-40 flex w-3/4 justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
       >
-        Use Hint {hintNum} (Time Penalty)
+        {session.user[`hints${mission}used`] > hintNum - 1
+          ? `Show Hint ${hintNum}`
+          : `Use Hint ${hintNum} (Time Penalty)`}
       </button>
       {showHintCounter == hintNum && (
         <p className="text-white w-full">{hintMessage}</p>

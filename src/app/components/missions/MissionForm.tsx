@@ -96,7 +96,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
   return (
     <HintProvider>
-      <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center">
+      <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
         <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg">
           <VideoFrame
             videoLink={missionData[mission].video}
@@ -108,6 +108,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
             Mission {mission} Submission
           </div>
           <input
+            name="missionAnswer"
             onChange={(e) => setSubmission(e.target.value)}
             className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
