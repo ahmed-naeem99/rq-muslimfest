@@ -4,7 +4,7 @@ import { sql } from "@vercel/postgres";
 export async function GET() {
   try {
     const response = await sql`
-          SELECT username, hintsused, timecompleted, role FROM users
+          SELECT username, hintsused, timecompleted, role FROM users WHERE role='player'
         `;
     return NextResponse.json({ message: "Success", result: response.rows });
   } catch (e: any) {
