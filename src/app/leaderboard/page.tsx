@@ -8,6 +8,7 @@ interface User {
   hintsused: number;
   role: string;
   finaltime: string | null;
+  currentmission: number;
 }
 
 const LeaderBoardPage = () => {
@@ -20,13 +21,22 @@ const LeaderBoardPage = () => {
         const response = await fetch("/api/leaderboard");
         const data = await response.json();
 
+        console.log(data);
+
         const penalizedData = data.result.map((user: User) => ({
           ...user,
           finaltime: adjustCompletionTime(user.timecompleted, user.hintsused),
         }));
         const sortedData = penalizedData.sort((a: User, b: User) => {
+          const missionA = a.currentmission === -1 ? 4 : a.currentmission;
+          const missionB = b.currentmission === -1 ? 4 : b.currentmission;
+          if (missionA !== missionB) {
+            return missionB - missionA;
+          }
+
           if (!a.finaltime) return 1;
           if (!b.finaltime) return -1;
+
           return (
             new Date(a.finaltime).getTime() - new Date(b.finaltime).getTime()
           );
@@ -90,6 +100,7 @@ const LeaderBoardPage = () => {
             <tr>
               <th className="py-2 px-3">#</th>
               <th className="py-2 px-3">Team</th>
+              <th className="py-2 px-6">Mission</th>
               <th className="py-2 px-3">Completion</th>
               <th className="py-2 px-3">Hints Used</th>
               <th className="py-2 px-10">Final Time</th>
@@ -111,8 +122,15 @@ const LeaderBoardPage = () => {
               >
                 <td className="py-2">{index + 1}</td>
                 <td className="py-2">{user.username}</td>
+                <td className="py-2">
+                  {user.currentmission === -1
+                    ? "Complete"
+                    : user.currentmission}
+                </td>
                 <td className="py-2">{formatDate(user.timecompleted)}</td>
-                <td className="py-2">{user.hintsused}</td>
+                <td className="py-2">
+                  {user.hintsused >= 8 ? 8 : user.hintsused}
+                </td>
                 <td className="py-2">{formatDate(user.finaltime)}</td>
               </tr>
             ))}
