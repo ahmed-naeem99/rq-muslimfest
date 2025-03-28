@@ -23,18 +23,15 @@ const ThemeToggle = () => {
 
   return (
     <div
-      className="relative w-16 h-8 flex items-center dark:bg-gray-900 bg-sky-800 cursor-pointer rounded-full p-1"
+      className="btn btn-ghost btn-circle"
       onClick={() => setDarkMode(!darkMode)}
     >
-      <FaMoon className="text-white" size={18} />
-      <div
-        className="absolute bg-white w-7 h-7 rounded-full shadow-md transform duration-1000"
-        style={{
-          left: darkMode ? "2px" : "35px",
-          transition: "left 0.3s cubic-bezier(0, 0, 0.05, 0.99) 0s",
-        }}
-      ></div>
-      <BsSunFill className="ml-auto text-sky-600" size={18} />
+      <div className={`${darkMode ? "inline" : "hidden"}`}>
+        <FaMoon className="text-white" size={18} />
+      </div>
+      <div className={`${darkMode ? "hidden" : "inline"}`}>
+        <BsSunFill className="ml-auto text-black" size={22} />
+      </div>
     </div>
   );
 };

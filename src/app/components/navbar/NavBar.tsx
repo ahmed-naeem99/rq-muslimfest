@@ -1,93 +1,29 @@
 import React from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
-import localFont from "next/font/local";
+import Image from "next/image";
 import { getServerSession } from "next-auth";
 import Logout from "./Logout";
-
-const poseyFont = localFont({
-  src: "../../../../public/fonts/posey-textured.ttf",
-});
+import realityQuestLogo from "../../../../public/rqlogo.svg";
+import { RxAvatar } from "react-icons/rx";
 
 const NavBar = async () => {
   const session = await getServerSession();
   return (
-    <div className="navbar dark:text-white dark:focus:text-white transition-colors  rounded-3xl">
-      {/* border-2 dark:border-gray-600/40 */}
+    <div className="backdrop-blur-lg bg-white dark:bg-black/10  navbar  dark:text-white dark:focus:text-white transition-colors sm:px-6 px-2">
       <div className="navbar-start">
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost lg:hidden px-0 pr-3 sm:px-4 "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+        <Link href="/" className="font-normal">
+          <div className="btn btn-ghost btn-square">
+            <Image priority src={realityQuestLogo} alt="Logo" width={50} />
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52   bg-sky-800 text-white"
-          >
-            {/* <li>
-              <Link className="dark:focus:text-white" href="/login">
-                LoginTest
-              </Link>
-            </li> */}
-            <li>
-              <a>Missions</a>
-              <ul className="p-2">
-                <li>
-                  <Link
-                    className="dark:focus:text-white dark:text-white"
-                    href="/mission/1"
-                  >
-                    M1
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dark:focus:text-white" href="/mission/2">
-                    M2
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dark:focus:text-white" href="/mission/3">
-                    M3
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link className="dark:focus:text-white" href="/leaderboard">
-                Leaderboard
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <Link
-          href="/"
-          className="btn btn-ghost text-lg sm:text-3xl px-0 sm:px-4 font-normal"
-        >
-          <div className={poseyFont.className}>MAC Reality Quest</div>
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 items-center justify-center">
+      <div className="navbar-center">
+        <ul className="menu menu-horizontal px-1 items-center justify-center flex">
           <li>
             <details>
               <summary>Missions</summary>
-              <ul className="p-2  bg-sky-800 ">
+              <ul className="p-2  bg-sky-400 dark:bg-sky-600">
                 <li>
                   <Link
                     className="dark:focus:text-white text-white"
@@ -133,16 +69,13 @@ const NavBar = async () => {
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://i.imgur.com/AJ3InNO.png"
-              />
+            <div className="rounded-full">
+              <RxAvatar size={25} />
             </div>
           </div>
           <ul
             tabIndex={0}
-            className=" mt-24 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52  bg-sky-800"
+            className=" mt-24 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52  bg-sky-400 dark:bg-sky-600"
           >
             {!session && (
               <li>
