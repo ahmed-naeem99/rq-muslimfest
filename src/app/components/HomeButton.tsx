@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import localFont from "next/font/local";
 import { useSession } from "next-auth/react";
-
-const poseyFont = localFont({
-  src: "../../../public/fonts/posey-textured.ttf",
-});
 
 const HomeButton = () => {
   const router = useRouter();
@@ -27,10 +22,10 @@ const HomeButton = () => {
 
   return (
     <div
-      className="btn bg-sky-800 text-white border-none hover:bg-sky-700 text-2xl  font-light"
+      className="btn text-white rounded-2xl dark:bg-neutral-800 dark:hover:bg-neutral-700 bg-sky-600 hover:bg-sky-500 border-none  text-2xl"
       onClick={handleNavigation}
     >
-      <div className={poseyFont.className}>ENTER</div>
+      <div className="font-bold">ENTER</div>
     </div>
   );
 };
