@@ -254,11 +254,10 @@ export default function Home() {
             className="mt-16 text-center"
           >
             <Link
-              href="/about"
+              href="/mission/1"
               className="inline-flex items-center text-sky-600 hover:text-white transition-colors"
             >
-              <BsInfoCircle className="mr-2 h-5 w-5" />
-              Learn more about Reality Quest
+              Ready to Start the Hunt?
             </Link>
           </motion.div>
         </div>
