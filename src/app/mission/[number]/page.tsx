@@ -18,8 +18,8 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   if (isLoading) {
     if (!session) {
       return (
-        <div className="grid place-items-center h-full dark:text-white text-dark pb-32">
-          Please log in to access this page.
+        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+          <p>Please log in to access this page.</p>
         </div>
       );
     }
