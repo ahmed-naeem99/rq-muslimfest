@@ -8,4 +8,4 @@ This game will go live throughout the MAC convention in Toronto every year. The 
 
 ## Total Teams Registered in Reality Quest 2024: 37 Teams, ~150 players
 
-![MAC Reality Quest Login Page](public/images/loginpage.png)
+![MAC Reality Quest Login Page](public/images/homepage.png)
