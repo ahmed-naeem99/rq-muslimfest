@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { FiPlus, FiMinus } from "react-icons/fi";
 
 interface TeamMember {
@@ -9,45 +8,31 @@ interface TeamMember {
 }
 
 interface TeamMembersProps {
-  accountEmail: string;
-  onTeamChange: (team: TeamMember[]) => void;
+  teamMembers: TeamMember[];
+  setTeamMembers: (teamMembers: TeamMember[]) => void;
+  teamErrorMessages: {
+    [key: number]: string;
+  };
 }
 
 export default function TeamMembers({
-  accountEmail,
-  onTeamChange,
+  teamMembers,
+  setTeamMembers,
+  teamErrorMessages,
 }: TeamMembersProps) {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
-    { name: "", email: accountEmail },
-  ]);
-
-  // Update first member's email when accountEmail changes
-  useEffect(() => {
-    if (teamMembers[0].email !== accountEmail) {
-      const updatedTeamMembers = [...teamMembers];
-      updatedTeamMembers[0] = {
-        ...updatedTeamMembers[0],
-        email: accountEmail,
-      };
-      setTeamMembers(updatedTeamMembers);
-      onTeamChange(updatedTeamMembers);
-    }
-  }, [accountEmail]);
-
   const addTeamMember = () => {
     if (teamMembers.length < 5) {
       const newTeamMembers = [...teamMembers, { name: "", email: "" }];
       setTeamMembers(newTeamMembers);
-      onTeamChange(newTeamMembers);
+      console.log(teamMembers);
     }
   };
 
   const removeTeamMember = (index: number) => {
-    if (index === 0) return; // Can't remove the first member
+    if (index === 0) return;
     if (teamMembers.length > 1) {
       const newTeamMembers = teamMembers.filter((_, i) => i !== index);
       setTeamMembers(newTeamMembers);
-      onTeamChange(newTeamMembers);
     }
   };
 
@@ -56,7 +41,7 @@ export default function TeamMembers({
     field: "name" | "email",
     value: string
   ) => {
-    if (index === 0 && field === "email") return; // Can't change the account email for first member
+    if (index === 0 && field === "email") return;
 
     const newTeamMembers = [...teamMembers];
     newTeamMembers[index] = {
@@ -65,7 +50,6 @@ export default function TeamMembers({
     };
 
     setTeamMembers(newTeamMembers);
-    onTeamChange(newTeamMembers);
   };
 
   return (
@@ -96,58 +80,70 @@ export default function TeamMembers({
 
       <div className="flex flex-col gap-12">
         {teamMembers.map((member, index) => (
-          <div className="flex flex-row gap-6 items-top" key={index}>
-            <div className="flex flex-col sm:flex-row gap-4 items-start md:items-center">
-              <div className="flex-1">
-                <label className="block text-sm font-medium dark:text-gray-300 text-gray-700 mb-1">
-                  {index === 0 ? "Your Name" : `Team Member ${index + 1} Name`}
-                </label>
-                <input
-                  type="text"
-                  value={member.name}
-                  onChange={(e) =>
-                    updateTeamMember(index, "name", e.target.value)
-                  }
-                  className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                  placeholder="Enter Name"
-                />
-              </div>
+          <div>
+            <div className="flex flex-row gap-6 items-top" key={index}>
+              <div className="flex flex-col sm:flex-row gap-4 items-start md:items-center">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium dark:text-gray-300 text-gray-700 mb-1">
+                    {index === 0
+                      ? "Your Name"
+                      : `Team Member ${index + 1} Name`}
+                  </label>
+                  <input
+                    type="text"
+                    value={member.name}
+                    onChange={(e) =>
+                      updateTeamMember(index, "name", e.target.value)
+                    }
+                    className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                    placeholder="Enter Name"
+                  />
+                </div>
 
-              <div className="flex-1">
-                <label className="block text-sm font-medium dark:text-gray-300 text-gray-700 mb-1">
-                  {index === 0
-                    ? "Your Email"
-                    : `Team Member ${index + 1} Email`}
-                </label>
-                <input
-                  type="email"
-                  value={member.email}
-                  onChange={(e) =>
-                    updateTeamMember(index, "email", e.target.value)
-                  }
-                  disabled={index === 0}
-                  className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6
+                <div className="flex-1">
+                  <label className="block text-sm font-medium dark:text-gray-300 text-gray-700 mb-1">
+                    {index === 0
+                      ? "Your Email"
+                      : `Team Member ${index + 1} Email`}
+                  </label>
+                  <input
+                    type="email"
+                    value={member.email}
+                    onChange={(e) =>
+                      updateTeamMember(index, "email", e.target.value)
+                    }
+                    disabled={index === 0}
+                    className={`block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6
                         ${
                           index === 0
                             ? "bg-gray-300 dark:bg-zinc-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                             : ""
                         }`}
-                  placeholder={`${index === 0 ? "Account" : "Enter"} Email`}
-                />
+                    placeholder={`${index === 0 ? "Account" : "Enter"} Email`}
+                  />
+                </div>
+              </div>
+              <div>
+                {index > 0 && (
+                  <button
+                    onClick={() => removeTeamMember(index)}
+                    className="mt-6 p-2 rounded-full bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800"
+                    title="Remove team member"
+                  >
+                    <FiMinus className="text-red-600 dark:text-red-400" />
+                  </button>
+                )}
+
+                {index == 0 && <span className="pr-8 rounded-full" />}
               </div>
             </div>
-            <div>
-              {index > 0 && (
-                <button
-                  onClick={() => removeTeamMember(index)}
-                  className="mt-6 p-2 rounded-full bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800"
-                  title="Remove team member"
-                >
-                  <FiMinus className="text-red-600 dark:text-red-400" />
-                </button>
-              )}
 
-              {index == 0 && <span className="pr-8 rounded-full" />}
+            <div>
+              {teamErrorMessages[index] && (
+                <div className="text-sm text-red-500 dark:text-red-400 mt-2">
+                  {teamErrorMessages[index]}
+                </div>
+              )}
             </div>
           </div>
         ))}
