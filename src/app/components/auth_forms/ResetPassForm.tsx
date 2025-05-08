@@ -34,15 +34,14 @@ export default function ResetPassForm(data: any) {
   };
 
   return (
-    <div className="grid place-items-center">
-      <div className="flex flex-1 flex-col justify-center pb-32 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <Image priority src={realityQuestLogo} alt="Logo" width={300} />
-          <h2 className="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white pb-4">
-            Reset Password
-          </h2>
-        </div>
-
+    <div className="grid place-items-center py-16">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+        <Image priority src={realityQuestLogo} alt="Logo" width={300} />
+        <h2 className="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white pb-4">
+          Reset Password
+        </h2>
+      </div>
+      <div className="mt-10 flex flex-col w-[70%] md:w-[50%] lg:max-w-[450px] bg-white dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
         <div className="pb-6">
           <div className="flex items-center justify-between">
             <label

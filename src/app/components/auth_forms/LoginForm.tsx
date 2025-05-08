@@ -10,7 +10,6 @@ import { signIn } from "next-auth/react";
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isValid, setIsUserValid] = useState(true);
   const [errorMessages, setErrorMessages] = useState({
     username: "",
     password: "",
@@ -27,22 +26,19 @@ export default function LoginForm() {
     });
     const isUsernameValid = validateUsername(username);
 
-    setIsUserValid(isUsernameValid);
+    console.log("Username:", username);
+    console.log("Password:", password);
 
     if (isUsernameValid) {
-      // Proceed with sign-in logic
       const response = await signIn("credentials", {
         username: username,
         password: password,
         redirect: false,
       });
 
+      console.log("Response from signIn:", response);
+
       if (!response?.error) {
-        setErrorMessages({
-          username: "",
-          password: "",
-          general: "",
-        });
         router.push("/");
         router.refresh();
       } else {
@@ -90,8 +86,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="grid place-items-center ">
-      <div className="flex flex-1 flex-col justify-center pb-16 lg:px-8">
+    <div className="grid place-items-center mt-16">
+      <div className="flex flex-1 flex-col items-center pb-16 lg:px-8 w-full">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <Image priority src={realityQuestLogo} alt="Logo" width={300} />
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
@@ -99,7 +95,7 @@ export default function LoginForm() {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 w-[60%] md:w-[50%] lg:max-w-[450px] dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
           <div className="space-y-6">
             <div>
               <label
