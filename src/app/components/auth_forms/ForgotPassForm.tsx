@@ -34,23 +34,35 @@ export default function ForgotPassForm() {
         // Disable forgot password button from being clicked multiple times
         setResetSent(true);
       } else {
-        setEmailError("An error has occurred. Please try again.");
+        switch (response.status) {
+          case 400:
+            setEmailError("Invalid email format.");
+            break;
+          case 404:
+            setEmailError("Error: email not found.");
+            break;
+          case 500:
+            setEmailError("An error has occurred. Please try again.");
+            break;
+          default:
+            setEmailError("An error has occurred. Please try again.");
+            break;
+        }
         button?.removeAttribute("disabled");
       }
     }
   };
 
   return (
-    <div className="grid place-items-center">
-      <div className="flex flex-1 flex-col justify-center pb-32 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <Image priority src={realityQuestLogo} alt="Logo" width={300} />
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
-            Forgot Password
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="grid place-items-center py-16">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+        <Image priority src={realityQuestLogo} alt="Logo" width={300} />
+        <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
+          Forgot Password
+        </h2>
+      </div>
+      <div className="flex flex-1 flex-col justify-center lg:px-8 mt-16 bg-white dark:bg-zinc-600/20 p-6 rounded-lg shadow-md w-[70%] sm:w-[60%] md:max-w-[450px]">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="space-y-6">
             <div>
               <label

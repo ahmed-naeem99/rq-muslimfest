@@ -59,7 +59,7 @@ export async function POST(request: Request) {
           code: "EMAIL_NOT_FOUND",
         },
         {
-          status: 400,
+          status: 404,
         }
       );
     } else {
