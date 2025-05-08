@@ -133,7 +133,7 @@ export default function Home() {
         </motion.div>
       </div>
       {/* Game description section */}
-      <div className="relative py-20 px-4 md:px-8  bg-sky-50/80 dark:bg-[#0f0f0f]/80 backdrop-blur-md z-10">
+      <div className="relative py-20 px-4 md:px-8  bg-sky-50/80 dark:bg-gray-700/30 backdrop-blur-md z-10">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -231,7 +231,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="bg-white/80 dark:bg-[#1a1a1a]/60 backdrop-blur-md p-8 min-[768px]:mx-0 mx-8 rounded-xl border-none dark:border border-[#333333]/30"
+                className="bg-white/80 dark:bg-gray-800/60 backdrop-blur-md p-8 min-[768px]:mx-0 mx-8 rounded-xl border-none dark:border border-[#333333]/30"
               >
                 <div className="flex flex-col items-center text-center">
                   {item.icon}
@@ -265,7 +265,7 @@ export default function Home() {
 
       {/* Mouse follower effect */}
       <motion.div
-        className="fixed w-10 h-10 rounded-full pointer-events-none z-50 mix-blend-screen"
+        className="fixed w-10 h-10 rounded-full pointer-events-none z-50 mix-blend-screen hidden md:block"
         style={{
           background:
             "radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(14,165,233,0.4) 70%, rgba(2,132,199,0) 100%)",
