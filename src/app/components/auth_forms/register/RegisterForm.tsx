@@ -43,7 +43,7 @@ export default function LoginForm() {
       };
       setTeamMembers(updatedTeam);
     }
-  }, [email]);
+  }, [email, teamMembers]);
 
   const router = useRouter();
 

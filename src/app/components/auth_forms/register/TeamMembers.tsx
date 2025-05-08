@@ -80,8 +80,8 @@ export default function TeamMembers({
 
       <div className="flex flex-col gap-12">
         {teamMembers.map((member, index) => (
-          <div>
-            <div className="flex flex-row gap-6 items-top" key={index}>
+          <div key={index}>
+            <div className="flex flex-row gap-6 items-top">
               <div className="flex flex-col sm:flex-row gap-4 items-start md:items-center">
                 <div className="flex-1">
                   <label className="block text-sm font-medium dark:text-gray-300 text-gray-700 mb-1">
