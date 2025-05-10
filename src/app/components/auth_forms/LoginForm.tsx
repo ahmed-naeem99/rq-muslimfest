@@ -95,7 +95,7 @@ export default function LoginForm() {
           </h2>
         </div>
 
-        <div className="mt-10 w-[60%] md:w-[50%] lg:max-w-[450px] dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
+        <div className="mt-10 w-[70%] md:w-[50%] lg:max-w-[450px] dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
           <div className="space-y-6">
             <div>
               <label
