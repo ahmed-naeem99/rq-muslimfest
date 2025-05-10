@@ -112,14 +112,9 @@ export default function LoginForm() {
     const isUsernameValid = validateUsername(username);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePasswords(password, rePassword);
-    const isTeamMembersValid = validateTeamMembers(teamMembers);
+    // const isTeamMembersValid = validateTeamMembers(teamMembers);
 
-    if (
-      isUsernameValid &&
-      isEmailValid &&
-      isPasswordValid &&
-      isTeamMembersValid
-    ) {
+    if (isUsernameValid && isEmailValid && isPasswordValid) {
       return true;
     }
     return false;
@@ -316,7 +311,7 @@ export default function LoginForm() {
           </div>
         </div>
 
-        <div className="flex flex-col w-auto lg:max-w-[700px]">
+        {/* <div className="flex flex-col w-auto lg:max-w-[700px]">
           <h2 className="text-center text-lg pb-4 font-bold leading-9 tracking-tight text-dark dark:text-white">
             Team Information
           </h2>
@@ -328,7 +323,7 @@ export default function LoginForm() {
               teamErrorMessages={teamErrorMessages}
             />
           </div>
-        </div>
+        </div> */}
       </div>
       <div>
         {errorMessages.general && (

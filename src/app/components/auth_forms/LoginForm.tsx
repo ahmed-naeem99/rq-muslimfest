@@ -108,7 +108,7 @@ export default function LoginForm() {
                 <input
                   id="username"
                   name="username"
-                  type="text" // Changed to text type for username input
+                  type="text"
                   autoComplete="username"
                   onChange={(e) => setUsername(e.target.value)}
                   required

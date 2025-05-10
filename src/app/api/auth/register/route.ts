@@ -70,50 +70,50 @@ export async function POST(request: Request) {
     const userId = response.rows[0].id;
 
     // Insert into game_data table
-    await sql`
-    INSERT INTO game_data (team_id)
-    VALUES (${userId})
-    `;
+    // await sql`
+    // INSERT INTO game_data (team_id)
+    // VALUES (${userId})
+    // `;
 
-    // Insert into missions table
-    await sql`
-    INSERT INTO missions (team_id, mission) 
-    VALUES (${userId}, ${1})
-    `;
+    // // Insert into missions table
+    // await sql`
+    // INSERT INTO missions (team_id, mission)
+    // VALUES (${userId}, ${1})
+    // `;
 
     // Insert the user themselves into team_members table, then add team members
-    await sql`
-    INSERT INTO team_members (team_id, member_name, member_email)
-    VALUES (${userId}, ${teamMembers[0].name}, ${email})
-    `;
+    // await sql`
+    // INSERT INTO team_members (team_id, member_name, member_email)
+    // VALUES (${userId}, ${teamMembers[0].name}, ${email})
+    // `;
 
-    if (teamMembers && Array.isArray(teamMembers) && teamMembers.length > 1) {
-      for (const memberUsername of teamMembers) {
-        if (memberUsername.name === teamMembers[0].name) {
-          continue;
-        }
-        if (
-          typeof memberUsername.email === "string" &&
-          memberUsername.email.trim() !== "" &&
-          emailRegex.test(memberUsername.email)
-        ) {
-          await sql`
-          INSERT INTO team_members (team_id, member_name, member_email)
-          VALUES (${userId}, ${memberUsername.name}, ${memberUsername.email})
-          `;
-        } else {
-          return NextResponse.json(
-            {
-              message: "Invalid team member email",
-              code: "INVALID_TEAM_MEMBER_EMAIL",
-            },
-            {
-              status: 400,
-            }
-          );
-        }
-      }
-    }
+    // if (teamMembers && Array.isArray(teamMembers) && teamMembers.length > 1) {
+    //   for (const memberUsername of teamMembers) {
+    //     if (memberUsername.name === teamMembers[0].name) {
+    //       continue;
+    //     }
+    //     if (
+    //       typeof memberUsername.email === "string" &&
+    //       memberUsername.email.trim() !== "" &&
+    //       emailRegex.test(memberUsername.email)
+    //     ) {
+    //       await sql`
+    //       INSERT INTO team_members (team_id, member_name, member_email)
+    //       VALUES (${userId}, ${memberUsername.name}, ${memberUsername.email})
+    //       `;
+    //     } else {
+    //       return NextResponse.json(
+    //         {
+    //           message: "Invalid team member email",
+    //           code: "INVALID_TEAM_MEMBER_EMAIL",
+    //         },
+    //         {
+    //           status: 400,
+    //         }
+    //       );
+    //     }
+    //   }
+    // }
   } catch (e: any) {
     console.log(e);
     if (e.code === "23505") {
