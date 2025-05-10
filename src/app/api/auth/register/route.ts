@@ -7,7 +7,7 @@ const usernameRegex = /^[a-zA-Z0-9_]{3,36}$/;
 
 export async function POST(request: Request) {
   try {
-    const { email, username, password, teamMembers, ticket } =
+    const { email, username, password, fullName, age, ticket } =
       await request.json();
 
     if (
@@ -62,8 +62,8 @@ export async function POST(request: Request) {
 
     // Insert into users table
     const response = await sql`
-    INSERT INTO users (email, username, password, ticket)
-    VALUES (${email}, ${username}, ${hashedPassword}, ${ticket}) 
+    INSERT INTO users (email, username, password, full_name, age, ticket)
+    VALUES (${email}, ${username}, ${hashedPassword}, ${fullName}, ${age}, ${ticket}) 
     RETURNING id
     `;
 

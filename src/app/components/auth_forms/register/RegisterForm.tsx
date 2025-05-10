@@ -17,10 +17,14 @@ export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [age, setAge] = useState("");
   const [errorMessages, setErrorMessages] = useState({
     email: "",
     username: "",
     password: "",
+    fullName: "",
+    age: "",
     general: "",
   });
 
@@ -34,16 +38,16 @@ export default function LoginForm() {
     [key: number]: string;
   }>({});
 
-  useEffect(() => {
-    if (teamMembers[0].email !== email) {
-      const updatedTeam = [...teamMembers];
-      updatedTeam[0] = {
-        ...updatedTeam[0],
-        email: email,
-      };
-      setTeamMembers(updatedTeam);
-    }
-  }, [email, teamMembers]);
+  // useEffect(() => {
+  //   if (teamMembers[0].email !== email) {
+  //     const updatedTeam = [...teamMembers];
+  //     updatedTeam[0] = {
+  //       ...updatedTeam[0],
+  //       email: email,
+  //     };
+  //     setTeamMembers(updatedTeam);
+  //   }
+  // }, [email, teamMembers]);
 
   const router = useRouter();
 
@@ -108,13 +112,48 @@ export default function LoginForm() {
     }
   };
 
+  const validateFullName = (name: string) => {
+    if (name.trim() === "") {
+      setErrorMessages((prev) => ({
+        ...prev,
+        fullName: "Full name is required.",
+      }));
+      return false;
+    } else {
+      setErrorMessages((prev) => ({ ...prev, fullName: "" }));
+      return true;
+    }
+  };
+
+  const validateAge = (age: string) => {
+    const ageNumber = Number(age);
+    if (ageNumber <= 0) {
+      setErrorMessages((prev) => ({
+        ...prev,
+        age: "Age must be a positive number.",
+      }));
+      return false;
+    } else {
+      setErrorMessages((prev) => ({ ...prev, age: "" }));
+      return true;
+    }
+  };
+
   const handleClientErrors = () => {
     const isUsernameValid = validateUsername(username);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePasswords(password, rePassword);
     // const isTeamMembersValid = validateTeamMembers(teamMembers);
+    const isFullNameValid = validateFullName(fullName);
+    const isAgeValid = validateAge(age);
 
-    if (isUsernameValid && isEmailValid && isPasswordValid) {
+    if (
+      isUsernameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isFullNameValid &&
+      isAgeValid
+    ) {
       return true;
     }
     return false;
@@ -125,6 +164,8 @@ export default function LoginForm() {
       email: "",
       username: "",
       password: "",
+      fullName: "",
+      age: "",
       general: "",
     });
     setTeamErrorMessages({});
@@ -165,7 +206,8 @@ export default function LoginForm() {
         email: email,
         username: username,
         password: password,
-        teamMembers: teamMembers,
+        fullName: fullName,
+        age: age,
         ticket: ticket,
       }),
     });
@@ -198,7 +240,7 @@ export default function LoginForm() {
                   htmlFor="username"
                   className="block text-sm font-medium leading-6  text-dark dark:text-white"
                 >
-                  Team Name
+                  Username
                 </label>
                 <div className="mt-2">
                   <input
@@ -219,7 +261,6 @@ export default function LoginForm() {
                   )}
                 </div>
               </div>
-
               <div>
                 <label
                   htmlFor="email"
@@ -246,7 +287,6 @@ export default function LoginForm() {
                   )}
                 </div>
               </div>
-
               <div>
                 <div className="flex items-center justify-between">
                   <label
@@ -273,7 +313,6 @@ export default function LoginForm() {
                   )}
                 </div>
               </div>
-
               <div>
                 <div className="flex items-center justify-between">
                   <label
@@ -296,6 +335,61 @@ export default function LoginForm() {
                 </div>
               </div>
 
+              <div className="w-full border-t border-gray-400" />
+              <div className="flex flex-row gap-4">
+                <div>
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium leading-6 text-dark dark:text-white"
+                  >
+                    Full Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="fullName"
+                      name="fullName"
+                      type="text"
+                      autoComplete="name"
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                      className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="age"
+                    className="block text-sm font-medium leading-6 text-dark dark:text-white"
+                  >
+                    Age
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="age"
+                      name="age"
+                      type="number"
+                      onKeyDown={(e) => {
+                        if (e.key === "-" || e.key === "e") {
+                          e.preventDefault();
+                        }
+                      }}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        console.log("Age value:", value);
+                        if (value > 0 || e.target.value === "") {
+                          setAge(e.target.value);
+                        } else {
+                          setAge("");
+                        }
+                      }}
+                      value={age}
+                      min={1}
+                      required
+                      className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+              </div>
               <div className="flex items-center">
                 <input
                   type="checkbox"
@@ -333,7 +427,9 @@ export default function LoginForm() {
         )}
         <button
           onClick={handleSignUp}
-          disabled={!email || !password || !username || !rePassword}
+          disabled={
+            !email || !password || !username || !rePassword || !fullName || !age
+          }
           className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
         >
           Sign Up
