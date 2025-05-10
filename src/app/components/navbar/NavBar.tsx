@@ -178,10 +178,10 @@ const NavBar = () => {
           isMobileMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
-        } transition-all block absolute top-16 right-0 w-full bg-gray-100 dark:bg-neutral-900 shadow-lg rounded-lg`}
+        } transition-all block absolute top-16 right-0 w-full bg-gray-300 dark:bg-neutral-900 shadow-lg rounded-lg`}
       >
-        <div className="bg-gray-100 dark:bg-neutral-800 rounded-lg m-2">
-          <div className="py-3"></div>
+        <div className="bg-gray-100 dark:bg-neutral-800 rounded-lg m-2 transition-colors">
+          <div className="py-3" />
           <h3 className="font-semibold text-gray-700 dark:text-gray-300 px-4 mb-2">
             Missions
           </h3>
@@ -189,7 +189,7 @@ const NavBar = () => {
           <ul className="space-y-1 px-4">
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
                 href="/mission/1"
               >
                 Day 1
@@ -197,7 +197,7 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
                 href="/mission/2"
               >
                 Day 2
@@ -205,7 +205,7 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
                 href="/mission/3"
               >
                 Day 3
