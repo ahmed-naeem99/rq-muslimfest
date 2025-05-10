@@ -229,7 +229,7 @@ export default function LoginForm() {
         </h2>
       </div>
       <div className="flex flex-1 flex-col w-full lg:flex-row lg:px-16 lg:gap-16 justify-center items-center pb-16  gap-8">
-        <div className="w-[70%] md:w-[50%] lg:max-w-[450px] flex flex-col">
+        <div className="max-[400px]:w-[80%] w-[70%] md:w-[50%] lg:max-w-[450px] flex flex-col">
           <h2 className="text-center text-lg font-bold leading-9 pb-4 tracking-tight text-dark dark:text-white">
             Account Information
           </h2>

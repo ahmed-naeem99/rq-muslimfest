@@ -61,7 +61,7 @@ export default function ForgotPassForm() {
           Forgot Password
         </h2>
       </div>
-      <div className="flex flex-1 flex-col justify-center lg:px-8 mt-16 bg-white dark:bg-zinc-600/20 p-6 rounded-lg shadow-md w-[70%] sm:w-[60%] md:max-w-[450px]">
+      <div className="flex flex-1 flex-col justify-center lg:px-8 mt-16 bg-white dark:bg-zinc-600/20 p-6 rounded-lg shadow-md max-[400px]:w-[80%] w-[70%] sm:w-[60%] md:max-w-[450px]">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="space-y-6">
             <div>

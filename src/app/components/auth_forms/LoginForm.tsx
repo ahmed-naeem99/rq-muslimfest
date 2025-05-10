@@ -90,12 +90,12 @@ export default function LoginForm() {
       <div className="flex flex-1 flex-col items-center pb-16 lg:px-8 w-full">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <Image priority src={realityQuestLogo} alt="Logo" width={300} />
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
+          <h2 className="mt-6 px-6 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950 dark:text-white">
             Sign in to your Team Account
           </h2>
         </div>
 
-        <div className="mt-10 w-[70%] md:w-[50%] lg:max-w-[450px] dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
+        <div className="mt-10 max-[400px]:w-[80%] w-[70%] md:w-[50%] lg:max-w-[450px] dark:bg-zinc-600/20 p-6 rounded-lg shadow-md">
           <div className="space-y-6">
             <div>
               <label
