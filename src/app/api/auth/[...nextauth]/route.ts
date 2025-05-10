@@ -34,10 +34,6 @@ const handler = NextAuth({
             return {
               id: user.id,
               username: user.username,
-              mission: user.currentmission,
-              hints1used: user.hints1used,
-              hints2used: user.hints2used,
-              hints3used: user.hints3used,
             };
           } else {
             throw new Error("IncorrectPassword");
@@ -56,20 +52,6 @@ const handler = NextAuth({
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.user = user;
-      }
-      if (trigger === "update") {
-        if (session?.mission) {
-          (token.user as any).mission = session.mission;
-        }
-        if (session?.hints1used) {
-          (token.user as any).hints1used = session.hints1used;
-        }
-        if (session?.hints2used) {
-          (token.user as any).hints2used = session.hints2used;
-        }
-        if (session?.hints3used) {
-          (token.user as any).hints3used = session.hints3used;
-        }
       }
       return token;
     },
