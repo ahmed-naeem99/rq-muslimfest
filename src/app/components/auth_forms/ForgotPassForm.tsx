@@ -88,7 +88,7 @@ export default function ForgotPassForm() {
                 )}
                 {!emailError && resetSent && (
                   <p className="text-green-500 pt-3 w-full max-w-xs">
-                    A reset password link has been sent to your email.
+                    {`A reset password link has been sent to your email (check spam if needed).`}
                   </p>
                 )}
               </div>
