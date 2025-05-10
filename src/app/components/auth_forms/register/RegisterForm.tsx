@@ -134,6 +134,9 @@ export default function LoginForm() {
     });
     setTeamErrorMessages({});
 
+    const errorCode = result.code;
+    console.log("Error code:", errorCode);
+
     switch (result.code) {
       case "EMAIL_EXISTS":
         setErrorMessages((prev) => ({
@@ -167,6 +170,8 @@ export default function LoginForm() {
         email: email,
         username: username,
         password: password,
+        teamMembers: teamMembers,
+        ticket: ticket,
       }),
     });
     const result = await response.json();
