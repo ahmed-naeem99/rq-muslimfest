@@ -12,7 +12,12 @@ import { RxAvatar } from "react-icons/rx";
 const NavBar = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  const toggleMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent | TouchEvent) => {
@@ -62,7 +67,7 @@ const NavBar = () => {
           </div>
         </Link>
       </div>
-      <div className="navbar-center">
+      <div className="navbar-center min-[400px]:flex hidden">
         <ul className="menu menu-horizontal px-1 items-center justify-center flex">
           <li>
             <details ref={detailsRef} onToggle={handleToggle}>
@@ -112,8 +117,8 @@ const NavBar = () => {
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-        <div className="dropdown dropdown-end flex flex-row space-x-2 sm:space-x-4 items-center">
+      <div className="navbar-end space-x-2 sm:space-x-4">
+        <div className="dropdown dropdown-end flex flex-row  items-center">
           <ThemeToggle />
           <div
             tabIndex={0}
@@ -144,6 +149,81 @@ const NavBar = () => {
               </li>
             )}
           </ul>
+        </div>
+        <div className="min-[400px]:hidden inline pr-3 pt-1">
+          <button
+            onClick={toggleMenu}
+            className="text-gray-800 dark:text-white focus:outline-none hover:text-neutral-500 cursor-pointer"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={`${
+          isMobileMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } transition-all block absolute top-16 right-0 w-full bg-gray-100 dark:bg-neutral-900 shadow-lg rounded-lg`}
+      >
+        <div className="bg-gray-100 dark:bg-neutral-800 rounded-lg m-2">
+          <div className="py-3"></div>
+          <h3 className="font-semibold text-gray-700 dark:text-gray-300 px-4 mb-2">
+            Missions
+          </h3>
+          {/* <div className="border-b border-gray-300 dark:border-gray-700 w-[70%]" /> */}
+          <ul className="space-y-1 px-4">
+            <li>
+              <Link
+                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                href="/mission/1"
+              >
+                Day 1
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                href="/mission/2"
+              >
+                Day 2
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block px-4 py-2 w-[50%] text-center bg-neutral-900 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors"
+                href="/mission/3"
+              >
+                Day 3
+              </Link>
+            </li>
+          </ul>
+          <div className="py-3">
+            <ul>
+              <li>
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors font-medium"
+                  href="/leaderboard"
+                >
+                  Leaderboard
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
