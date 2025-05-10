@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import Logout from "./Logout";
-import realityQuestLogo from "../../../../public/rqlogo.svg";
+import escapeArenaLogo from "../../../../public/escape_logo.svg";
 import { RxAvatar } from "react-icons/rx";
 
 const NavBar = () => {
@@ -58,7 +58,7 @@ const NavBar = () => {
       <div className="navbar-start">
         <Link href="/" className="font-normal">
           <div className="btn btn-ghost btn-square">
-            <Image priority src={realityQuestLogo} alt="Logo" width={50} />
+            <Image priority src={escapeArenaLogo} alt="Logo" width={50} />
           </div>
         </Link>
       </div>
