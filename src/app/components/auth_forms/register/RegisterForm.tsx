@@ -127,10 +127,10 @@ export default function LoginForm() {
 
   const validateAge = (age: string) => {
     const ageNumber = Number(age);
-    if (ageNumber <= 0) {
+    if (ageNumber <= 0 || ageNumber > 150) {
       setErrorMessages((prev) => ({
         ...prev,
-        age: "Age must be a positive number.",
+        age: "Invalid age.",
       }));
       return false;
     } else {
@@ -337,7 +337,7 @@ export default function LoginForm() {
 
               <div className="w-full border-t border-gray-400" />
               <div className="flex flex-row gap-4">
-                <div>
+                <div className="w-full">
                   <label
                     htmlFor="fullName"
                     className="block text-sm font-medium leading-6 text-dark dark:text-white"
@@ -356,7 +356,7 @@ export default function LoginForm() {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-full">
                   <label
                     htmlFor="age"
                     className="block text-sm font-medium leading-6 text-dark dark:text-white"
@@ -375,8 +375,10 @@ export default function LoginForm() {
                       }}
                       onChange={(e) => {
                         const value = Number(e.target.value);
-                        console.log("Age value:", value);
-                        if (value > 0 || e.target.value === "") {
+                        if (
+                          (value > 0 && value < 151) ||
+                          e.target.value === ""
+                        ) {
                           setAge(e.target.value);
                         } else {
                           setAge("");
@@ -384,6 +386,7 @@ export default function LoginForm() {
                       }}
                       value={age}
                       min={1}
+                      max={150}
                       required
                       className="block px-3 w-full rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
                     />
