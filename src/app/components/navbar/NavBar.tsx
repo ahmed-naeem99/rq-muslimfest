@@ -80,7 +80,7 @@ const NavBar = () => {
                     className="dark:focus:text-white focus:text-white text-white"
                     href="/mission/1"
                   >
-                    M1
+                    Day 1
                   </Link>
                 </li>
                 <li>
@@ -88,7 +88,7 @@ const NavBar = () => {
                     className="dark:focus:text-white focus:text-white text-white"
                     href="/mission/2"
                   >
-                    M2
+                    Day 2
                   </Link>
                 </li>
                 <li>
@@ -96,7 +96,7 @@ const NavBar = () => {
                     className="dark:focus:text-white focus:text-white text-white"
                     href="/mission/3"
                   >
-                    M3
+                    Day 3
                   </Link>
                 </li>
               </ul>
