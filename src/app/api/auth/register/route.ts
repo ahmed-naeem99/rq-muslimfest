@@ -75,11 +75,23 @@ export async function POST(request: Request) {
     // VALUES (${userId})
     // `;
 
-    // // Insert into missions table
-    // await sql`
-    // INSERT INTO missions (team_id, mission)
-    // VALUES (${userId}, ${1})
-    // `;
+    // Insert mission 1 into missions table
+    await sql`
+    INSERT INTO missions (team_id, mission)
+    VALUES (${userId}, ${1})
+    `;
+
+    // Insert mission 2 into missions table
+    await sql`
+    INSERT INTO missions (team_id, mission)
+    VALUES (${userId}, ${2})
+    `;
+
+    // Insert mission 3 into missions table
+    await sql`
+    INSERT INTO missions (team_id, mission)
+    VALUES (${userId}, ${3})
+    `;
 
     // Insert the user themselves into team_members table, then add team members
     // await sql`
