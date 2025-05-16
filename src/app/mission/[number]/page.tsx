@@ -59,7 +59,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
 
   if (isLoading) {
     return (
-      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+      <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
         <p>Loading...</p>{" "}
       </div>
     );
@@ -71,7 +71,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   if (curr_time < start_time) {
     if (countdownString === null) {
       return (
-        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+        <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
           <p>Loading countdown...</p>
         </div>
       );
@@ -79,7 +79,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
     if (countdownString === "ended") {
       // Countdown has finished
       return (
-        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+        <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
           <div className="text-center">
             <p className="text-2xl mb-4 font-bold max-[350px]:pb-16 max-[350px]:pt-16">
               Coming Soon...
@@ -92,7 +92,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
       );
     }
     return (
-      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32 no-x-scroll">
+      <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32 no-x-scroll">
         <motion.div
           className="absolute -inset-[0px] opacity-30 blur-[100px] z-1"
           animate={{
@@ -165,7 +165,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
     if (!session) {
       // User is not logged in
       return (
-        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32 no-x-scroll">
+        <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32 no-x-scroll">
           <motion.div
             className="absolute -inset-[0px] opacity-30 blur-[100px] z-1"
             animate={{
