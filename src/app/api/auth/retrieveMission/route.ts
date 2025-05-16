@@ -6,9 +6,8 @@ export async function POST(request: Request) {
     const req = await request.json();
 
     const response = await sql`
-    UPDATE missions
-    SET timecompleted = CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York'
-    WHERE team_id = ${req.username}
+    SELECT * FROM missions
+    WHERE team_id = ${req.user_id}
     AND mission = ${req.mission};
       `;
 
@@ -18,11 +17,15 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    return NextResponse.json(
+      { message: "Success", result: response.rows[0] },
+      { status: 200 }
+    );
   } catch (e: any) {
     return NextResponse.json(
       { message: "An error occurred", code: "UNKNOWN_ERROR" },
       { status: 500 }
     );
   }
-  return NextResponse.json({ message: "Success" });
 }
