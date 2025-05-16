@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import MissionForm from "@/app/components/missions/MissionForm";
+import { motion } from "framer-motion";
 
 const MissionPage = ({ params: { number: missionNum } }: any) => {
   const { data: session, status } = useSession() as any;
@@ -91,8 +92,44 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
       );
     }
     return (
-      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
-        <div className="text-center">
+      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32 no-x-scroll">
+        <motion.div
+          className="absolute -inset-[0px] opacity-30 blur-[100px] z-1"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 80% 80%, #952727 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 20% 80%, #952727 0%, transparent 50%)",
+              "radial-gradient(circle at 50% 50%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 70% 30%, #952727 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 80% 80%, #952727 0%, transparent 50%)",
+            ],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+        />
+
+        <motion.div
+          className="absolute -inset-[0px] opacity-30 dark:opacity-100 blur-[300px] z-1"
+          animate={{
+            background: [
+              "radial-gradient(circle at 30% 40%, #13154f 0%, transparent 40%), radial-gradient(circle at 60% 60%, #13154f 0%, transparent 40%)",
+              "radial-gradient(circle at 60% 30%, #13154f 0%, transparent 40%), radial-gradient(circle at 30% 70%, #13154f 0%, transparent 40%)",
+              "radial-gradient(circle at 40% 60%, #13154f 0%, transparent 40%), radial-gradient(circle at 70% 40%, #13154f 0%, transparent 40%)",
+              "radial-gradient(circle at 30% 40%, #13154f 0%, transparent 40%), radial-gradient(circle at 60% 60%, #13154f 0%, transparent 40%)",
+            ],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+        />
+
+        <div className="text-center z-10">
           <p className="text-2xl mb-4 font-bold max-[350px]:pb-16 max-[350px]:pt-16">
             Coming Soon...
           </p>
@@ -128,8 +165,43 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
     if (!session) {
       // User is not logged in
       return (
-        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
-          <p>Please log in to access this page.</p>
+        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32 no-x-scroll">
+          <motion.div
+            className="absolute -inset-[0px] opacity-30 blur-[100px] z-1"
+            animate={{
+              background: [
+                "radial-gradient(circle at 20% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 80% 80%, #952727 0%, transparent 50%)",
+                "radial-gradient(circle at 80% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 20% 80%, #952727 0%, transparent 50%)",
+                "radial-gradient(circle at 50% 50%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 70% 30%, #952727 0%, transparent 50%)",
+                "radial-gradient(circle at 20% 20%, #60a5fa 0%, transparent 50%), radial-gradient(circle at 80% 80%, #952727 0%, transparent 50%)",
+              ],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+              ease: "linear",
+            }}
+          />
+
+          <motion.div
+            className="absolute -inset-[0px] opacity-30 dark:opacity-100 blur-[300px] z-1"
+            animate={{
+              background: [
+                "radial-gradient(circle at 30% 40%, #13154f 0%, transparent 40%), radial-gradient(circle at 60% 60%, #13154f 0%, transparent 40%)",
+                "radial-gradient(circle at 60% 30%, #13154f 0%, transparent 40%), radial-gradient(circle at 30% 70%, #13154f 0%, transparent 40%)",
+                "radial-gradient(circle at 40% 60%, #13154f 0%, transparent 40%), radial-gradient(circle at 70% 40%, #13154f 0%, transparent 40%)",
+                "radial-gradient(circle at 30% 40%, #13154f 0%, transparent 40%), radial-gradient(circle at 60% 60%, #13154f 0%, transparent 40%)",
+              ],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+              ease: "linear",
+            }}
+          />
+          <p className="z-10">Please log in to access this page.</p>
         </div>
       );
     }
