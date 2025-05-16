@@ -5,45 +5,14 @@ export async function POST(request: Request) {
   try {
     const req = await request.json();
 
-    const columnName = `hints${req.currMiss}used`;
+    const response = await sql`
+    UPDATE missions
+    SET hintsused = ${req.hintNum}
+    WHERE team_id = ${req.user_id}
+    AND mission = ${req.mission};
+      `;
 
-    if (columnName === "hints1used") {
-      const response = await sql`
-            UPDATE users
-            SET hintsused = hintsused + 1, hints1used = hints1used + 1
-            WHERE username = ${req.username};
-        `;
-      if (response.rowCount != 1) {
-        return NextResponse.json(
-          { message: "An error occurred", code: "UNKNOWN_ERROR" },
-          { status: 500 }
-        );
-      }
-    } else if (columnName === "hints2used") {
-      const response = await sql`
-            UPDATE users
-            SET hintsused = hintsused + 1, hints2used = hints2used + 1
-            WHERE username = ${req.username};
-            `;
-      if (response.rowCount != 1) {
-        return NextResponse.json(
-          { message: "An error occurred", code: "UNKNOWN_ERROR" },
-          { status: 500 }
-        );
-      }
-    } else if (columnName === "hints3used") {
-      const response = await sql`
-            UPDATE users
-            SET hintsused = hintsused + 1, hints3used = hints3used + 1
-            WHERE username = ${req.username};
-            `;
-      if (response.rowCount != 1) {
-        return NextResponse.json(
-          { message: "An error occurred", code: "UNKNOWN_ERROR" },
-          { status: 500 }
-        );
-      }
-    } else {
+    if (response.rowCount != 1) {
       return NextResponse.json(
         { message: "An error occurred", code: "UNKNOWN_ERROR" },
         { status: 500 }

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
 import { HintProvider } from "@/app/context/HintContext";
 import VideoFrame from "./MissionVideo";
+import { time } from "console";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -56,10 +57,39 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [submitMessage, setSubmitMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(true);
 
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [showHintCounter, setShowHintCounter] = useState(0);
+
+  useEffect(() => {
+    const fetchMissionData = async () => {
+      const response = await fetch("/api/auth/retrieveMission", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: session.user.id,
+          mission: mission,
+        }),
+      });
+
+      const data = await response.json();
+      setHintsUsed(data.result.hintsused);
+    };
+
+    fetchMissionData();
+  }, [mission, session.user.id]);
+
   const handleSubmit = async () => {
     setIsCorrect(false);
 
-    if (session.user.mission != mission) {
+    const completed = await fetch("/api/auth/retrieveMission", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: session.user.id,
+        mission: mission,
+      }),
+    });
+
+    const completedData = await completed.json();
+    if (completedData.timeCompleted !== null) {
       setSubmitMessage("You have already completed this mission.");
       return;
     }
@@ -72,8 +102,8 @@ const MissionForm = ({ mission }: { mission: number }) => {
     const response = await fetch("/api/auth/updateMission", {
       method: "POST",
       body: JSON.stringify({
-        username: session.user.username,
-        setMission: mission === 3 ? -1 : mission + 1,
+        user_id: session.user.id,
+        mission: mission,
       }),
     });
 
@@ -85,9 +115,8 @@ const MissionForm = ({ mission }: { mission: number }) => {
         );
         return;
       } else {
-        setSubmitMessage("Correct! Well done, proceed to mission 2.");
+        setSubmitMessage("Correct! Well done, good luck on the next mission.");
       }
-      update({ mission: mission === 3 ? -1 : mission + 1 });
       return;
     }
 
@@ -95,60 +124,67 @@ const MissionForm = ({ mission }: { mission: number }) => {
   };
 
   return (
-    <HintProvider>
-      <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
-        <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg">
-          <VideoFrame
-            videoLink={missionData[mission].video}
-            mission={mission}
-          />
-          <div
-            className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
+    // <HintProvider>
+    <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
+      <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
+        <VideoFrame videoLink={missionData[mission].video} mission={mission} />
+        <div
+          className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
+        >
+          Mission {mission} Submission
+        </div>
+        <input
+          name="missionAnswer"
+          onChange={(e) => setSubmission(e.target.value)}
+          className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+        />
+        {submitMessage && isCorrect && (
+          <p className="text-green-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+        )}
+        {submitMessage && !isCorrect && (
+          <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
+        )}
+        <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
+          <button
+            onClick={handleSubmit}
+            disabled={!submission}
+            className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
-            Mission {mission} Submission
-          </div>
-          <input
-            name="missionAnswer"
-            onChange={(e) => setSubmission(e.target.value)}
-            className="block px-3 sm:w-full w-3/4 rounded-md border-0 bg-black/5 dark:bg-white/5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-black/5 dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+            Submit (Use Wikipedia Spelling)
+          </button>
+          <HintButton
+            hintNum={1}
+            hintMessage={missionData[mission].hint1}
+            mission={mission}
+            hintsUsed={hintsUsed}
+            setHintsUsed={setHintsUsed}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
           />
-          {submitMessage && isCorrect && (
-            <p className="text-green-500 pt-3 sm:w-full w-3/4">
-              {submitMessage}
-            </p>
-          )}
-          {submitMessage && !isCorrect && (
-            <p className="text-red-500 pt-3 sm:w-full w-3/4">{submitMessage}</p>
-          )}
-          <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
-            <button
-              onClick={handleSubmit}
-              disabled={!submission}
-              className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Submit (Use Wikipedia Spelling)
-            </button>
-            <HintButton
-              hintNum={1}
-              hintMessage={missionData[mission].hint1}
-              mission={mission}
-            />
 
-            <HintButton
-              hintNum={2}
-              hintMessage={missionData[mission].hint2}
-              mission={mission}
-            />
+          <HintButton
+            hintNum={2}
+            hintMessage={missionData[mission].hint2}
+            mission={mission}
+            hintsUsed={hintsUsed}
+            setHintsUsed={setHintsUsed}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
+          />
 
-            <HintButton
-              hintNum={3}
-              hintMessage={missionData[mission].hint3}
-              mission={mission}
-            />
-          </div>
+          <HintButton
+            hintNum={3}
+            hintMessage={missionData[mission].hint3}
+            mission={mission}
+            hintsUsed={hintsUsed}
+            setHintsUsed={setHintsUsed}
+            showHintCounter={showHintCounter}
+            setShowHintCounter={setShowHintCounter}
+          />
         </div>
       </div>
-    </HintProvider>
+    </div>
+    // </HintProvider>
   );
 };
 
