@@ -148,6 +148,22 @@ const NavBar = () => {
                 <Logout />
               </li>
             )}
+            <li>
+              <Link
+                className="dark:focus:text-white focus:text-white text-white  justify-between "
+                href="/toolbox"
+              >
+                Toolbox
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="dark:focus:text-white focus:text-white text-white  justify-between "
+                href="/rules"
+              >
+                Rules
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="min-[400px]:hidden inline pr-3 pt-1">
