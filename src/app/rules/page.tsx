@@ -3,7 +3,7 @@ import React from "react";
 const RulesPage = () => {
   return (
     <div className="container mx-auto px-4 py-8 dark:text-white text-dark max-w-4xl">
-      <div className="bg-white dark:bg-neutral-900 shadow-md rounded-lg p-6 md:p-10 outline outline-1 outline-red-900">
+      <div className="bg-white dark:bg-neutral-900 shadow-md rounded-lg p-6 md:p-10 outline outline-2 dark:outline-red-900 outline-red-600">
         <h1 className="text-3xl font-bold mb-6 text-center">
           {`Reality Quest: Resilience! In the Portals of Andalus`}
         </h1>

@@ -40,7 +40,7 @@ const ToolBoxPage = () => {
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-lg dark:text-white shadow-md">
+      <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-lg dark:text-white shadow-md outline outline-2 dark:outline-red-900 outline-red-600">
         <h2 className="text-xl font-semibold mb-2">About:</h2>
         <p>
           These slides contain important resources you may/may not take
