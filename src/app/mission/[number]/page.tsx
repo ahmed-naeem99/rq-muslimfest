@@ -68,7 +68,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   const curr_time = new Date().getTime();
   const start_time = countdownDate;
 
-  if (curr_time < start_time) {
+  if (curr_time > start_time) {
     if (countdownString === null) {
       return (
         <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
