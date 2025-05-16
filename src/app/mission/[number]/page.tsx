@@ -1,48 +1,139 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import MissionForm from "@/app/components/missions/MissionForm";
-import { useState } from "react";
 
 const MissionPage = ({ params: { number: missionNum } }: any) => {
-  return (
-    <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
-      <p>Coming Soon...</p>
-    </div>
-  );
-  // const { data: session, status } = useSession() as any;
-  // const [isLoading, setIsLoading] = useState(true);
+  const { data: session, status } = useSession() as any;
+  const [isLoading, setIsLoading] = useState(true);
+  const [countdownString, setCountdownString] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   if (session) {
-  //     setIsLoading(false);
-  //   }
-  // }, [session]);
+  const countdownDate = new Date("2025-05-17T12:00:00Z").getTime();
+  useEffect(() => {
+    if (status !== "loading") {
+      setIsLoading(false);
+    }
+  }, [status]);
 
-  // if (isLoading) {
-  //   if (!session) {
-  //     return (
-  //       <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
-  //         <p>Please log in to access this page.</p>
-  //       </div>
-  //     );
-  //   }
-  //   return (
-  //     <div className="grid place-items-center h-full dark:text-white text-dark pb-32">
-  //       <p>Loading...</p>
-  //     </div>
-  //   );
-  // }
+  useEffect(() => {
+    const calculateAndSetCountdown = () => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
 
-  // if (session.user.mission != -1 && session.user.mission < Number(missionNum)) {
-  //   return (
-  //     <div className="grid place-items-center h-full dark:text-white text-dark pb-48">
-  //       You must complete the previous mission first.
-  //     </div>
-  //   );
-  // }
+      if (distance < 0) {
+        setCountdownString("ended");
+        return true;
+      }
 
-  // return <MissionForm mission={Number(missionNum)} />;
+      const days =
+        Math.floor(distance / (1000 * 60 * 60 * 24)) + (Number(missionNum) - 1);
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setCountdownString(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      return false;
+    };
+
+    const hasEndedInitially = calculateAndSetCountdown();
+
+    let intervalId: NodeJS.Timeout | undefined;
+    if (!hasEndedInitially) {
+      intervalId = setInterval(() => {
+        if (calculateAndSetCountdown()) {
+          if (intervalId) clearInterval(intervalId);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [countdownDate, missionNum]);
+
+  if (isLoading) {
+    return (
+      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+        <p>Loading...</p>{" "}
+      </div>
+    );
+  }
+
+  const curr_time = new Date().getTime();
+  const start_time = countdownDate;
+
+  if (curr_time < start_time) {
+    if (countdownString === null) {
+      return (
+        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+          <p>Loading countdown...</p>
+        </div>
+      );
+    }
+    if (countdownString === "ended") {
+      // Countdown has finished
+      return (
+        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+          <div className="text-center">
+            <p className="text-2xl mb-4 font-bold max-[350px]:pb-16 max-[350px]:pt-16">
+              Coming Soon...
+            </p>
+            <div className="text-lg text-gray-500">
+              The countdown has ended. Refresh the page to begin.
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+        <div className="text-center">
+          <p className="text-2xl mb-4 font-bold max-[350px]:pb-16 max-[350px]:pt-16">
+            Coming Soon...
+          </p>
+          <div className="flex max-[350px]:flex-col justify-center gap-4 mb-4">
+            {countdownString.split(" ").map((unit, index) => {
+              const [value, label] = unit.split(/([a-z]+)/);
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center bg-gray-200/60 dark:bg-neutral-900 rounded-lg p-3 min-w-[70px] shadow-md"
+                >
+                  <span className="font-bold text-2xl dark:text-[#952727] text-[#b53131] ">
+                    {value}
+                  </span>
+                  <span className="text-xs text-neutral-900 dark:text-gray-300">
+                    {label === "d"
+                      ? "DAYS"
+                      : label === "h"
+                      ? "HOURS"
+                      : label === "m"
+                      ? "MINUTES"
+                      : "SECONDS"}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    // Countdown period is over
+    if (!session) {
+      // User is not logged in
+      return (
+        <div className="grid place-items-center h-[90vh] dark:text-white text-dark pb-32">
+          <p>Please log in to access this page.</p>
+        </div>
+      );
+    }
+    return <MissionForm mission={Number(missionNum)} />;
+  }
 };
 export default MissionPage;
