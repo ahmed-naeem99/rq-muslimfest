@@ -10,7 +10,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [countdownString, setCountdownString] = useState<string | null>(null);
 
-  const countdownDate = new Date("2025-05-17T12:00:00Z").getTime();
+  const countdownDate = new Date("2025-05-17T16:00:00Z").getTime();
   useEffect(() => {
     if (status !== "loading") {
       setIsLoading(false);
