@@ -117,6 +117,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
       const completionDate = new Date(data.result.time_completed);
 
+      setTimeCompleted(data.result.time_completed);
       setIsCorrect(true);
 
       if (completionDate > missionEndDate) {
