@@ -127,7 +127,6 @@ export async function POST(request: Request) {
     //   }
     // }
   } catch (e: any) {
-    console.log(e);
     if (e.code === "23505") {
       if (e.message.includes("users_lower_idx")) {
         return NextResponse.json(

@@ -26,17 +26,12 @@ export default function LoginForm() {
     });
     const isUsernameValid = validateUsername(username);
 
-    console.log("Username:", username);
-    console.log("Password:", password);
-
     if (isUsernameValid) {
       const response = await signIn("credentials", {
         username: username,
         password: password,
         redirect: false,
       });
-
-      console.log("Response from signIn:", response);
 
       if (!response?.error) {
         router.push("/");

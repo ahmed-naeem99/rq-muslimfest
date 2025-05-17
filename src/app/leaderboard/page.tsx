@@ -21,8 +21,6 @@ const LeaderBoardPage = () => {
         const response = await fetch("/api/leaderboard");
         const data = await response.json();
 
-        console.log(data);
-
         const penalizedData = data.result.map((user: User) => ({
           ...user,
           finaltime: adjustCompletionTime(user.timecompleted, user.hintsused),

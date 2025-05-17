@@ -24,7 +24,6 @@ export default function TeamMembers({
     if (teamMembers.length < 5) {
       const newTeamMembers = [...teamMembers, { name: "", email: "" }];
       setTeamMembers(newTeamMembers);
-      console.log(teamMembers);
     }
   };
 
