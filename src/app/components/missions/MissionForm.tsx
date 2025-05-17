@@ -5,8 +5,6 @@ import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
 import VideoFrame from "./MissionVideo";
-import { time } from "console";
-import { HintButtons } from "./HintButtons";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
