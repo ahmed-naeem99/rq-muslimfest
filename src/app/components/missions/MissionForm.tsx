@@ -4,9 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
-import { HintProvider } from "@/app/context/HintContext";
 import VideoFrame from "./MissionVideo";
-import { time } from "console";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -71,7 +69,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
       });
 
       const data = await response.json();
-      console.log(data);
       setHintsUsed(data.result.hints_used);
     };
 
@@ -90,7 +87,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
     });
 
     const completedData = await completed.json();
-    console.log(completedData);
     if (completedData.result.time_completed !== null) {
       setSubmitMessage("You have already completed this mission.");
       return;
@@ -112,8 +108,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
     if (response.status === 200) {
       const data = await response.json();
 
-      console.log(data);
-
       const endDate = new Date("2025-05-17T20:00:00Z");
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
@@ -121,13 +115,9 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
       const completionDate = new Date(data.result.time_completed);
 
-      console.log(missionEndDate);
-      console.log(completionDate);
-
       setIsCorrect(true);
 
       if (completionDate > missionEndDate) {
-        console.log("late");
         setSubmitMessage(
           "Correct, well done! As the competition for this day is closed, your time will not be counted on the leaderboard."
         );
@@ -144,7 +134,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
   };
 
   return (
-    // <HintProvider>
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
@@ -204,7 +193,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
         </div>
       </div>
     </div>
-    // </HintProvider>
   );
 };
 

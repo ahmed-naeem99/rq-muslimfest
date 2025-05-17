@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { useHint } from "@/app/context/HintContext";
 
 interface HintButtonProps {
   hintNum: number;
@@ -23,7 +22,6 @@ const HintButton: React.FC<HintButtonProps> = ({
   setShowHintCounter,
 }) => {
   const { data: session } = useSession() as any;
-  // const { showHintCounter, setShowHintCounter } = useHint();
 
   const handleHint = async (hintNum: number) => {
     if (hintsUsed > hintNum - 1) {
