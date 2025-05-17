@@ -71,6 +71,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
       });
 
       const data = await response.json();
+      console.log(data);
       setHintsUsed(data.result.hintsused);
     };
 
