@@ -9,7 +9,8 @@ export async function POST(request: Request) {
     UPDATE missions
     SET time_completed = CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York'
     WHERE team_id = ${req.user_id}
-    AND mission = ${req.mission};
+    AND mission = ${req.mission}
+    RETURNING *;
       `;
 
     if (response.rowCount != 1) {
