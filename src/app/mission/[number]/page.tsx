@@ -71,6 +71,15 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   const curr_time = new Date().getTime();
   const start_time = countdownDate;
 
+  // if missionNum is greater than or equal to 3, dont return anything
+  if (missionNum >= 3) {
+    return (
+      <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
+        <p>Mission #{missionNum} does not exist.</p>
+      </div>
+    );
+  }
+
   if (curr_time < start_time) {
     if (countdownString === null) {
       return (
