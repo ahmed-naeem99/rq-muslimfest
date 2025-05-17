@@ -90,7 +90,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     });
 
     const completedData = await completed.json();
-    if (completedData.timeCompleted !== null) {
+    if (completedData.time_completed !== null) {
       setSubmitMessage("You have already completed this mission.");
       return;
     }
