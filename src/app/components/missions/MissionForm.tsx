@@ -111,14 +111,10 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
     if (response.status === 200) {
       setIsCorrect(true);
-      if (mission === 3) {
-        setSubmitMessage(
-          "Congratulations! You have completed all the missions."
-        );
-        return;
-      } else {
-        setSubmitMessage("Correct! Well done, good luck on the next mission.");
-      }
+      setSubmitMessage(
+        "Correct! Well done, check the leaderboards to view your ranking."
+      );
+
       return;
     }
 
