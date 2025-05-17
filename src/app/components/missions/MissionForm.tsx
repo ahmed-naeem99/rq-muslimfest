@@ -111,6 +111,9 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
     if (response.status === 200) {
       const data = await response.json();
+
+      console.log(data);
+
       const endDate = new Date("2025-05-17T20:00:00Z");
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
