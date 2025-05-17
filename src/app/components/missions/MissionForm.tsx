@@ -110,10 +110,25 @@ const MissionForm = ({ mission }: { mission: number }) => {
     });
 
     if (response.status === 200) {
-      setIsCorrect(true);
-      setSubmitMessage(
-        "Correct! Well done, check the leaderboards to view your ranking."
+      const data = await response.json();
+      const endDate = new Date("2025-05-17T20:00:00Z");
+      const missionEndDate = new Date(
+        endDate.getTime() + mission * 24 * 60 * 60 * 1000
       );
+      console.log(missionEndDate);
+      console.log(data.result.time_completed);
+
+      setIsCorrect(true);
+
+      if (data.result.time_completed > missionEndDate) {
+        setSubmitMessage(
+          "Correct, well done! As the competition for this day is closed, your time will not be counted on the leaderboard."
+        );
+      } else {
+        setSubmitMessage(
+          "Correct! Well done, check the leaderboards to view your ranking."
+        );
+      }
 
       return;
     }

@@ -10,7 +10,11 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [countdownString, setCountdownString] = useState<string | null>(null);
 
-  const countdownDate = new Date("2025-05-17T16:00:00Z").getTime();
+  const initialDate = new Date("2025-05-17T16:00:00Z");
+  const countdownDate = new Date(
+    initialDate.getTime() + (missionNum - 1) * 24 * 60 * 60 * 1000
+  ).getTime();
+
   useEffect(() => {
     if (status !== "loading") {
       setIsLoading(false);
@@ -27,8 +31,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
         return true;
       }
 
-      const days =
-        Math.floor(distance / (1000 * 60 * 60 * 24)) + (Number(missionNum) - 1);
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );

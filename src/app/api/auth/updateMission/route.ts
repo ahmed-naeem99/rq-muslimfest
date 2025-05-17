@@ -18,11 +18,15 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    return NextResponse.json(
+      { message: "Success", result: response.rows[0] },
+      { status: 200 }
+    );
   } catch (e: any) {
     return NextResponse.json(
       { message: "An error occurred", code: "UNKNOWN_ERROR" },
       { status: 500 }
     );
   }
-  return NextResponse.json({ message: "Success" });
 }
