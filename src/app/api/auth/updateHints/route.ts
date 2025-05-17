@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
     const response = await sql`
     UPDATE missions
-    SET hintsused = ${req.hintNum}
+    SET hints_used = ${req.hintNum}
     WHERE team_id = ${req.user_id}
     AND mission = ${req.mission};
       `;
