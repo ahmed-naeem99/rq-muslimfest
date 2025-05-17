@@ -96,14 +96,6 @@ const NavBar = () => {
                     Day 2
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className="dark:focus:text-white focus:text-white text-white"
-                    href="/mission/3"
-                  >
-                    Day 3
-                  </Link>
-                </li>
               </ul>
             </details>
           </li>

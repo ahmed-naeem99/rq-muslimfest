@@ -12,7 +12,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
 
   const initialDate = new Date("2025-05-17T16:00:00Z");
   const countdownDate = new Date(
-    initialDate.getTime() + (missionNum - 1) * 24 * 60 * 60 * 1000
+    initialDate.getTime() + missionNum * 24 * 60 * 60 * 1000
   ).getTime();
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
   const curr_time = new Date().getTime();
   const start_time = countdownDate;
 
-  if (curr_time > start_time) {
+  if (curr_time < start_time) {
     if (countdownString === null) {
       return (
         <div className="grid place-items-center h-[93vh] dark:text-white text-dark pb-32">
@@ -204,7 +204,7 @@ const MissionPage = ({ params: { number: missionNum } }: any) => {
               ease: "linear",
             }}
           />
-          <p className="z-10">Please log in to access this page.</p>
+          <p className="z-10 font-bold">Please log in to access this page.</p>
         </div>
       );
     }
