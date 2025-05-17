@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const response = await sql`
     UPDATE missions
     SET timecompleted = CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York'
-    WHERE team_id = ${req.username}
+    WHERE team_id = ${req.user_id}
     AND mission = ${req.mission};
       `;
 

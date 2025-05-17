@@ -72,7 +72,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
       const data = await response.json();
       console.log(data);
-      setHintsUsed(data.result.hintsused);
+      setHintsUsed(data.result.hints_used);
     };
 
     fetchMissionData();
