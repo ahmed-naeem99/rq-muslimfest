@@ -115,12 +115,16 @@ const MissionForm = ({ mission }: { mission: number }) => {
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
       );
+
+      const completionDate = new Date(data.result.time_completed);
+
       console.log(missionEndDate);
-      console.log(data.result.time_completed);
+      console.log(completionDate);
 
       setIsCorrect(true);
 
-      if (data.result.time_completed > missionEndDate) {
+      if (completionDate > missionEndDate) {
+        console.log("late");
         setSubmitMessage(
           "Correct, well done! As the competition for this day is closed, your time will not be counted on the leaderboard."
         );
