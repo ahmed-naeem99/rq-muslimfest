@@ -133,7 +133,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
         );
       } else {
         setSubmitMessage(
-          "Correct! Well done, check the leaderboards to view your ranking."
+          "Correct! Check the leaderboards to view your ranking."
         );
       }
 
