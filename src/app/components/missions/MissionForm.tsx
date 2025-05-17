@@ -114,7 +114,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
       console.log(data);
 
-      const endDate = new Date("2025-05-17T20:00:00Z");
+      const endDate = new Date("2025-05-25T20:00:00Z");
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
       );
