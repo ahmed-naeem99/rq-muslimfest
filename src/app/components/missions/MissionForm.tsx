@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import HintButton from "./HintButton";
 import VideoFrame from "./MissionVideo";
+import { time } from "console";
+import { HintButtons } from "./HintButtons";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -18,7 +20,7 @@ interface MissionData {
   hint3: string;
 }
 
-const missionData: { [key: number]: MissionData } = {
+export const missionData: { [key: number]: MissionData } = {
   1: {
     video: "https://www.youtube.com/embed/vvEvBzUisXs",
     answer: ["Talha ibn Ubayd Allah", "Talha ibn 'Ubayd Allah"],
@@ -57,6 +59,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
   const [hintsUsed, setHintsUsed] = useState(0);
   const [showHintCounter, setShowHintCounter] = useState(0);
+  const [timeCompleted, setTimeCompleted] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMissionData = async () => {
@@ -69,6 +72,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
       });
 
       const data = await response.json();
+      setTimeCompleted(data.result.time_completed);
       setHintsUsed(data.result.hints_used);
     };
 
@@ -163,32 +167,32 @@ const MissionForm = ({ mission }: { mission: number }) => {
           </button>
           <HintButton
             hintNum={1}
-            hintMessage={missionData[mission].hint1}
             mission={mission}
             hintsUsed={hintsUsed}
             setHintsUsed={setHintsUsed}
             showHintCounter={showHintCounter}
             setShowHintCounter={setShowHintCounter}
+            timeCompleted={timeCompleted}
           />
 
           <HintButton
             hintNum={2}
-            hintMessage={missionData[mission].hint2}
             mission={mission}
             hintsUsed={hintsUsed}
             setHintsUsed={setHintsUsed}
             showHintCounter={showHintCounter}
             setShowHintCounter={setShowHintCounter}
+            timeCompleted={timeCompleted}
           />
 
           <HintButton
             hintNum={3}
-            hintMessage={missionData[mission].hint3}
             mission={mission}
             hintsUsed={hintsUsed}
             setHintsUsed={setHintsUsed}
             showHintCounter={showHintCounter}
             setShowHintCounter={setShowHintCounter}
+            timeCompleted={timeCompleted}
           />
         </div>
       </div>
