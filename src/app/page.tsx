@@ -91,7 +91,7 @@ export default function Home() {
           ease: "linear",
         }}
       />
-      <div className="relative h-[93vh] flex flex-col items-center justify-center px-4 z-10">
+      <div className="relative h-[93vh] flex flex-col items-center justify-center text-center px-4 z-10">
         <div className="relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 dark:from-sky-300 to-sky-400 dark:to-white">
@@ -99,7 +99,7 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-sky-950 dark:text-sky-100 mb-12 max-w-2xl">
+          <p className="text-xl md:text-2xl md:mx-[0] sm:mx-[20%] mx-[10%] text-center text-sky-950 dark:text-sky-100 mb-12 max-w-2xl">
             Embark on an adventure that blends the digital and physical worlds
           </p>
 
