@@ -170,6 +170,11 @@ export default function LoginForm() {
               className="font-semibold leading-6 text-sky-600 hover:text-sky-500"
             >
               Sign Up
+              {errorMessages.general && (
+                <p className="text-red-500 pt-3 w-full max-w-xs">
+                  {errorMessages.general}
+                </p>
+              )}
             </button>
           </p>
         </div>
