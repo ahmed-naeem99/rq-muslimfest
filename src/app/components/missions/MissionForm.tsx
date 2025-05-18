@@ -20,13 +20,13 @@ interface MissionData {
 
 export const missionData: { [key: number]: MissionData } = {
   1: {
-    video: "https://www.youtube.com/embed/vvEvBzUisXs",
-    answer: ["Talha ibn Ubayd Allah", "Talha ibn 'Ubayd Allah"],
-    hint1:
-      "Did you find the link hidden in the video? Those numbers in the end are hexadecimal; they can be converted...",
-    hint2: "The posters symbolize events from the Seerah; put them in order.",
+    video:
+      "https://drive.google.com/file/d/1wm6T6ly9WgkM07GDKF56iz-Ls8l_0kUf/preview",
+    answer: ["Yusuf ibn Tashfin"],
+    hint1: "You should know how to convert Hexadecimal to text.",
+    hint2: "What is a language game?",
     hint3:
-      "Black screen? Or is it? Play around with the brightness and contrast.",
+      "The 5th portal is not an actually in the convention; you must piece it together from the other portals",
   },
   2: {
     video: "https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn",
@@ -35,15 +35,6 @@ export const missionData: { [key: number]: MissionData } = {
       "Riddle me this Riddle me that! What it's saying is that you need to find the place in the convention that people stand in lines. Here's the hint: the big magical stairs.",
     hint2: "The video had two pauses; which letters were replaced?",
     hint3: "What happens if you overlay the two maps? Also horse code",
-  },
-  3: {
-    video: "https://www.youtube.com/embed/Z43NS_BL0eE?si=1V0LdR3175AEbhha",
-    answer: ["Mark Sykes"],
-    hint1:
-      "Since this is the last mission don't expect the hints to be too helpful. There are 2 different audio tricks done on the video: Re- and...",
-    hint2:
-      "Retrace your steps means go back to where you went before in the convention center. Look in places you didn't look in before.",
-    hint3: "",
   },
 };
 
