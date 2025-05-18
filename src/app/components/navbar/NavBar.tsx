@@ -67,7 +67,7 @@ const NavBar = () => {
           </div>
         </Link>
       </div>
-      <div className="navbar-center min-[400px]:flex hidden">
+      <div className="navbar-center md:flex hidden">
         <ul className="menu menu-horizontal px-1 items-center justify-center flex">
           <li>
             <details ref={detailsRef} onToggle={handleToggle}>
@@ -107,6 +107,22 @@ const NavBar = () => {
               Leaderboard
             </Link>
           </li>
+          <li>
+            <Link
+              className="dark:focus:text-white focus:text-black dark:text-white "
+              href="/toolbox"
+            >
+              Toolbox
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="dark:focus:text-white focus:text-black dark:text-white "
+              href="/rules"
+            >
+              Rules
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="navbar-end space-x-2 sm:space-x-4">
@@ -140,25 +156,9 @@ const NavBar = () => {
                 <Logout />
               </li>
             )}
-            <li>
-              <Link
-                className="dark:focus:text-white focus:text-white text-white  justify-between "
-                href="/toolbox"
-              >
-                Toolbox
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="dark:focus:text-white focus:text-white text-white  justify-between "
-                href="/rules"
-              >
-                Rules
-              </Link>
-            </li>
           </ul>
         </div>
-        <div className="min-[400px]:hidden inline pr-3 pt-1">
+        <div className="md:hidden inline pr-3 pt-1">
           <button
             onClick={toggleMenu}
             className="text-gray-800 dark:text-white focus:outline-none hover:text-neutral-500 cursor-pointer"
@@ -186,7 +186,7 @@ const NavBar = () => {
           isMobileMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
-        } transition-all block absolute top-16 right-0 w-full bg-gray-300 dark:bg-neutral-900 shadow-lg rounded-lg`}
+        } transition-all block absolute top-16 right-0 w-[50%] bg-gray-300 dark:bg-neutral-900 shadow-lg rounded-lg`}
       >
         <div className="bg-gray-100 dark:bg-neutral-800 rounded-lg m-2 transition-colors">
           <div className="py-3" />
@@ -197,7 +197,7 @@ const NavBar = () => {
           <ul className="space-y-1 px-4">
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
                 href="/mission/1"
               >
                 Day 1
@@ -205,7 +205,7 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
                 href="/mission/2"
               >
                 Day 2
@@ -213,25 +213,41 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                className="block px-4 py-2 w-[50%] text-center bg-gray-200 dark:bg-neutral-900 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md transition-colors"
+                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
                 href="/mission/3"
               >
                 Day 3
               </Link>
             </li>
           </ul>
-          <div className="py-3">
-            <ul>
-              <li>
-                <Link
-                  className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors font-medium"
-                  href="/leaderboard"
-                >
-                  Leaderboard
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <div className="border-b border-gray-300 dark:border-gray-700 w-[70%] mx-auto mt-6 mb-4" />
+
+          <ul className="space-y-1 px-4 py-2">
+            <li className="w-full">
+              <Link
+                className="block px-4 py-2 bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors font-medium"
+                href="/leaderboard"
+              >
+                Leaderboard
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                className="block px-4 py-2 bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors font-medium"
+                href="/toolbox"
+              >
+                Toolbox
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                className="block px-4 py-2 bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors font-medium"
+                href="/rules"
+              >
+                Rules
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

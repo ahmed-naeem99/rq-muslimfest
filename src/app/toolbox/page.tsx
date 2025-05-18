@@ -40,9 +40,9 @@ const ToolBoxPage = () => {
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-lg dark:text-white shadow-md outline outline-2 dark:outline-red-900 outline-red-600">
+      <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-lg dark:text-white shadow-md outline outline-2 dark:outline-red-900/50 outline-red-700/60">
         <h2 className="text-xl font-semibold mb-2">About:</h2>
-        <p>
+        <p className="text-sm md:text-[16px]">
           These slides contain important resources you may/may not take
           advantage of along your journey. You can navigate through the slides
           using the controls in the embedded viewer or use the full-screen
