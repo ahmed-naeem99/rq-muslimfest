@@ -54,10 +54,6 @@ const handler = NextAuth({
         token.user = user;
       }
 
-      if (trigger === "update" && session) {
-        token.user = session.user;
-      }
-
       return token;
     },
   },
