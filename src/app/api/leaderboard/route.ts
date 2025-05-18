@@ -6,6 +6,7 @@ export async function POST(request: Request) {
     const req = await request.json();
     const missionNum = req.mission;
 
+    // Keep the initial query to get mission data
     const missionResponse = await sql`
           SELECT m.team_id, m.time_completed, m.hints_used, u.username
           FROM missions m
@@ -13,7 +14,6 @@ export async function POST(request: Request) {
           WHERE u.role = 'player'
           AND m.time_completed IS NOT NULL
           AND m.mission = ${missionNum}
-          ORDER BY m.time_completed ASC
         `;
 
     const leaderboard = missionResponse.rows.map((row) => ({
@@ -24,6 +24,8 @@ export async function POST(request: Request) {
         row.time_completed.getTime() + row.hints_used * 10 * 60 * 1000
       ),
     }));
+
+    leaderboard.sort((a, b) => a.finaltime.getTime() - b.finaltime.getTime());
 
     return NextResponse.json(
       { message: "Success", result: leaderboard },
