@@ -13,11 +13,7 @@ const HomeButton = () => {
       return;
     }
 
-    if (session.user.mission != -1) {
-      router.push("/mission/" + session.user.mission);
-    } else {
-      router.push("/leaderboard");
-    }
+    router.push("/mission/1");
   };
 
   return (
