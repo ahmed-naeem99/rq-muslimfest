@@ -24,7 +24,7 @@ export const missionData: { [key: number]: MissionData } = {
       "https://drive.google.com/file/d/1wm6T6ly9WgkM07GDKF56iz-Ls8l_0kUf/preview",
     answer: ["Yusuf ibn Tashfin"],
     hint1: "What is ixnay? Ixnay = Ixnaq",
-    hint2: "What is a language game?",
+    hint2: "Learn how to change a hexadecimal to text",
     hint3: "Eich is a homophone of Letter",
   },
   2: {
