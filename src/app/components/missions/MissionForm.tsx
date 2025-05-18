@@ -50,6 +50,56 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [showHintCounter, setShowHintCounter] = useState(0);
   const [timeCompleted, setTimeCompleted] = useState<string | null>(null);
 
+  const [countdownString, setCountdownString] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const initialDate = new Date("2025-05-17T20:00:00Z");
+  const countdownDate = new Date(
+    initialDate.getTime() + mission * 24 * 60 * 60 * 1000
+  ).getTime();
+
+  useEffect(() => {
+    const calculateAndSetCountdown = () => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      if (distance <= 0) {
+        // When countdown ends, set to "0d 0h 0m 0s" instead of "ended"
+        setCountdownString("0d 0h 0m 0s");
+        return true; // Return true to clear interval
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setCountdownString(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      return false;
+    };
+
+    // Initial calculation
+    const hasEndedInitially = calculateAndSetCountdown();
+
+    // Only set up interval if countdown hasn't ended
+    let intervalId: NodeJS.Timeout | undefined;
+    if (!hasEndedInitially) {
+      intervalId = setInterval(() => {
+        if (calculateAndSetCountdown()) {
+          if (intervalId) clearInterval(intervalId);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [countdownDate]);
+
   useEffect(() => {
     const fetchMissionData = async () => {
       const response = await fetch("/api/auth/retrieveMission", {
@@ -135,6 +185,31 @@ const MissionForm = ({ mission }: { mission: number }) => {
           className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
         >
           Mission {mission} Submission
+        </div>
+        <div className="flex  justify-center gap-4 mb-8">
+          {countdownString &&
+            countdownString.split(" ").map((unit, index) => {
+              const [value, label] = unit.split(/([a-z]+)/);
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center bg-gray-200/60 dark:bg-neutral-900 rounded-lg p-3 min-w-[70px] shadow-md"
+                >
+                  <span className="font-bold text-2xl dark:text-[#952727] text-[#b53131] ">
+                    {value}
+                  </span>
+                  <span className="text-xs text-neutral-900 dark:text-gray-300">
+                    {label === "d"
+                      ? "DAYS"
+                      : label === "h"
+                      ? "HOURS"
+                      : label === "m"
+                      ? "MINUTES"
+                      : "SECONDS"}
+                  </span>
+                </div>
+              );
+            })}
         </div>
         <input
           name="missionAnswer"
