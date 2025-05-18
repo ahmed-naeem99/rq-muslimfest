@@ -11,6 +11,7 @@ const poseyFont = localFont({
 });
 
 interface MissionData {
+  title: string;
   video: string;
   answer: string[];
   hint1: string;
@@ -20,6 +21,7 @@ interface MissionData {
 
 export const missionData: { [key: number]: MissionData } = {
   1: {
+    title: "Mission Phelec",
     video:
       "https://drive.google.com/file/d/1wm6T6ly9WgkM07GDKF56iz-Ls8l_0kUf/preview",
     answer: ["Yusuf ibn Tashfin"],
@@ -28,6 +30,7 @@ export const missionData: { [key: number]: MissionData } = {
     hint3: "Eich is a homophone of Letter",
   },
   2: {
+    title: "Mission Catastrophe",
     video: "https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn",
     answer: ["Ahmad ibn Hanbal"],
     hint1:
@@ -182,8 +185,12 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
 
         <div
-          className={`dark:text-white text-black text-lg pt-8 pb-4 font-bold`}
+          className={`dark:text-white text-black text-3xl py-8 font-bold font-serif ${poseyFont.className}`}
         >
+          {missionData[mission].title}
+        </div>
+
+        <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
           Time Limit
         </div>
 
@@ -211,9 +218,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
                 </div>
               );
             })}
-        </div>
-        <div className={`dark:text-white text-black text-2xl py-4 font-bold`}>
-          Day {mission} Submission
         </div>
         <input
           name="missionAnswer"
