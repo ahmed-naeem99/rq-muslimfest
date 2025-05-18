@@ -10,7 +10,7 @@ export async function POST(request: Request) {
           SELECT m.team_id, m.time_completed, m.hints_used, u.username
           FROM missions m
           JOIN users u ON m.team_id = u.id
-          WHERE u.role = 'tester'
+          WHERE u.role = 'player'
           AND m.time_completed IS NOT NULL
           AND m.mission = ${missionNum}
           ORDER BY m.time_completed ASC
