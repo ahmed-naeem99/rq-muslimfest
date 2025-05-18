@@ -23,10 +23,9 @@ export const missionData: { [key: number]: MissionData } = {
     video:
       "https://drive.google.com/file/d/1wm6T6ly9WgkM07GDKF56iz-Ls8l_0kUf/preview",
     answer: ["Yusuf ibn Tashfin"],
-    hint1: "You should know how to convert Hexadecimal to text.",
+    hint1: "What is ixnay? Ixnay = Ixnaq",
     hint2: "What is a language game?",
-    hint3:
-      "The 5th portal is not an actually in the convention; you must piece it together from the other portals",
+    hint3: "Eich is a homophone of Letter",
   },
   2: {
     video: "https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn",
