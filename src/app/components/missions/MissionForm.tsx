@@ -181,11 +181,13 @@ const MissionForm = ({ mission }: { mission: number }) => {
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
+
         <div
-          className={`dark:text-white text-black text-2xl py-8 ${poseyFont.className}`}
+          className={`dark:text-white text-black text-lg pt-8 pb-4 font-bold`}
         >
-          Mission {mission} Submission
+          Time Limit:
         </div>
+
         <div className="flex  justify-center gap-4 mb-8">
           {countdownString &&
             countdownString.split(" ").map((unit, index) => {
@@ -210,6 +212,9 @@ const MissionForm = ({ mission }: { mission: number }) => {
                 </div>
               );
             })}
+        </div>
+        <div className={`dark:text-white text-black text-2xl py-4 font-bold`}>
+          Day {mission} Submission
         </div>
         <input
           name="missionAnswer"
