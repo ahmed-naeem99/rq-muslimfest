@@ -97,7 +97,7 @@ export default function LoginForm() {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6  text-dark dark:text-white"
               >
-                Team Name
+                Username
               </label>
               <div className="mt-2">
                 <input
