@@ -185,7 +185,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <div
           className={`dark:text-white text-black text-lg pt-8 pb-4 font-bold`}
         >
-          Time Limit:
+          Time Limit
         </div>
 
         <div className="flex  justify-center gap-4 mb-8">
