@@ -184,17 +184,19 @@ const MissionForm = ({ mission }: { mission: number }) => {
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
 
-        <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
-          {`Video Corrected:`}{" "}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-400 underline"
-            href="https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview"
-          >
-            Mirror Link
-          </a>
-        </div>
+        {mission == 2 && (
+          <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
+            {`Video Corrected:`}{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 underline"
+              href="https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview"
+            >
+              Mirror Link
+            </a>
+          </div>
+        )}
 
         <div
           className={`dark:text-white text-black text-3xl py-8 font-bold font-serif ${poseyFont.className}`}
