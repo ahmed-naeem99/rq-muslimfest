@@ -40,8 +40,6 @@ const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission, title }) => {
         });
         const data = await response.json();
 
-        console.log("Leaderboard data:", data);
-
         setLeaderboard(data.result);
         setLoading(false);
       } catch (error) {
