@@ -185,7 +185,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
 
         <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
-          {`Corrected Video:`}{" "}
+          {`Video Corrected:`}{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
