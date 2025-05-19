@@ -55,7 +55,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [countdownString, setCountdownString] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const initialDate = new Date("2025-05-17T20:00:00Z");
+  const initialDate = new Date("2025-05-17T18:45:00Z");
   const countdownDate = new Date(
     initialDate.getTime() + mission * 24 * 60 * 60 * 1000
   ).getTime();
@@ -153,7 +153,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     if (response.status === 200) {
       const data = await response.json();
 
-      const endDate = new Date("2025-05-17T20:00:00Z");
+      const endDate = new Date("2025-05-17T18:45:00Z");
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
       );
@@ -183,6 +183,16 @@ const MissionForm = ({ mission }: { mission: number }) => {
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         <VideoFrame videoLink={missionData[mission].video} mission={mission} />
+
+        <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
+          {`Corrected Video:`}{" "}
+          <a
+            className="text-blue-400 underline"
+            href="https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview"
+          >
+            Mirror Link
+          </a>
+        </div>
 
         <div
           className={`dark:text-white text-black text-3xl py-8 font-bold font-serif ${poseyFont.className}`}

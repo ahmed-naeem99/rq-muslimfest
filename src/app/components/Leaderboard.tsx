@@ -20,7 +20,7 @@ const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission, title }) => {
 
   const isLeaderboardAvailable = () => {
     const now = new Date();
-    const releaseDate = new Date(`2025-05-${17 + mission}T20:00:00Z`);
+    const releaseDate = new Date(`2025-05-${17 + mission}T18:45:00Z`);
     return now >= releaseDate;
   };
 
@@ -80,8 +80,8 @@ const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission, title }) => {
         <h1 className="text-xl mb-6 font-bold">{`Day ${mission}: Mission ${title}`}</h1>
         <div className="p-8 bg-white dark:bg-neutral-700 rounded-lg shadow-md">
           <p className="text-lg font-medium">
-            The leaderboard for this mission will be released after 4PM EST on
-            May {17 + mission}, 2025.
+            The leaderboard for this mission will be released after 2:45PM EST
+            on May {17 + mission}, 2025.
           </p>
           <p className="mt-4 text-gray-600 dark:text-gray-300">
             Check back later to see the rankings!
