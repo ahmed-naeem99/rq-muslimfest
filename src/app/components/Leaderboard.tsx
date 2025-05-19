@@ -11,22 +11,34 @@ interface User {
 
 interface LeaderBoardProps {
   mission: number;
+  title: string;
 }
 
-const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission }) => {
+const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission, title }) => {
   const [leaderboard, setLeaderboard] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const isLeaderboardAvailable = () => {
+    const now = new Date();
+    const releaseDate = new Date(`2025-05-${17 + mission}T20:00:00Z`);
+    return now >= releaseDate;
+  };
+
+  const leaderboardAvailable = isLeaderboardAvailable();
+
   useEffect(() => {
     const fetchLeaderboard = async () => {
+      if (!leaderboardAvailable) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch("/api/leaderboard", {
           method: "POST",
           body: JSON.stringify({ mission: mission }),
         });
         const data = await response.json();
-
-        console.log("Leaderboard data:", data);
 
         setLeaderboard(data.result);
         setLoading(false);
@@ -37,7 +49,7 @@ const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission }) => {
     };
 
     fetchLeaderboard();
-  }, []);
+  }, [mission, leaderboardAvailable]);
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) {
@@ -62,9 +74,26 @@ const LeaderBoardTable: React.FC<LeaderBoardProps> = ({ mission }) => {
     );
   }
 
+  if (!leaderboardAvailable) {
+    return (
+      <div className="flex flex-col text-center justify-center dark:text-white items-center pt-12 px-4 w-full">
+        <h1 className="text-xl mb-6 font-bold">{`Day ${mission}: Mission ${title}`}</h1>
+        <div className="p-8 bg-white dark:bg-neutral-700 rounded-lg shadow-md">
+          <p className="text-lg font-medium">
+            The leaderboard for this mission will be released after 4PM EST on
+            May {17 + mission}, 2025.
+          </p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">
+            Check back later to see the rankings!
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col text-center justify-center dark:text-white items-center pt-12 px-4 w-full">
-      <h1 className="text-2xl mb-6 font-bold">{`Day ${mission}`}</h1>
+      <h1 className="text-xl mb-6 font-bold">{`Day ${mission}: Mission ${title}`}</h1>
       <div className="w-full sm:w-[90%] md:w-[80%] xl:w-[60%] overflow-x-auto">
         <div className="min-w-fit bg-white dark:bg-gray-100 p-1 rounded-lg">
           <table className="min-w-full text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-neutral-700 transition-all rounded-lg border-spacing-0 overflow-hidden">
