@@ -32,7 +32,7 @@ export const missionData: { [key: number]: MissionData } = {
   2: {
     title: "Mission Catastrophe",
     video:
-      "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preivew",
+      "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview",
     answer: ["Mehmed II"],
     hint1: "What is a spectogram?",
     hint2: "Return to the old portals/doors from yesterday",
