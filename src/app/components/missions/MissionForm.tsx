@@ -31,10 +31,12 @@ export const missionData: { [key: number]: MissionData } = {
   },
   2: {
     title: "Mission Catastrophe",
-    video: "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/view?usp=sharing",
+    video:
+      "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preivew",
     answer: ["Mehmed II"],
-    hint1:
-      "What is a spectogram?",
+    hint1: "What is a spectogram?",
+    hint2: "Return to the old portals/doors from yesterday",
+    hint3: "What is a website made of? code",
   },
 };
 
