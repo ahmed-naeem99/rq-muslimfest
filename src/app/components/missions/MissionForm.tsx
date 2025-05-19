@@ -187,6 +187,8 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
           {`Corrected Video:`}{" "}
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-400 underline"
             href="https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview"
           >
