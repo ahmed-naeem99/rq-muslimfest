@@ -31,12 +31,10 @@ export const missionData: { [key: number]: MissionData } = {
   },
   2: {
     title: "Mission Catastrophe",
-    video: "https://www.youtube.com/embed/5yP4FtvkkKw?si=WvxWZzLzq6kUs_qn",
-    answer: ["Ahmad ibn Hanbal"],
+    video: "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/view?usp=sharing",
+    answer: ["Mehmed II"],
     hint1:
-      "Riddle me this Riddle me that! What it's saying is that you need to find the place in the convention that people stand in lines. Here's the hint: the big magical stairs.",
-    hint2: "The video had two pauses; which letters were replaced?",
-    hint3: "What happens if you overlay the two maps? Also horse code",
+      "What is a spectogram?",
   },
 };
 
