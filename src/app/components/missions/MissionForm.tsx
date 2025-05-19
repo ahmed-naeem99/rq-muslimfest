@@ -55,7 +55,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [countdownString, setCountdownString] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const initialDate = new Date("2025-05-17T18:45:00Z");
+  const initialDate = new Date("2025-05-17T19:30:00Z");
   const countdownDate = new Date(
     initialDate.getTime() + mission * 24 * 60 * 60 * 1000
   ).getTime();
@@ -153,7 +153,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     if (response.status === 200) {
       const data = await response.json();
 
-      const endDate = new Date("2025-05-17T18:45:00Z");
+      const endDate = new Date("2025-05-17T19:30:00Z");
       const missionEndDate = new Date(
         endDate.getTime() + mission * 24 * 60 * 60 * 1000
       );
