@@ -95,7 +95,7 @@ export default function Home() {
         <div className="relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 dark:from-sky-300 to-sky-400 dark:to-white">
-              Reality Quest
+              Reality Quest - MuslimFest
             </span>
           </h1>
 
