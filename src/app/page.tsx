@@ -93,9 +93,12 @@ export default function Home() {
       />
       <div className="relative h-[93vh] flex flex-col items-center justify-center text-center px-4 z-10">
         <div className="relative z-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 dark:from-sky-300 to-sky-400 dark:to-white">
-              Reality Quest - MuslimFest
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 dark:from-sky-300 to-sky-400 dark:to-white">
+              Reality Quest
+            </span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 dark:from-white to-sky-300 dark:to-sky-100">
+              MuslimFest
             </span>
           </h1>
 
