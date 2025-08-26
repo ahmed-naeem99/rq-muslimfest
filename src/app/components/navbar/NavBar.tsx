@@ -71,29 +71,23 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1 items-center justify-center flex">
           <li>
             <details ref={detailsRef} onToggle={handleToggle}>
-              <summary
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleDropdown();
-                }}
-              >
+              <summary>
                 Missions
               </summary>
-              <ul className="p-2  bg-sky-400 dark:bg-neutral-600">
+              <ul className="p-2 bg-sky-400 dark:bg-neutral-600">
                 <li>
-                  <Link
-                    className="dark:focus:text-white focus:text-white text-white"
-                    href="/mission/1"
-                  >
+                  <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/1">
                     Day 1
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="dark:focus:text-white focus:text-white text-white"
-                    href="/mission/2"
-                  >
+                  <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/2">
                     Day 2
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/3">
+                    Day 3
                   </Link>
                 </li>
               </ul>
@@ -217,6 +211,14 @@ const NavBar = () => {
                 href="/mission/2"
               >
                 Day 2
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                href="/mission/3"
+              >
+                Day 3
               </Link>
             </li>
           </ul>

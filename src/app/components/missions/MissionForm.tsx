@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
+import Image from "next/image";
 import HintButton from "./HintButton";
-import VideoFrame from "./MissionVideo";
 
 const poseyFont = localFont({
   src: "../../../../public/fonts/posey-textured.ttf",
@@ -12,7 +12,7 @@ const poseyFont = localFont({
 
 interface MissionData {
   title: string;
-  video: string;
+  image: string;   // ✅ now image instead of video
   answer: string[];
   hint1: string;
   hint2: string;
@@ -21,30 +21,35 @@ interface MissionData {
 
 export const missionData: { [key: number]: MissionData } = {
   1: {
-    title: "Mission Phelec",
-    video:
-      "https://drive.google.com/file/d/1wm6T6ly9WgkM07GDKF56iz-Ls8l_0kUf/preview",
-    answer: ["Yusuf ibn Tashfin"],
-    hint1: "What is ixnay? Ixnay = Ixnaq",
-    hint2: "Learn how to change a hexadecimal to text",
-    hint3: "Eich is a homophone of Letter",
+    title: "Mission 1: Turmoil",
+    image: "./missions/mission1.png",
+    answer: ["Answer"],
+    hint1: "hint1",
+    hint2: "hint2",
+    hint3: "hint3",
   },
   2: {
-    title: "Mission Catastrophe",
-    video:
-      "https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview",
-    answer: ["Mehmed II"],
-    hint1: "What is a spectogram?",
-    hint2: "Return to the old portals/doors from yesterday",
-    hint3: "What is a website made of? code",
+    title: "Mission 2: Duality",
+    image: "./missions/mission2.png",
+    answer: ["Answer"],
+    hint1: "hint1",
+    hint2: "hint2",
+    hint3: "hint3",
+  },
+  3: {
+    title: "Mission 3: Criterion",
+    image: "",
+    answer: ["Your Answer Here"],
+    hint1: "First hint",
+    hint2: "Second hint",
+    hint3: "Third hint",
   },
 };
 
 const MissionForm = ({ mission }: { mission: number }) => {
-  const { data: session, update } = useSession() as any;
+  const { data: session } = useSession() as any;
 
   const [submission, setSubmission] = useState("");
-
   const [submitMessage, setSubmitMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(true);
 
@@ -53,7 +58,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [timeCompleted, setTimeCompleted] = useState<string | null>(null);
 
   const [countdownString, setCountdownString] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const initialDate = new Date("2025-05-17T19:30:00Z");
   const countdownDate = new Date(
@@ -66,9 +70,8 @@ const MissionForm = ({ mission }: { mission: number }) => {
       const distance = countdownDate - now;
 
       if (distance <= 0) {
-        // When countdown ends, set to "0d 0h 0m 0s" instead of "ended"
         setCountdownString("0d 0h 0m 0s");
-        return true; // Return true to clear interval
+        return true;
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -82,10 +85,8 @@ const MissionForm = ({ mission }: { mission: number }) => {
       return false;
     };
 
-    // Initial calculation
     const hasEndedInitially = calculateAndSetCountdown();
 
-    // Only set up interval if countdown hasn't ended
     let intervalId: NodeJS.Timeout | undefined;
     if (!hasEndedInitially) {
       intervalId = setInterval(() => {
@@ -96,9 +97,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     }
 
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
+      if (intervalId) clearInterval(intervalId);
     };
   }, [countdownDate]);
 
@@ -117,8 +116,10 @@ const MissionForm = ({ mission }: { mission: number }) => {
       setHintsUsed(data.result.hints_used);
     };
 
-    fetchMissionData();
-  }, [mission, session.user.id]);
+    if (session?.user?.id) {
+      fetchMissionData();
+    }
+  }, [mission, session?.user?.id]);
 
   const handleSubmit = async () => {
     setIsCorrect(false);
@@ -182,21 +183,16 @@ const MissionForm = ({ mission }: { mission: number }) => {
   return (
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
-        <VideoFrame videoLink={missionData[mission].video} mission={mission} />
-
-        {mission == 2 && (
-          <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
-            {`Video Corrected:`}{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 underline"
-              href="https://drive.google.com/file/d/1TpfSMfQ1Hnz05uFT0G6IbmTQ3uxY1sVy/preview"
-            >
-              Mirror Link
-            </a>
-          </div>
-        )}
+        {/* ✅ Mission image instead of video */}
+        <div className="w-full flex justify-center">
+          <Image
+            src={missionData[mission].image}
+            alt={missionData[mission].title}
+            width={600}
+            height={400}
+            className="rounded-lg shadow-md"
+          />
+        </div>
 
         <div
           className={`dark:text-white text-black text-3xl py-8 font-bold font-serif ${poseyFont.className}`}
