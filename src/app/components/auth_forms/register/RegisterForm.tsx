@@ -159,7 +159,7 @@ export default function LoginForm() {
     return false;
   };
 
-  const handleServerErrors = (result: any) => {
+    const handleServerErrors = (result: any) => {
     setErrorMessages({
       email: "",
       username: "",
@@ -170,9 +170,10 @@ export default function LoginForm() {
     });
     setTeamErrorMessages({});
 
-    const errorCode = result.code;
+    // Check if result has a code property
+    const errorCode = result?.code;
 
-    switch (result.code) {
+    switch (errorCode) {
       case "EMAIL_EXISTS":
         setErrorMessages((prev) => ({
           ...prev,
@@ -188,34 +189,54 @@ export default function LoginForm() {
       default:
         setErrorMessages((prev) => ({
           ...prev,
-          general: "An unknown error occurred.",
+          general: result?.message || "An unknown error occurred.",
         }));
         break;
     }
   };
 
-  const handleSignUp = async () => {
+    const handleSignUp = async () => {
     if (!handleClientErrors()) {
       return;
     }
 
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
-        fullName: fullName,
-        age: age,
-        ticket: ticket,
-      }),
-    });
-    const result = await response.json();
-    if (response.status === 200) {
-      router.push("/login");
-      router.refresh();
-    } else {
-      handleServerErrors(result);
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          password: password,
+          fullName: fullName,
+          age: age,
+          ticket: ticket,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/login");
+        router.refresh();
+      } else {
+        console.log("REGISTER BODY", { email, username, fullName, age, ticket, hasPassword: !!password });
+        try {
+          const result = await response.json();
+          handleServerErrors(result);
+        } catch (e) {
+          // If response is not JSON, use a generic error
+          setErrorMessages(prev => ({
+            ...prev,
+            general: "An error occurred during registration.",
+          }));
+        }
+      }
+    } catch (error) {
+      setErrorMessages(prev => ({
+        ...prev,
+        general: "Network error. Please try again.",
+      }));
     }
   };
 
