@@ -38,16 +38,16 @@ export default function LoginForm() {
     [key: number]: string;
   }>({});
 
-  // useEffect(() => {
-  //   if (teamMembers[0].email !== email) {
-  //     const updatedTeam = [...teamMembers];
-  //     updatedTeam[0] = {
-  //       ...updatedTeam[0],
-  //       email: email,
-  //     };
-  //     setTeamMembers(updatedTeam);
-  //   }
-  // }, [email, teamMembers]);
+  useEffect(() => {
+    if (teamMembers[0].email !== email) {
+      const updatedTeam = [...teamMembers];
+      updatedTeam[0] = {
+        ...updatedTeam[0],
+        email: email,
+      };
+      setTeamMembers(updatedTeam);
+    }
+  }, [email, teamMembers]);
 
   const router = useRouter();
 
@@ -143,7 +143,7 @@ export default function LoginForm() {
     const isUsernameValid = validateUsername(username);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePasswords(password, rePassword);
-    // const isTeamMembersValid = validateTeamMembers(teamMembers);
+    const isTeamMembersValid = validateTeamMembers(teamMembers);
     const isFullNameValid = validateFullName(fullName);
     const isAgeValid = validateAge(age);
 
@@ -213,6 +213,7 @@ export default function LoginForm() {
           fullName: fullName,
           age: age,
           ticket: ticket,
+          teamMembers: teamMembers,
         }),
       });
 
@@ -220,7 +221,6 @@ export default function LoginForm() {
         router.push("/login");
         router.refresh();
       } else {
-        console.log("REGISTER BODY", { email, username, fullName, age, ticket, hasPassword: !!password });
         try {
           const result = await response.json();
           handleServerErrors(result);
@@ -413,22 +413,11 @@ export default function LoginForm() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  onChange={(e) => setTicket(e.target.checked)}
-                  checked={ticket}
-                  className="h-4 w-4 checkbox bg-gray-200 dark:bg-neutral-800 focus:ring-sky-500 rounded"
-                />
-                <label className="ml-2 text-sm font-medium dark:text-gray-300 text-gray-700">
-                  I have a ticket for the MAC Convention
-                </label>
-              </div>
             </div>
           </div>
         </div>
 
-        {/* <div className="flex flex-col w-auto lg:max-w-[700px]">
+        {<div className="flex flex-col w-auto lg:max-w-[700px]">
           <h2 className="text-center text-lg pb-4 font-bold leading-9 tracking-tight text-dark dark:text-white">
             Team Information
           </h2>
@@ -440,7 +429,7 @@ export default function LoginForm() {
               teamErrorMessages={teamErrorMessages}
             />
           </div>
-        </div> */}
+        </div>}
       </div>
       <div>
         {errorMessages.general && (

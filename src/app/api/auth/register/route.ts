@@ -7,7 +7,7 @@ const usernameRegex = /^[a-zA-Z0-9_]{3,36}$/;
 
 export async function POST(request: Request) {
   try {
-    const { email, username, password, fullName, age, ticket } =
+    const { email, username, password, fullName, age, ticket, teamMembers } =
       await request.json();
 
     if (
@@ -67,16 +67,13 @@ export async function POST(request: Request) {
     RETURNING id
     `;
 
-    console.log("User insert response:", response.rows);
-
     const userId = response.rows[0].id;
-    console.log("User id:", userId);
 
-    // Insert into game_data table
-    // await sql`
-    // INSERT INTO game_data (team_id)
-    // VALUES (${userId})
-    // `;
+    //Insert into game_data table
+    await sql`
+    INSERT INTO game_data (team_id)
+    VALUES (${userId})
+    `;
 
     // Insert mission 1 into missions table
     await sql`
@@ -96,39 +93,41 @@ export async function POST(request: Request) {
     VALUES (${userId}, ${3})
     `;
 
-    // Insert the user themselves into team_members table, then add team members
-    // await sql`
-    // INSERT INTO team_members (team_id, member_name, member_email)
-    // VALUES (${userId}, ${teamMembers[0].name}, ${email})
-    // `;
+    //Insert the user themselves into team_members table, then add team members
+    await sql`
+    INSERT INTO team_members (team_id, member_name, member_email)
+    VALUES (${userId}, ${teamMembers[0].name}, ${email})
+    `;
 
-    // if (teamMembers && Array.isArray(teamMembers) && teamMembers.length > 1) {
-    //   for (const memberUsername of teamMembers) {
-    //     if (memberUsername.name === teamMembers[0].name) {
-    //       continue;
-    //     }
-    //     if (
-    //       typeof memberUsername.email === "string" &&
-    //       memberUsername.email.trim() !== "" &&
-    //       emailRegex.test(memberUsername.email)
-    //     ) {
-    //       await sql`
-    //       INSERT INTO team_members (team_id, member_name, member_email)
-    //       VALUES (${userId}, ${memberUsername.name}, ${memberUsername.email})
-    //       `;
-    //     } else {
-    //       return NextResponse.json(
-    //         {
-    //           message: "Invalid team member email",
-    //           code: "INVALID_TEAM_MEMBER_EMAIL",
-    //         },
-    //         {
-    //           status: 400,
-    //         }
-    //       );
-    //     }
-    //   }
-    // }
+    if (teamMembers && Array.isArray(teamMembers) && teamMembers.length > 1) {
+      for (const memberUsername of teamMembers) {
+        if (memberUsername.name === teamMembers[0].name) {
+          continue;
+        }
+        if (
+          typeof memberUsername.email === "string" &&
+          memberUsername.email.trim() !== "" &&
+          emailRegex.test(memberUsername.email)
+        ) {
+          await sql`
+          INSERT INTO team_members (team_id, member_name, member_email)
+          VALUES (${userId}, ${memberUsername.name}, ${memberUsername.email})
+          `;
+        } else {
+          return NextResponse.json(
+            {
+              message: "Invalid team member email",
+              code: "INVALID_TEAM_MEMBER_EMAIL",
+            },
+            {
+              status: 400,
+            }
+          );
+        }
+      }
+    }
+
+
   } catch (e: any) {
     if (e.code === "23505") {
       if (e.message.includes("users_lower_idx")) {
