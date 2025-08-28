@@ -22,7 +22,7 @@ interface MissionData {
 export const missionData: { [key: number]: MissionData } = {
   1: {
     title: "Mission 1: Turmoil",
-    image: "./missionImages/mission1.png",
+    image: "/missionImages/mission1.png",
     answer: ["Answer"],
     hint1: "hint1",
     hint2: "hint2",
@@ -30,7 +30,7 @@ export const missionData: { [key: number]: MissionData } = {
   },
   2: {
     title: "Mission 2: Duality",
-    image: "./missionImages/mission2.png",
+    image: "/missionImages/mission2.png",
     answer: ["Answer"],
     hint1: "hint1",
     hint2: "hint2",
