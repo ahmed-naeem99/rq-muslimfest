@@ -23,7 +23,7 @@ export const missionData: { [key: number]: MissionData } = {
   1: {
     title: "Mission 1: Turmoil",
     image: "/missionImages/mission1.png",
-    answer: ["Answer"],
+    answer: ["Muhammad Ali Pasha", "Muhamaad Ali of Egypt"],
     hint1: "hint1",
     hint2: "hint2",
     hint3: "hint3",
@@ -31,7 +31,7 @@ export const missionData: { [key: number]: MissionData } = {
   2: {
     title: "Mission 2: Duality",
     image: "/missionImages/mission2.png",
-    answer: ["Answer"],
+    answer: ["Mustafa Sabri", "Mustafa Sabri Effendi"],
     hint1: "hint1",
     hint2: "hint2",
     hint3: "hint3",
@@ -184,7 +184,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         {/* ✅ Mission image instead of video */}
-        <div className="w-full flex justify-center mt-10">
+        <div className="w-full flex justify-center mt-13">
           <Image
             src={missionData[mission].image}
             alt={missionData[mission].title}
