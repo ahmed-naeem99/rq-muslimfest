@@ -70,6 +70,7 @@ export async function POST(request: Request) {
     console.log("User insert response:", response.rows);
 
     const userId = response.rows[0].id;
+    console.log("User id:", userId);
 
     // Insert into game_data table
     // await sql`
