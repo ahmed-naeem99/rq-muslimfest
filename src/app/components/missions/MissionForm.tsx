@@ -184,7 +184,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
         {/* ✅ Mission image instead of video */}
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mt-10">
           <Image
             src={missionData[mission].image}
             alt={missionData[mission].title}
