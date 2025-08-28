@@ -6,16 +6,32 @@ export async function POST(request: Request) {
     const req = await request.json();
     const missionNum = req.mission;
 
-    // Keep the initial query to get mission data
-    const missionResponse = await sql`
-          SELECT m.team_id, m.time_completed, m.hints_used, u.username
-          FROM missions m
-          JOIN users u ON m.team_id = u.id
-          WHERE u.role = 'player'
-          AND m.time_completed IS NOT NULL
-          AND m.mission = ${missionNum}
-        `;
+    // Check if missionNum is provided
+    if (!missionNum) {
+      return NextResponse.json(
+        { message: "Mission number is required", code: "MISSION_REQUIRED" },
+        { status: 400 }
+      );
+    }
 
+    // Updated query with the correct columns
+    const missionResponse = await sql`
+      SELECT m.user_id, m.time_completed, m.hints_used, u.username
+      FROM missions m
+      JOIN users u ON m.user_id = u.id
+      WHERE m.mission = ${missionNum}
+      AND m.time_completed IS NOT NULL
+    `;
+
+    // Check if we got any results
+    if (!missionResponse.rows || missionResponse.rows.length === 0) {
+      return NextResponse.json(
+        { message: "No data found for this mission", result: [] },
+        { status: 200 }
+      );
+    }
+
+    // Process the data
     const leaderboard = missionResponse.rows.map((row) => ({
       username: row.username,
       timecompleted: row.time_completed,
@@ -32,8 +48,9 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (e: any) {
+    console.error("Error in leaderboard API:", e);
     return NextResponse.json(
-      { message: "An error occurred", code: "UNKNOWN_ERROR" },
+      { message: "An error occurred", code: "UNKNOWN_ERROR", error: e.message },
       { status: 500 }
     );
   }
