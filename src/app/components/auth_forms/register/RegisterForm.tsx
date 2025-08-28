@@ -152,7 +152,8 @@ export default function LoginForm() {
       isEmailValid &&
       isPasswordValid &&
       isFullNameValid &&
-      isAgeValid
+      isAgeValid &&
+      isTeamMembersValid
     ) {
       return true;
     }
