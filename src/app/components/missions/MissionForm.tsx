@@ -58,26 +58,30 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const [timeCompleted, setTimeCompleted] = useState<string | null>(null);
 
   const [countdownString, setCountdownString] = useState<string | null>(null);
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
-  const initialDate = new Date("2025-05-17T19:30:00Z");
-  const countdownDate = new Date(
-    initialDate.getTime() + mission * 24 * 60 * 60 * 1000
-  ).getTime();
+  // 🔑 Unlock schedule
+  const missionUnlockDates: { [key: number]: Date } = {
+    1: new Date("2025-08-29T18:00:00Z"), // Friday 2PM EST
+    2: new Date("2025-08-30T16:00:00Z"), // Saturday 12PM EST
+    3: new Date("2025-08-31T16:00:00Z"), // Sunday 12PM EST
+  };
+
+  const unlockDate = missionUnlockDates[mission].getTime();
 
   useEffect(() => {
-    const calculateAndSetCountdown = () => {
+    const calculateCountdown = () => {
       const now = new Date().getTime();
-      const distance = countdownDate - now;
+      const distance = unlockDate - now;
 
       if (distance <= 0) {
-        setCountdownString("0d 0h 0m 0s");
+        setIsUnlocked(true);
+        setCountdownString(null); // no countdown needed anymore
         return true;
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
@@ -85,43 +89,30 @@ const MissionForm = ({ mission }: { mission: number }) => {
       return false;
     };
 
-    const hasEndedInitially = calculateAndSetCountdown();
+    const ended = calculateCountdown();
+    let interval: NodeJS.Timeout | undefined;
 
-    let intervalId: NodeJS.Timeout | undefined;
-    if (!hasEndedInitially) {
-      intervalId = setInterval(() => {
-        if (calculateAndSetCountdown()) {
-          if (intervalId) clearInterval(intervalId);
+    if (!ended) {
+      interval = setInterval(() => {
+        if (calculateCountdown()) {
+          if (interval) clearInterval(interval);
         }
       }, 1000);
     }
 
     return () => {
-      if (intervalId) clearInterval(intervalId);
+      if (interval) clearInterval(interval);
     };
-  }, [countdownDate]);
+  }, [unlockDate]);
 
-  useEffect(() => {
-    const fetchMissionData = async () => {
-      const response = await fetch("/api/auth/retrieveMission", {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: session.user.id,
-          mission: mission,
-        }),
-      });
-
-      const data = await response.json();
-      setTimeCompleted(data.result.time_completed);
-      setHintsUsed(data.result.hints_used);
-    };
-
-    if (session?.user?.id) {
-      fetchMissionData();
-    }
-  }, [mission, session?.user?.id]);
-
+  // 🚫 Prevent submission before unlock
   const handleSubmit = async () => {
+    if (!isUnlocked) {
+      setSubmitMessage("This mission is not unlocked yet!");
+      setIsCorrect(false);
+      return;
+    }
+
     setIsCorrect(false);
 
     const completed = await fetch("/api/auth/retrieveMission", {
@@ -153,27 +144,9 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
     if (response.status === 200) {
       const data = await response.json();
-
-      const endDate = new Date("2025-05-17T19:30:00Z");
-      const missionEndDate = new Date(
-        endDate.getTime() + mission * 24 * 60 * 60 * 1000
-      );
-
-      const completionDate = new Date(data.result.time_completed);
-
       setTimeCompleted(data.result.time_completed);
       setIsCorrect(true);
-
-      if (completionDate > missionEndDate) {
-        setSubmitMessage(
-          "Correct, well done! As the competition for this day is closed, your time will not be counted on the leaderboard."
-        );
-      } else {
-        setSubmitMessage(
-          "Correct! Check the leaderboards to view your ranking."
-        );
-      }
-
+      setSubmitMessage("Correct! Check the leaderboards to view your ranking.");
       return;
     }
 
@@ -229,6 +202,11 @@ const MissionForm = ({ mission }: { mission: number }) => {
               );
             })}
         </div>
+        {!isUnlocked && (
+          <div className="text-center text-red-500 font-bold my-4">
+            Mission locked! Unlocks in: {countdownString}
+          </div>
+        )}
         <input
           name="missionAnswer"
           onChange={(e) => setSubmission(e.target.value)}
@@ -243,7 +221,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
           <button
             onClick={handleSubmit}
-            disabled={!submission}
+            disabled={!submission || !isUnlocked}
             className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Submit (Use Wikipedia Spelling)
