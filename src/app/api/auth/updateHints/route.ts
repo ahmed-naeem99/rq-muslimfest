@@ -6,23 +6,26 @@ export async function POST(request: Request) {
     const req = await request.json();
 
     const response = await sql`
-    UPDATE missions
-    SET hints_used = ${req.hintNum}
-    WHERE team_id = ${req.user_id}
-    AND mission = ${req.mission};
-      `;
+      UPDATE missions
+      SET hints_used = GREATEST(hints_used, ${req.hintNum})
+      WHERE user_id = ${req.user_id}
+      AND mission = ${req.mission};
+    `;
 
-    if (response.rowCount != 1) {
+    if (response.rowCount !== 1) {
       return NextResponse.json(
-        { message: "An error occurred", code: "UNKNOWN_ERROR" },
-        { status: 500 }
+        { message: "No matching mission found", code: "NOT_FOUND" },
+        { status: 404 }
       );
     }
+
+    return NextResponse.json({ message: "Success" });
+
   } catch (e: any) {
+    console.error("❌ updateHints error:", e);
     return NextResponse.json(
       { message: "An error occurred", code: "UNKNOWN_ERROR" },
       { status: 500 }
     );
   }
-  return NextResponse.json({ message: "Success" });
 }
