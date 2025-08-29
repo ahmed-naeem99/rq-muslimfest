@@ -14,6 +14,33 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  
+  // Check if missions are unlocked
+  const [missionsUnlocked, setMissionsUnlocked] = useState({
+    1: true,
+    2: false,
+    3: false
+  });
+
+  useEffect(() => {
+    // Check mission unlock status
+    const checkUnlockStatus = () => {
+      const now = new Date().getTime();
+      const mission2Unlock = new Date("2025-08-30T16:00:00Z").getTime();
+      const mission3Unlock = new Date("2025-08-31T16:00:00Z").getTime();
+      
+      setMissionsUnlocked({
+        1: true, // Mission 1 is always unlocked
+        2: now >= mission2Unlock,
+        3: now >= mission3Unlock
+      });
+    };
+    
+    checkUnlockStatus();
+    const interval = setInterval(checkUnlockStatus, 60000); // Check every minute
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -80,16 +107,20 @@ const NavBar = () => {
                     Day 1
                   </Link>
                 </li>
-                <li>
-                  <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/2">
-                    Day 2
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/3">
-                    Day 3
-                  </Link>
-                </li>
+                {missionsUnlocked[2] && (
+                  <li>
+                    <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/2">
+                      Day 2
+                    </Link>
+                  </li>
+                )}
+                {missionsUnlocked[3] && (
+                  <li>
+                    <Link className="text-white hover:bg-sky-500 dark:hover:bg-neutral-700" href="/mission/3">
+                      Day 3
+                    </Link>
+                  </li>
+                )}
               </ul>
             </details>
           </li>
@@ -195,7 +226,6 @@ const NavBar = () => {
           <h3 className="font-semibold text-gray-700 dark:text-gray-300 px-4 mb-2">
             Missions
           </h3>
-          {/* <div className="border-b border-gray-300 dark:border-gray-700 w-[70%]" /> */}
           <ul className="space-y-1 px-4">
             <li>
               <Link
@@ -205,22 +235,26 @@ const NavBar = () => {
                 Day 1
               </Link>
             </li>
-            <li>
-              <Link
-                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
-                href="/mission/2"
-              >
-                Day 2
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
-                href="/mission/3"
-              >
-                Day 3
-              </Link>
-            </li>
+            {missionsUnlocked[2] && (
+              <li>
+                <Link
+                  className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                  href="/mission/2"
+                >
+                  Day 2
+                </Link>
+              </li>
+            )}
+            {missionsUnlocked[3] && (
+              <li>
+                <Link
+                  className="block px-4 py-2 w-full text-center bg-gray-200 dark:bg-neutral-900 hover:bg-red-800/30 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                  href="/mission/3"
+                >
+                  Day 3
+                </Link>
+              </li>
+            )}
           </ul>
           <div className="border-b border-gray-300 dark:border-gray-700 w-[70%] mx-auto mt-6 mb-4" />
 

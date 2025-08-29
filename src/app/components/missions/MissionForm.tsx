@@ -12,7 +12,7 @@ const poseyFont = localFont({
 
 interface MissionData {
   title: string;
-  image: string;   // ✅ now image instead of video
+  image: string;
   answer: string[];
   hint1: string;
   hint2: string;
@@ -76,7 +76,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
 
       if (distance <= 0) {
         setIsUnlocked(true);
-        setCountdownString(null); // no countdown needed anymore
+        setCountdownString(null);
         return true;
       }
 
@@ -105,7 +105,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
     };
   }, [unlockDate]);
 
-  // 🚫 Prevent submission before unlock
   const handleSubmit = async () => {
     if (!isUnlocked) {
       setSubmitMessage("This mission is not unlocked yet!");
@@ -153,6 +152,53 @@ const MissionForm = ({ mission }: { mission: number }) => {
     setSubmitMessage("An error has occurred. Please try again.");
   };
 
+  // Don't show mission content until unlocked
+  if (!isUnlocked) {
+    return (
+      <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
+        <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
+          <div className="dark:text-white text-black text-3xl py-8 font-bold font-serif">
+            Mission {mission} Locked
+          </div>
+          
+          <div className="dark:text-white text-black text-lg py-4 font-bold">
+            Unlocks In:
+          </div>
+
+          <div className="flex justify-center gap-4 mb-8">
+            {countdownString &&
+              countdownString.split(" ").map((unit, index) => {
+                const [value, label] = unit.split(/([a-z]+)/);
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center bg-gray-200/60 dark:bg-neutral-900 rounded-lg p-3 min-w-[70px] shadow-md"
+                  >
+                    <span className="font-bold text-2xl dark:text-[#952727] text-[#b53131] ">
+                      {value}
+                    </span>
+                    <span className="text-xs text-neutral-900 dark:text-gray-300">
+                      {label === "d"
+                        ? "DAYS"
+                        : label === "h"
+                        ? "HOURS"
+                        : label === "m"
+                        ? "MINUTES"
+                        : "SECONDS"}
+                    </span>
+                  </div>
+                );
+              })}
+          </div>
+          
+          <div className="text-center text-red-500 font-bold my-4">
+            This mission will unlock on {missionUnlockDates[mission].toLocaleDateString()} at {missionUnlockDates[mission].toLocaleTimeString()}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-full justify-center text-center pb-16 md:mx-auto flex flex-col items-center overflow-auto min-h-screen">
       <div className="flex flex-col items-center text-center sm:w-3/4 w-full md:max-w-lg px-4">
@@ -173,40 +219,6 @@ const MissionForm = ({ mission }: { mission: number }) => {
           {missionData[mission].title}
         </div>
 
-        <div className={`dark:text-white text-black text-lg py-4 font-bold`}>
-          Time Limit
-        </div>
-
-        <div className="flex  justify-center gap-4 mb-8">
-          {countdownString &&
-            countdownString.split(" ").map((unit, index) => {
-              const [value, label] = unit.split(/([a-z]+)/);
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col items-center bg-gray-200/60 dark:bg-neutral-900 rounded-lg p-3 min-w-[70px] shadow-md"
-                >
-                  <span className="font-bold text-2xl dark:text-[#952727] text-[#b53131] ">
-                    {value}
-                  </span>
-                  <span className="text-xs text-neutral-900 dark:text-gray-300">
-                    {label === "d"
-                      ? "DAYS"
-                      : label === "h"
-                      ? "HOURS"
-                      : label === "m"
-                      ? "MINUTES"
-                      : "SECONDS"}
-                  </span>
-                </div>
-              );
-            })}
-        </div>
-        {!isUnlocked && (
-          <div className="text-center text-red-500 font-bold my-4">
-            Mission locked! Unlocks in: {countdownString}
-          </div>
-        )}
         <input
           name="missionAnswer"
           onChange={(e) => setSubmission(e.target.value)}
@@ -221,7 +233,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
         <div className=" flex flex-col text-center items-center gap-y-5 sm:w-full w-3/4 py-4">
           <button
             onClick={handleSubmit}
-            disabled={!submission || !isUnlocked}
+            disabled={!submission}
             className="disabled:opacity-40 flex w-full justify-center rounded-md bg-sky-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Submit (Use Wikipedia Spelling)
