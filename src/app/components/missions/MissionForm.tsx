@@ -38,7 +38,7 @@ export const missionData: { [key: number]: MissionData } = {
   },
   3: {
     title: "Mission 3: Criterion",
-    image: "",
+    image: "/missionImages/mission3.png",
     answer: ["Your Answer Here"],
     hint1: "First hint",
     hint2: "Second hint",
@@ -63,7 +63,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
   // 🔑 Unlock schedule
   const missionUnlockDates: { [key: number]: Date } = {
     1: new Date("2025-08-29T18:00:00Z"), // Friday 2PM EST
-    2: new Date("2025-08-30T16:00:00Z"), // Saturday 12PM EST
+    2: new Date("2025-08-30T17:00:00Z"), // Saturday 1PM EST
     3: new Date("2025-08-31T16:00:00Z"), // Sunday 12PM EST
   };
 
