@@ -16,6 +16,7 @@ const LeaderboardPage = () => {
       <div className="flex flex-row gap-8 justify-center items-center flex-wrap">
         <LeaderBoardTable mission={1} title={"Phelec"} />
         <LeaderBoardTable mission={2} title={"Catastrophe"} />
+        <LeaderBoardTable mission={3} title={"Criterion"} />
       </div>
     </div>
   );
