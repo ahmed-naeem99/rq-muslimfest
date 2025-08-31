@@ -39,10 +39,10 @@ export const missionData: { [key: number]: MissionData } = {
   3: {
     title: "Mission 3: Criterion",
     image: "/missionImages/mission3.png",
-    answer: ["Your Answer Here"],
-    hint1: "First hint",
-    hint2: "Second hint",
-    hint3: "Third hint",
+    answer: ["Mohammad Ali Jauhar", "Muhammad Ali Jawhar"],
+    hint1: "To use this hint, please come to our Esacpe Arena Booth within the next 5 min, and then, you may ask one specific question about what you are stuck on. Remember, try to analyze your situation by thinking about what you know, what you don't know and what you need to do",
+    hint2: "To use this hint, please come to our Esacpe Arena Booth within the next 5 min, and then, you may ask one specific question about what you are stuck on. Remember, try to analyze your situation by thinking about what you know, what you don't know and what you need to do",
+    hint3: "To use this hint, please come to our Esacpe Arena Booth within the next 5 min, and then, you may ask one specific question about what you are stuck on. Remember, try to analyze your situation by thinking about what you know, what you don't know and what you need to do",
   },
 };
 
@@ -64,7 +64,7 @@ const MissionForm = ({ mission }: { mission: number }) => {
   const missionUnlockDates: { [key: number]: Date } = {
     1: new Date("2025-08-29T18:00:00Z"), // Friday 2PM EST
     2: new Date("2025-08-30T17:00:00Z"), // Saturday 1PM EST
-    3: new Date("2025-08-31T16:00:00Z"), // Sunday 12PM EST
+    3: new Date("2025-08-31T17:00:00Z"), // Sunday 12PM EST
   };
 
   const unlockDate = missionUnlockDates[mission].getTime();
